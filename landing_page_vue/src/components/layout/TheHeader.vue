@@ -1,11 +1,12 @@
 <template>
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
   <div class="container-fluid">
+    <!-- a.main da dei bug grafici sui telefoni -->
     <a
       href="#"
       class="navbar-brand h1 mb-0 px-4 main me-5"
       > {{appName}}
-    </a>
+    </a> 
     <button
       class="navbar-toggler"
       type="button"

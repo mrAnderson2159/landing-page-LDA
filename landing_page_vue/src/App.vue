@@ -1,8 +1,8 @@
 <template>
-  <the-header
-    app-name="Noleggio Auto"
-    :links="headerLinks"
-    >
+  <the-header app-name="Noleggio Auto">
+    <template #links>
+      <the-header-navbar />
+    </template>
   </the-header>
   <the-body></the-body>
   <the-footer></the-footer>
@@ -10,29 +10,35 @@
 
 <script>
 import TheHeader from './components/layout/TheHeader.vue'
+import TheHeaderNavbar from './components/layout/TheHeaderNavbar.vue';
 import TheBody from './components/layout/TheBody.vue'
 import TheFooter from './components/layout/TheFooter.vue'
-
-import TheHeaderLink from './classes/layout/TheHeaderLink.js'
 
 export default {
   components: {
     TheHeader, 
+    TheHeaderNavbar,
     TheBody, 
     TheFooter
   },
   data() {
     return {
-      headerLinks: [
-        new TheHeaderLink('features', '#', 'Features'),
-        new TheHeaderLink('pricing', '#', 'Pricing'),
-        new TheHeaderLink('google', 'https://www.google.com', 'Google'),
-        new TheHeaderLink('about_us', '#', 'About us')
-      ]
+      activeBodyComponent: null,
+
     };
   },
-  props: {},
-  methods: {},
+  methods: {
+    changeActiveBodyComponent(component) {
+      this.activeBodyComponent = component;
+      console.log(`[LOG]: active body component => ${this.activeBodyComponent}`);
+    } 
+  },
+  provide() {
+    return {
+      changeActiveBodyComponent: this.changeActiveBodyComponent,
+      activeBodyComponent: this.activeBodyComponent,
+    }
+  }
 };
 </script>
 
