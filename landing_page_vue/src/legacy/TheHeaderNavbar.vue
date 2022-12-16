@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import TheHeaderNavbarButton from './../../classes/layout/TheHeaderNavbarButton'
+import TheHeaderNavbarButton from '../classes/layout/TheHeaderNavbarButton'
 
 export default {
   data() {
