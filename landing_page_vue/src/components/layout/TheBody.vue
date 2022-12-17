@@ -5,7 +5,7 @@
     <div class="row main-text-container text-light position-relative">
       <div class="main-text col-md-6">
         <h1 class="head-message display-1">Noleggia una macchina di lusso</h1>
-        <p class="lead fs-3 text-secondary col-md-6">Scegli l'auto, dicci dove possiamo contattarti e pensiamo a tutto noi!</p>
+        <p class="lead fs-3 text-secondary col-md-6">Scegli l'auto lascia un recapito e pensiamo a tutto noi!</p>
         <div class="d-grid gap-2 col-3 mx-auto mt-5">
           <button type="button" class="btn btn-warning">Scegli una macchina</button>
         </div>
