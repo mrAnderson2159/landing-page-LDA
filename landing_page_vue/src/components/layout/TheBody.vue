@@ -7,7 +7,7 @@
         <h1 class="head-message display-1">Noleggia una macchina di lusso</h1>
         <p class="lead fs-3 text-secondary col-md-6">Scegli l'auto lascia un recapito e pensiamo a tutto noi!</p>
         <div class="d-grid gap-2 col-3 mx-auto mt-5">
-          <button type="button" class="btn btn-warning">Scegli una macchina</button>
+          <button type="submit" class="btn btn-warning" @click="sendRequest">Scegli una macchina</button>
         </div>
       </div>
     </div>
@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import axios from "axios";
+
+
 export default {
   name: "Test",
   created() {},
@@ -55,7 +58,21 @@ export default {
     };
   },
   props: {},
-  methods: {},
+  methods: {
+    async sendRequest() {
+      try {
+        // Send a POST request to the API
+        const response = await axios.post('http://localhost:8000/form/', {
+            data: 'hi there!'
+        });
+        // Append the returned data to the tasks array
+        this.tasks.push(response.data);
+      } catch (error) {
+          // Log the error
+          console.log(error);
+      }
+    }
+  },
 };
 </script>
 
@@ -75,7 +92,7 @@ export default {
   }
 
   @media screen and (min-width: 500px) {
-      .masthead {
+    .masthead {
       height: $bg_hight;
       width: 75vw;
       min-height: 0;

@@ -34,6 +34,9 @@ export default {
       changeActiveBodyComponent: this.changeActiveBodyComponent,
       activeBodyComponent: this.activeBodyComponent,
     }
+  }, 
+  created() {
+    
   }
 };
 </script>
