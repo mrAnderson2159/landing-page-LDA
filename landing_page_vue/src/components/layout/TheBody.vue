@@ -6,7 +6,7 @@
       <div class="main-text col-md-6">
         <h1 class="head-message display-1">Noleggia una macchina di lusso</h1>
         <p class="lead fs-3 text-secondary col-md-6">Scegli l'auto lascia un recapito e pensiamo a tutto noi!</p>
-        <div class="d-grid gap-2 col-3 mx-auto mt-5">
+        <div class="d-grid gap-2 col-3 mt-5"> <!-- mx-auto -->
           <button type="submit" class="btn btn-warning" @click="sendRequest">Scegli una macchina</button>
         </div>
       </div>
