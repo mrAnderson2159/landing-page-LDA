@@ -1,13 +1,25 @@
 <template>
   <div id="container" class="container-fluid p-0">
-    <div class="bg-image position-fixed"></div>
+    <!-- <div class="bg-image position-fixed"></div> -->
+    <div class="bg-image position-fixed">
+      <img :src="bgImage" alt="BACKGROUND-CAR" class="position-relative" />
+    </div>
     <div id="masthead" class="masthead position-fixed"></div>
     <div class="row main-text-container text-light position-relative">
       <div class="main-text col-md-6">
         <h1 class="head-message display-1">Noleggia una macchina di lusso</h1>
-        <p class="lead fs-3 text-secondary col-md-6">Scegli l'auto lascia un recapito e pensiamo a tutto noi!</p>
-        <div class="d-grid gap-2 col-3 mt-5"> <!-- mx-auto -->
-          <button type="submit" class="btn btn-warning" @click="sendRequest">Scegli una macchina</button>
+        <p class="lead fs-3 text-secondary col-md-6">
+          Scegli l'auto lascia un recapito e pensiamo a tutto noi!
+        </p>
+        <div class="d-grid gap-2 col-3 mt-5">
+          <!-- mx-auto -->
+          <button
+            type="submit"
+            class="btn btn-warning text-nowrap"
+            @click="sendRequest"
+          >
+            Scegli una macchina
+          </button>
         </div>
       </div>
     </div>
@@ -17,9 +29,7 @@
 <script>
 import axios from "axios";
 
-
 export default {
-  name: "Test",
   created() {},
   data() {
     return {
@@ -53,8 +63,8 @@ export default {
         "https://wallpaperscraft.com/public/img/general/app2.png",
         "https://wallpaperscraft.com/public/img/general/app3.png",
         "https://wallpaperscraft.com/public/img/general/app4.png",
-        "https://wallpaperscraft.com/public/img/general/app5.png"
-      ]
+        "https://wallpaperscraft.com/public/img/general/app5.png",
+      ],
     };
   },
   props: {},
@@ -62,79 +72,102 @@ export default {
     async sendRequest() {
       try {
         // Send a POST request to the API
-        const response = await axios.post('http://localhost:8000/form/', {
-            data: 'hi there!'
+        const response = await axios.post("http://localhost:8000/form/", {
+          data: "hi there!",
         });
         // Append the returned data to the tasks array
         this.tasks.push(response.data);
       } catch (error) {
-          // Log the error
-          console.log(error);
+        // Log the error
+        console.log(error);
       }
-    }
+    },
+  },
+  computed: {
+    bgImage() {
+      return "src/assets/images/main_background.png";
+    },
+    bgImageSize() {
+      /* 
+        Le dimensioni dell'imagine vanno stabilite con un po di javascript o python
+        se vogliamo richiedere l'immagine direttamente dal server, cosa che in effetti
+        mi sembra più logica... 
+
+        L'immagine deve sempre avere l'altezza $bg_hight definita sotto nel css e 
+        larghezza proporzionale alle sue dimensioni reali. Quindi al restringersi della
+        finestra bisogna anche calcolare una posizione relativa dell'immagine in modo tale
+        da farla rimanere al centro ma di non restringerla o distenderla
+      */
+      return null;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mukta:wght@200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mukta:wght@200;300;400;500;600;700&display=swap");
 
-  $bg_hight: 80vh;
-  $phi: 1.618;
+$bg_hight: 80vh;
+$phi: 1.618;
 
-  .bg-image {
-    background: url('../../assets/images/main_background.png');
+.bg-image {
+  height: $bg_hight;
+  width: 100%;
+  overflow: hidden;
+
+  & img {
     height: $bg_hight;
     width: 100%;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position-y: 0%;
+    margin: auto 0;
+    min-width: 1400px;
+    // bottom: 50px;
   }
+}
 
-  @media screen and (min-width: 500px) {
-    .masthead {
-      height: $bg_hight;
-      width: 75vw;
-      min-height: 0;
-      padding-bottom: 0;
-
-      &::before {
-        transform: skewX(-9deg);
-        transform-origin: top right;
-      }
-    }
-  }
-
+@media screen and (min-width: 770px) {
   .masthead {
-    overflow: hidden;
+    height: $bg_hight;
+    width: 75vw;
+    min-height: 0;
+    padding-bottom: 0;
 
     &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.75);
+      transform: skewX(-9deg);
+      transform-origin: top right;
     }
   }
+}
 
-  .main-text-container {
-    height: $bg_hight;
+.masthead {
+  overflow: hidden;
+  z-index: 2;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
   }
+}
 
-  .main-text {
+.main-text-container {
+  height: $bg_hight;
+  z-index: 4;
+
+  & .main-text {
     // border: 1px solid red;
     height: 60%;
-    margin: auto 10%// percentage($phi / 10)
-  }
+    margin: auto 10%; // percentage($phi / 10)
 
-  .head-message {
-    font-family: 'Mukta', sans-serif;
-    text-transform: uppercase;
+    & .head-message {
+      font-family: "Mukta", sans-serif;
+      text-transform: uppercase;
+    }
   }
-
-  
+}
 </style>
