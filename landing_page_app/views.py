@@ -13,4 +13,4 @@ def form(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         print(data)
-        return HttpResponse(status=200)
+        return JsonResponse("Hi there, client!", safe=False)

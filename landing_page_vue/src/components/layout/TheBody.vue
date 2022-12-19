@@ -1,38 +1,37 @@
 <template>
-  <div id="container" class="container-fluid p-0">
-    <!-- <div class="bg-image position-fixed"></div> -->
-    <div class="bg-image position-fixed">
-      <img :src="bgImage" alt="BACKGROUND-CAR" class="position-relative" />
-    </div>
-    <div id="masthead" class="masthead position-fixed"></div>
-    <div class="row main-text-container text-light position-relative">
-      <div class="main-text col-md-6">
-        <h1 class="head-message display-1">Noleggia una macchina di lusso</h1>
-        <p class="lead fs-3 text-secondary col-md-6">
-          Scegli l'auto lascia un recapito e pensiamo a tutto noi!
-        </p>
-        <div class="d-grid gap-2 col-3 mt-5">
-          <!-- mx-auto -->
-          <button
-            type="submit"
-            class="btn btn-warning text-nowrap"
-            @click="sendRequest"
-          >
-            Scegli una macchina
-          </button>
-        </div>
-      </div>
-    </div>
+  <div id="container" class="container-fluid p-0 not-mobile">
+    <base-background-image :bg-image="bgImage" img-min-width="1400px" />
+
+    <base-background-shape
+      width="75vw"
+      :opacity="0.75"
+      inclination="-9deg"
+      transform-origin="top right"
+    />
+    <base-presentation
+      title="Noleggia una macchina di lusso"
+      subtitle="Scegli l'auto lascia un recapito e pensiamo a tutto noi!"
+      submit="Scegli una macchina"
+      mode="body"
+    />
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import BaseBackgroundImage from "../UI/BaseBackgroundImage.vue";
+import BaseBackgroundShape from "../UI/BaseBackgroundShape.vue";
+import BasePresentation from "../UI/BasePresentation.vue";
 
 export default {
+  components: {
+    BaseBackgroundImage,
+    BaseBackgroundShape,
+    BasePresentation,
+  },
   created() {},
   data() {
     return {
+      ç_height: "80vh",
       cars: [
         "https://images.wallpaperscraft.com/image/single/supercar_art_road_car_90590_300x168.jpg",
         "https://images.wallpaperscraft.com/image/single/supercar_green_aston_martin_79798_300x168.jpg",
@@ -68,106 +67,31 @@ export default {
     };
   },
   props: {},
-  methods: {
-    async sendRequest() {
-      try {
-        // Send a POST request to the API
-        const response = await axios.post("http://localhost:8000/form/", {
-          data: "hi there!",
-        });
-        // Append the returned data to the tasks array
-        this.tasks.push(response.data);
-      } catch (error) {
-        // Log the error
-        console.log(error);
-      }
-    },
-  },
+  methods: {},
   computed: {
     bgImage() {
       return "src/assets/images/main_background.png";
     },
-    bgImageSize() {
-      /* 
-        Le dimensioni dell'imagine vanno stabilite con un po di javascript o python
-        se vogliamo richiedere l'immagine direttamente dal server, cosa che in effetti
-        mi sembra più logica... 
-
-        L'immagine deve sempre avere l'altezza $bg_hight definita sotto nel css e 
-        larghezza proporzionale alle sue dimensioni reali. Quindi al restringersi della
-        finestra bisogna anche calcolare una posizione relativa dell'immagine in modo tale
-        da farla rimanere al centro ma di non restringerla o distenderla
-      */
-      return null;
-    },
+  },
+  provide() {
+    return {
+      ç_height: this.ç_height,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mukta:wght@200;300;400;500;600;700&display=swap");
+@import "../node_modules/bootstrap/scss/bootstrap"; // PERFORMANCE: QUESTO RALLENTA MOLTO
 
-$bg_hight: 80vh;
-$phi: 1.618;
-
-.bg-image {
-  height: $bg_hight;
-  width: 100%;
-  overflow: hidden;
-
-  & img {
-    height: $bg_hight;
-    width: 100%;
-    margin: auto 0;
-    min-width: 1400px;
-    // bottom: 50px;
-  }
+.not-mobile {
+  display: none;
 }
 
-@media screen and (min-width: 770px) {
-  .masthead {
-    height: $bg_hight;
-    width: 75vw;
-    min-height: 0;
-    padding-bottom: 0;
-
-    &::before {
-      transform: skewX(-9deg);
-      transform-origin: top right;
-    }
-  }
-}
-
-.masthead {
-  overflow: hidden;
-  z-index: 2;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-  }
-}
-
-.main-text-container {
-  height: $bg_hight;
-  z-index: 4;
-
-  & .main-text {
-    // border: 1px solid red;
-    height: 60%;
-    margin: auto 10%; // percentage($phi / 10)
-
-    & .head-message {
-      font-family: "Mukta", sans-serif;
-      text-transform: uppercase;
-    }
+@include media-breakpoint-up(lg) {
+  .not-mobile {
+    display: block;
   }
 }
 </style>
