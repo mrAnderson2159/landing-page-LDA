@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-0 not-mobile">
+  <div id="first" class="container-fluid p-0 not-mobile position-relative">
     <base-background-image :bg-image="bgImage" img-min-width="1400px" />
     <base-background-shape
       width="75vw"
@@ -21,7 +21,7 @@
       div-classes="lead p-5"
     ></the-instructions>
   </div>
-  <!-- <div style="height: 500px"></div> -->
+  <div style="height: 500px"></div>
 </template>
 
 <script>
@@ -76,11 +76,18 @@ export default {
         "https://wallpaperscraft.com/public/img/general/app5.png",
       ],
       messages: [
-        new TheInstructionsMessage("Evviva", "Il divino marione è giunto"),
-        new TheInstructionsMessage("Gioite", "Sara un periodo di prosperità"),
         new TheInstructionsMessage(
-          "Prostratevi",
-          "Fate sentire la vosta gioia"
+          "Sceglila",
+          "Seleziona una macchina tra quelle disponibili nel nostro catalogo"
+        ),
+        new TheInstructionsMessage(
+          "Scrivici",
+          "Inviaci un recapito telefonico o una mail su cui possiamo contattarti per concordare \
+          il preventivo"
+        ),
+        new TheInstructionsMessage(
+          "Ricevila",
+          "Ricevi la macchina chiavi in mano e restituiscila a fine periodo"
         ),
       ],
     };
@@ -112,5 +119,9 @@ export default {
   .not-mobile {
     display: block;
   }
+}
+
+#first {
+  height: 75vh;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="shape position-relative"></div>
+  <div class="shape position-absolute"></div>
 </template>
 
 <script>
@@ -42,19 +42,17 @@ export default {
 
 <style lang="scss" scoped>
 $color: v-bind(color);
+$height: v-bind(rightHeight);
 .shape {
-  height: v-bind(rightHeight);
+  height: $height;
   width: v-bind(width);
   overflow: hidden;
   z-index: 2;
+  bottom: 0;
 
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
     height: 100%;
     width: 100%;
     background-color: $color;

@@ -1,10 +1,8 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
-import TheHeaderLink from '../../classes/layout/TheHeaderLink';
-import {isIterable} from '../../utilities/booleans'
+import TheHeaderLink from "../../classes/layout/TheHeaderLink";
+import { isIterable } from "../../utilities/booleans";
 
 export default {
   name: "Test",
@@ -12,14 +10,11 @@ export default {
   data() {
     return {};
   },
-  props: {
-
-  },
+  props: {},
   methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
-  // @import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&display=swap');
-
+// @import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&display=swap');
 </style>

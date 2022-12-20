@@ -1,6 +1,8 @@
 <template>
+  <!-- position-fixed -->
   <div class="bg-image" :style="commonStyle">
-    <img :src="bgImage" class="" :style="imgStyle" />
+    <!-- position-absolute -->
+    <img :src="bgImage" :style="imgStyle" />
   </div>
 </template>
 

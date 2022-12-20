@@ -75,9 +75,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$height: v-bind(rightHeight);
+
 .main-text-container {
-  height: v-bind(rightHeight);
+  height: $height;
   z-index: 4;
+  bottom: $height;
 
   & .main-text {
     // border: 1px solid red;
