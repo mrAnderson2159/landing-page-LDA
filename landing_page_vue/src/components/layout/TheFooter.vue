@@ -19,11 +19,32 @@
       :color="color"
     />
   </div>
-  <div id="footer-container" class="container-fluid not-mobile p-0"></div>
+  <div id="footer-container" class="container-fluid not-mobile p-0">
+    <base-presentation
+      title="Noleggia una macchina di lusso"
+      subtitle="Scegli l'auto, lascia un recapito e pensiamo a tutto noi!"
+      submit="Scegli una macchina"
+      mode="footer"
+    />
+    <div id="links" class="lead">
+      <ul class="text-light">
+        <li>
+          <a href="#">Chi siamo</a>
+        </li>
+        <li>
+          <a href="#">Termini e Condizioni</a>
+        </li>
+        <li>
+          <a href="#">Note Legali</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
 import BaseBackgroundShape from "../UI/BaseBackgroundShape.vue";
+import BasePresentation from "../UI/BasePresentation.vue";
 
 import {
   notRequiredNumber,
@@ -34,6 +55,7 @@ import { ratioValidator } from "../../utilities/validators";
 export default {
   components: {
     BaseBackgroundShape,
+    BasePresentation,
   },
   mounted() {
     window.addEventListener("resize", this.resize);
@@ -152,5 +174,27 @@ $height: v-bind(rightTrianglesHeight);
 #footer-container {
   height: 50vh;
   background-color: v-bind(computedColor);
+}
+
+#links {
+  width: 25%;
+  position: relative;
+  bottom: 36%;
+  float: right;
+
+  & ul {
+    list-style: none;
+    & li {
+      padding: 1em;
+      & a {
+        text-decoration: none;
+        color: whitesmoke;
+
+        &:hover {
+          font-size: 1.1em;
+        }
+      }
+    }
+  }
 }
 </style>

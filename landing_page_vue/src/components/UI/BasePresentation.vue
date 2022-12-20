@@ -1,5 +1,8 @@
 <template>
-  <div class="row main-text-container text-light position-relative">
+  <div
+    v-if="mode === 'body'"
+    class="row main-text-container text-light position-relative"
+  >
     <div class="main-text col-md-6">
       <h1 class="title display-1">{{ title }}</h1>
       <p class="subtitle lead fs-3 text-secondary col-md-6">{{ subtitle }}</p>
@@ -12,6 +15,24 @@
           {{ submit }}
         </button>
       </div>
+    </div>
+  </div>
+  <div
+    v-else-if="mode === 'footer'"
+    class="row main-text-container text-light position-relative footer ms-5"
+  >
+    <div class="col">
+      <h1 class="title display-6">{{ title }}</h1>
+      <p class="subtitle lead fs-5 text-secondary col-md-6">{{ subtitle }}</p>
+    </div>
+    <div class="col btn-container">
+      <button
+        type="submit"
+        class="btn btn-warning text-nowrap submit"
+        @click="sendRequest"
+      >
+        {{ submit }}
+      </button>
     </div>
   </div>
 </template>
@@ -91,6 +112,20 @@ $height: v-bind(rightHeight);
       font-family: "Mukta", sans-serif;
       text-transform: uppercase;
     }
+  }
+}
+
+.footer {
+  width: 60%;
+  padding-top: 8%;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+
+  & button {
+    margin: 0 auto;
   }
 }
 </style>
