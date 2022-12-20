@@ -48,3 +48,7 @@ export function notRequiredArray(type) {
 export const requiredArrayOfStrings = requiredArray("string");
 
 export const notRequiredArrayOfStrings = notRequiredArray("string");
+
+export const requiredArrayOfNumbers = requiredArray("number");
+
+export const notRequiredArrayOfNumbers = notRequiredArray("number");

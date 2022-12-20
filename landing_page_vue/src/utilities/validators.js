@@ -12,3 +12,7 @@ export function arrayValidator(type) {
     return value.every(condition);
   };
 }
+
+export function ratioValidator(value) {
+  return value >= 0 && value <= 1;
+}
