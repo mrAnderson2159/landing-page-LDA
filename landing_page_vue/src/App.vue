@@ -1,46 +1,45 @@
 <template>
-  <the-header>
-
-  </the-header>
+  <the-header> </the-header>
   <the-body></the-body>
   <the-footer></the-footer>
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue'
-import TheBody from './components/layout/TheBody.vue'
-import TheFooter from './components/layout/TheFooter.vue'
+import TheHeader from "./components/layout/TheHeader.vue";
+import TheBody from "./components/layout/TheBody.vue";
+import TheFooter from "./components/layout/TheFooter.vue";
 
 export default {
   components: {
-    TheHeader, 
-    TheBody, 
-    TheFooter
+    TheHeader,
+    TheBody,
+    TheFooter,
   },
   data() {
     return {
       activeBodyComponent: null,
-
     };
   },
   methods: {
     changeActiveBodyComponent(component) {
       this.activeBodyComponent = component;
-      console.log(`[LOG]: active body component => ${this.activeBodyComponent}`);
-    } 
+      console.log(
+        `[LOG]: active body component => ${this.activeBodyComponent}`
+      );
+    },
   },
   provide() {
     return {
       changeActiveBodyComponent: this.changeActiveBodyComponent,
       activeBodyComponent: this.activeBodyComponent,
-    }
-  }, 
-  created() {
-    
-  }
+    };
+  },
+  created() {},
 };
 </script>
 
 <style lang="scss">
-
+body {
+  // background-color: rgba($color: black, $alpha: 0.97);
+}
 </style>

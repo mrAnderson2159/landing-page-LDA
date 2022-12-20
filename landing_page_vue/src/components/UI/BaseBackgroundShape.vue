@@ -1,5 +1,5 @@
 <template>
-  <div class="shape position-fixed"></div>
+  <div class="shape position-relative"></div>
 </template>
 
 <script>

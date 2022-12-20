@@ -1,7 +1,6 @@
 <template>
-  <div id="container" class="container-fluid p-0 not-mobile">
+  <div class="container-fluid p-0 not-mobile">
     <base-background-image :bg-image="bgImage" img-min-width="1400px" />
-
     <base-background-shape
       width="75vw"
       :opacity="0.75"
@@ -10,28 +9,40 @@
     />
     <base-presentation
       title="Noleggia una macchina di lusso"
-      subtitle="Scegli l'auto lascia un recapito e pensiamo a tutto noi!"
+      subtitle="Scegli l'auto, lascia un recapito e pensiamo a tutto noi!"
       submit="Scegli una macchina"
       mode="body"
     />
   </div>
+  <div class="container-lg not-mobile">
+    <the-instructions
+      :messages="messages"
+      breakpoint="lg"
+      div-classes="lead p-5"
+    ></the-instructions>
+  </div>
+  <!-- <div style="height: 500px"></div> -->
 </template>
 
 <script>
 import BaseBackgroundImage from "../UI/BaseBackgroundImage.vue";
 import BaseBackgroundShape from "../UI/BaseBackgroundShape.vue";
 import BasePresentation from "../UI/BasePresentation.vue";
+import TheInstructions from "../layout/TheInstructions.vue";
+
+import { TheInstructionsMessage } from "../../utilities/classes";
 
 export default {
   components: {
     BaseBackgroundImage,
     BaseBackgroundShape,
     BasePresentation,
+    TheInstructions,
   },
   created() {},
   data() {
     return {
-      ç_height: "80vh",
+      ç_height: "75vh",
       cars: [
         "https://images.wallpaperscraft.com/image/single/supercar_art_road_car_90590_300x168.jpg",
         "https://images.wallpaperscraft.com/image/single/supercar_green_aston_martin_79798_300x168.jpg",
@@ -63,6 +74,14 @@ export default {
         "https://wallpaperscraft.com/public/img/general/app3.png",
         "https://wallpaperscraft.com/public/img/general/app4.png",
         "https://wallpaperscraft.com/public/img/general/app5.png",
+      ],
+      messages: [
+        new TheInstructionsMessage("Evviva", "Il divino marione è giunto"),
+        new TheInstructionsMessage("Gioite", "Sara un periodo di prosperità"),
+        new TheInstructionsMessage(
+          "Prostratevi",
+          "Fate sentire la vosta gioia"
+        ),
       ],
     };
   },

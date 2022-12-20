@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-image position-fixed" :style="commonStyle">
-    <img :src="bgImage" class="position-relative" :style="imgStyle" />
+  <div class="bg-image" :style="commonStyle">
+    <img :src="bgImage" class="" :style="imgStyle" />
   </div>
 </template>
 

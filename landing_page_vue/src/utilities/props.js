@@ -1,4 +1,4 @@
-import { unitValidator } from "./css";
+import { unitValidator, arrayValidator } from "./validators";
 
 export const requiredString = {
   type: String,
@@ -29,3 +29,22 @@ export const notRequiredCssUnit = {
   ...notRequiredString,
   validator: unitValidator,
 };
+
+export function requiredArray(type) {
+  return {
+    type: Array,
+    required: true,
+    validator: arrayValidator(type),
+  };
+}
+
+export function notRequiredArray(type) {
+  return {
+    ...requiredArray(type),
+    required: false,
+  };
+}
+
+export const requiredArrayOfStrings = requiredArray("string");
+
+export const notRequiredArrayOfStrings = notRequiredArray("string");
