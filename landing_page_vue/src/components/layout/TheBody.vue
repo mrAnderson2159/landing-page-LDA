@@ -1,5 +1,8 @@
 <template>
-  <div id="first" class="container-fluid p-0 not-mobile position-relative">
+  <div
+    class="container-fluid p-0 not-mobile position-relative"
+    :style="{ height: ç_height }"
+  >
     <base-background-image :bg-image="bgImage" img-min-width="1400px" />
     <base-background-shape
       width="75vw"
@@ -21,7 +24,6 @@
       div-classes="lead p-5"
     ></the-instructions>
   </div>
-  <div style="height: 500px"></div>
 </template>
 
 <script>
@@ -108,20 +110,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mukta:wght@200;300;400;500;600;700&display=swap");
-@import "../node_modules/bootstrap/scss/bootstrap"; // PERFORMANCE: QUESTO RALLENTA MOLTO
-
-.not-mobile {
-  display: none;
-}
-
-@include media-breakpoint-up(lg) {
-  .not-mobile {
-    display: block;
-  }
-}
-
-#first {
-  height: 75vh;
-}
+// @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mukta:wght@200;300;400;500;600;700&display=swap");
 </style>

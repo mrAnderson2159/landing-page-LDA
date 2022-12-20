@@ -1,3 +1,6 @@
+@import "../node_modules/bootstrap/scss/bootstrap"; // PERFORMANCE: QUESTO RALLENTA MOLTO
+
+
 @mixin faded($offset, $blur-radius, $spread-radius) {
     &.faded-left:after {
         box-shadow: inset $offset 0 $blur-radius (-$spread-radius);
@@ -132,3 +135,12 @@ body {
   box-sizing: border-box;
 }
 
+.not-mobile {
+    display: none;
+}
+  
+@include media-breakpoint-up(lg) {
+  .not-mobile {
+    display: block;
+  }
+}

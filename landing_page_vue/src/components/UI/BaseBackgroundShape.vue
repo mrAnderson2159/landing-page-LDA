@@ -1,12 +1,11 @@
 <template>
-  <div class="shape position-absolute"></div>
+  <div class="position-absolute" :class="mode"></div>
 </template>
 
 <script>
 import {
   requiredCssUnit,
   notRequiredCssUnit,
-  notRequiredNumber,
   notRequiredString,
 } from "../../utilities/props";
 
@@ -20,19 +19,23 @@ export default {
       ...notRequiredCssUnit,
       default: "-9deg",
     },
-    opacity: {
-      ...notRequiredNumber,
-      default: 0.75,
+    color: {
+      ...notRequiredString,
+      default: "rgba(0, 0, 0, .75)",
     },
     transformOrigin: {
       ...notRequiredString,
       default: "top right",
     },
+    mode: {
+      ...notRequiredString,
+      default: "rotate",
+      validator(value) {
+        return ["rotate", "cut"].includes(value);
+      },
+    },
   },
   computed: {
-    color() {
-      return `rgba(0, 0, 0, ${this.opacity})`;
-    },
     rightHeight() {
       return this.height || this.ç_height;
     },
@@ -43,9 +46,12 @@ export default {
 <style lang="scss" scoped>
 $color: v-bind(color);
 $height: v-bind(rightHeight);
-.shape {
+$width: v-bind(width);
+$angle: v-bind(inclination);
+$origin: v-bind(transformOrigin);
+.rotate {
   height: $height;
-  width: v-bind(width);
+  width: $width;
   overflow: hidden;
   z-index: 2;
   bottom: 0;
@@ -56,8 +62,29 @@ $height: v-bind(rightHeight);
     height: 100%;
     width: 100%;
     background-color: $color;
-    transform: skewX(v-bind(inclination));
-    transform-origin: v-bind(transformOrigin);
+    transform: skewX($angle);
+    transform-origin: $origin;
+  }
+}
+
+.cut {
+  height: $height;
+  width: $width;
+  overflow: hidden;
+  z-index: 2;
+  bottom: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1100%;
+    height: 1100%;
+    top: 20px;
+    right: -500%;
+    background-color: $color;
+    transform-origin: $origin;
+    transform: rotate($angle);
+    z-index: -1;
   }
 }
 </style>
