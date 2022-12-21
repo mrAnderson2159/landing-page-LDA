@@ -38,8 +38,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-body {
-  // background-color: rgba($color: black, $alpha: 0.97);
-}
-</style>
+<style lang="scss"></style>

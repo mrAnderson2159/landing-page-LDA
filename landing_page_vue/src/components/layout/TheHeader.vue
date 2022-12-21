@@ -1,11 +1,9 @@
-<template></template>
+<template>
+  <div></div>
+</template>
 
 <script>
-import TheHeaderLink from "../../classes/layout/TheHeaderLink";
-import { isIterable } from "../../utilities/booleans";
-
 export default {
-  name: "Test",
   created() {},
   data() {
     return {};

@@ -5,7 +5,7 @@
   >
     <base-background-image :bg-image="bgImage" img-min-width="1400px" />
     <base-background-shape
-      width="75vw"
+      width="73vw"
       :opacity="0.75"
       inclination="-9deg"
       transform-origin="top right"

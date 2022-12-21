@@ -128,4 +128,11 @@ $height: v-bind(rightHeight);
     margin: 0 auto;
   }
 }
+
+.title,
+.subtitle {
+  &:hover {
+    cursor: default;
+  }
+}
 </style>

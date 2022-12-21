@@ -52,6 +52,8 @@ import {
 } from "../../utilities/props";
 import { ratioValidator } from "../../utilities/validators";
 
+const FI = (Math.sqrt(5) + 1) / 2;
+
 export default {
   components: {
     BaseBackgroundShape,
@@ -78,7 +80,7 @@ export default {
   props: {
     trianglesHeight: {
       ...notRequiredNumber,
-      default: 0.1,
+      default: 0.1, // BUG: I triangoli funzionano solo perché il valore è 0.1
       validator: ratioValidator,
     },
     trianglesProportion: {
@@ -89,7 +91,7 @@ export default {
           value.every(ratioValidator)
         );
       },
-      default: [0.6, 0.4],
+      default: [FI - 1, 1 / (FI + 1)],
     },
   },
   computed: {
@@ -185,10 +187,11 @@ $height: v-bind(rightTrianglesHeight);
   & ul {
     list-style: none;
     & li {
-      padding: 1em;
+      padding: 1.618em;
       & a {
         text-decoration: none;
         color: whitesmoke;
+        position: absolute;
 
         &:hover {
           font-size: 1.1em;
