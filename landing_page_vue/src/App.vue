@@ -1,37 +1,33 @@
 <template>
-  <the-header> </the-header>
-  <the-body></the-body>
-  <the-footer></the-footer>
+  <component :is="currentPage" />
 </template>
 
 <script>
-import TheHeader from "./components/layout/TheHeader.vue";
-import TheBody from "./components/layout/TheBody.vue";
-import TheFooter from "./components/layout/TheFooter.vue";
+import HomePage from "./components/pages/HomePage.vue";
+import CarSelectionPage from "./components/pages/CarSelectionPage.vue";
+import ThanksgivingPage from "./components/pages/ThanksgivingPage.vue";
 
 export default {
   components: {
-    TheHeader,
-    TheBody,
-    TheFooter,
+    HomePage,
+    CarSelectionPage,
+    ThanksgivingPage,
   },
   data() {
     return {
-      activeBodyComponent: null,
+      currentPage: "CarSelectionPage",
     };
   },
   methods: {
-    changeActiveBodyComponent(component) {
-      this.activeBodyComponent = component;
-      console.log(
-        `[LOG]: active body component => ${this.activeBodyComponent}`
-      );
+    togglePage(page) {
+      return () => (this.currentPage = page);
     },
   },
   provide() {
     return {
-      changeActiveBodyComponent: this.changeActiveBodyComponent,
-      activeBodyComponent: this.activeBodyComponent,
+      toggleHomePage: this.togglePage("HomePage"),
+      toggleCarSelectionPage: this.togglePage("CarSelectionPage"),
+      toggleThanksgivingPage: this.togglePage("ThanksgivingPage"),
     };
   },
   created() {},

@@ -10,7 +10,7 @@
         <button
           type="submit"
           class="btn btn-warning text-nowrap submit"
-          @click="sendRequest"
+          @click="submitAction"
         >
           {{ submit }}
         </button>
@@ -29,7 +29,7 @@
       <button
         type="submit"
         class="btn btn-warning text-nowrap submit"
-        @click="sendRequest"
+        @click="submitAction"
       >
         {{ submit }}
       </button>
@@ -43,7 +43,7 @@ import axios from "axios";
 import { requiredString, notRequiredCssUnit } from "../../utilities/props";
 
 export default {
-  inject: ["ç_height"],
+  inject: ["ç_height", "toggleCarSelectionPage"],
   created() {},
   data() {
     return {};
@@ -85,6 +85,9 @@ export default {
           )}" sent to the server with error ${error}`
         );
       }
+    },
+    submitAction() {
+      this.toggleCarSelectionPage();
     },
   },
   computed: {

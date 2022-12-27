@@ -16,10 +16,10 @@ import {
   requiredArray,
   notRequiredString,
   requiredString,
-} from "../../utilities/props";
+} from "../../../utilities/props";
 
-import { isOdd } from "../../utilities/booleans";
-import { TheInstructionsMessage } from "../../utilities/classes";
+import { isOdd } from "../../../utilities/booleans";
+import { TheInstructionsMessage } from "../../../utilities/classes";
 
 export default {
   created() {},

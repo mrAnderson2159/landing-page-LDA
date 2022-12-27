@@ -20,12 +20,7 @@
     />
   </div>
   <div id="footer-container" class="container-fluid not-mobile p-0">
-    <base-presentation
-      title="Noleggia una macchina di lusso"
-      subtitle="Scegli l'auto, lascia un recapito e pensiamo a tutto noi!"
-      submit="Scegli una macchina"
-      mode="footer"
-    />
+    <base-presentation v-bind="{ ...presentation, mode: 'footer' }" />
     <div id="links" class="lead">
       <ul class="text-light">
         <li>
@@ -43,14 +38,14 @@
 </template>
 
 <script>
-import BaseBackgroundShape from "../UI/BaseBackgroundShape.vue";
-import BasePresentation from "../UI/BasePresentation.vue";
+import BaseBackgroundShape from "../../UI/BaseBackgroundShape.vue";
+import BasePresentation from "../../UI/BasePresentation.vue";
 
 import {
   notRequiredNumber,
   notRequiredArrayOfNumbers,
-} from "../../utilities/props";
-import { ratioValidator } from "../../utilities/validators";
+} from "../../../utilities/props";
+import { ratioValidator } from "../../../utilities/validators";
 
 const FI = (Math.sqrt(5) + 1) / 2;
 
@@ -59,6 +54,7 @@ export default {
     BaseBackgroundShape,
     BasePresentation,
   },
+  inject: ["presentation"],
   mounted() {
     window.addEventListener("resize", this.resize);
   },

@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <h1>Grazie per averci scelto</h1>
 </template>
 
 <script>
@@ -13,6 +13,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-// @import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&display=swap');
-</style>
+<style lang="scss" scoped></style>
