@@ -14,6 +14,9 @@ export default {
     TheHeader,
     TheBody,
   },
+  created() {
+    window.scrollTo({ top: 0 });
+  },
   data() {
     return {
       leadMessage:

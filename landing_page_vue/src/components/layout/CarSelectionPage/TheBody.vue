@@ -3,7 +3,11 @@
     <p class="lead text-center display-6 pt-5 mt-5">{{ leadMessage }}</p>
     <div id="cars" class="px-5 mx-5 text-center">
       <div class="row">
-        <div class="col-lg-6" v-for="data in cars" :key="data.name">
+        <div
+          class="col-lg-6 position-relative"
+          v-for="data in cars"
+          :key="data.name"
+        >
           <base-car-image-card :key="data.name" class="col-lg-8">
             <img :src="data.url" :alt="data.name" class="pt-3" />
             <p class="lead mt-3 mb-0 text-light">{{ data.name }}</p>
@@ -15,15 +19,19 @@
 </template>
 
 <script>
+import TheForm from "./TheForm.vue";
 import BaseCarImageCard from "../../UI/BaseCarImageCard.vue";
 
 export default {
   components: {
     BaseCarImageCard,
+    TheForm,
   },
   inject: ["leadMessage"],
   data() {
-    return {};
+    return {
+      formId: "theForm",
+    };
   },
   computed: {
     cars() {
