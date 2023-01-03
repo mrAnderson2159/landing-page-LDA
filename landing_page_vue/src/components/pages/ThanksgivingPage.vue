@@ -1,12 +1,16 @@
 <template>
   <the-header v-if="showHeader" />
-  <p class="lead text-center display-6 pt-5 mt-5" v-for="message in thanksMessages">
+  <p
+    class="lead text-center display-6 pt-5 mt-5"
+    v-for="message in thanksMessages"
+    :key="message"
+  >
     {{ message }}
   </p>
 </template>
 
 <script>
-import TheHeader from "../layout/CarSelectionPage/TheHeader.vue";
+import TheHeader from "../layout/All/TheHeader.vue";
 
 export default {
   components: {

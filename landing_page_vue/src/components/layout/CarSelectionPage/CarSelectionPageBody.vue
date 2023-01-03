@@ -1,5 +1,5 @@
 <template>
-  <the-form v-if="showForm" @close="closeForm" :car="activeCar"></the-form>
+  <car-selection-page-form v-if="showForm" @close="closeForm" :car="activeCar" />
   <div class="container-lg">
     <p class="lead text-center display-6 pt-5 mt-5">{{ leadMessage }}</p>
     <div id="cars" class="px-5 mx-5 text-center">
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import TheForm from "./TheForm.vue";
+import CarSelectionPageForm from "./CarSelectionPageForm.vue";
 import BaseCarImageCard from "../../UI/BaseCarImageCard.vue";
 
 export default {
   components: {
     BaseCarImageCard,
-    TheForm,
+    CarSelectionPageForm,
   },
   inject: ["leadMessage"],
   data() {

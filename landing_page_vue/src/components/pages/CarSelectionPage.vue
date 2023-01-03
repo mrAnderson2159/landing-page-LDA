@@ -1,30 +1,26 @@
 <template>
   <the-header v-if="showHeader" />
-  <the-body />
+  <car-selection-page-body />
 </template>
 
 <script>
-import TheHeader from "../layout/CarSelectionPage/TheHeader.vue";
-import TheBody from "../layout/CarSelectionPage/TheBody.vue";
+import TheHeader from "../layout/All/TheHeader.vue";
+import CarSelectionPageBody from "../layout/CarSelectionPage/CarSelectionPageBody.vue";
 
 export default {
   components: {
     TheHeader,
-    TheBody,
+    CarSelectionPageBody,
   },
   inject: ["showHeader"],
   created() {
     window.scrollTo({ top: 0 });
   },
-  data() {
+  data() {},
+  provide() {
     return {
       leadMessage:
         "Scegli la macchina che preferisci quindi lascia un recapito per essere ricontattato",
-    };
-  },
-  provide() {
-    return {
-      leadMessage: this.leadMessage,
     };
   },
 };

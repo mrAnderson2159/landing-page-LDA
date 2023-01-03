@@ -1,20 +1,23 @@
 <template>
-  <the-body></the-body>
-  <the-footer></the-footer>
+  <HomePageBody />
+  <HomePageFooter />
 </template>
 
 <script>
-import TheBody from "../layout/HomePage/TheBody.vue";
-import TheFooter from "../layout/HomePage/TheFooter.vue";
+import HomePageBody from "../layout/HomePage/HomePageBody.vue";
+import HomePageFooter from "../layout/HomePage/HomePageFooter.vue";
 
 import { TheInstructionsMessage } from "../../utilities/classes";
 
 export default {
   components: {
-    TheBody,
-    TheFooter,
+    HomePageBody,
+    HomePageFooter,
   },
   data() {
+    return {};
+  },
+  provide() {
     return {
       presentation: {
         title: "Noleggia una macchina di lusso",
@@ -36,12 +39,7 @@ export default {
           "Ricevi la macchina chiavi in mano e restituiscila a fine periodo"
         ),
       ],
-    };
-  },
-  provide() {
-    return {
-      presentation: this.presentation,
-      messages: this.messages,
+      mainBackground: "src/assets/images/main_background.png",
     };
   },
 };
