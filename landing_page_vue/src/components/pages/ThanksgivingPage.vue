@@ -1,15 +1,30 @@
 <template>
-  <h1>Grazie per averci scelto</h1>
+  <the-header v-if="showHeader" />
+  <p class="lead text-center display-6 pt-5 mt-5" v-for="message in thanksMessages">
+    {{ message }}
+  </p>
 </template>
 
 <script>
+import TheHeader from "../layout/CarSelectionPage/TheHeader.vue";
+
 export default {
-  created() {},
-  data() {
-    return {};
+  components: {
+    TheHeader,
   },
-  props: {},
-  methods: {},
+  inject: ["showHeader"],
+  created() {
+    window.scrollTo({ top: 0 });
+  },
+  data() {
+    return {
+      thanksMessages: [
+        "Grazie per averci scelto.",
+        "Ti contatteremo entro 24H per un preventivo.",
+        "A presto!",
+      ],
+    };
+  },
 };
 </script>
 

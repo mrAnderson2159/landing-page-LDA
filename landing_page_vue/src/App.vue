@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      currentPage: "CarSelectionPage",
+      currentPage: "HomePage",
     };
   },
   methods: {
@@ -28,9 +28,9 @@ export default {
       toggleHomePage: this.togglePage("HomePage"),
       toggleCarSelectionPage: this.togglePage("CarSelectionPage"),
       toggleThanksgivingPage: this.togglePage("ThanksgivingPage"),
+      showHeader: true,
     };
   },
-  created() {},
 };
 </script>
 

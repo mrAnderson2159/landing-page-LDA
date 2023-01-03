@@ -34,7 +34,7 @@ export default {
     BasePresentation,
     TheInstructions,
   },
-  inject: ["presentation", "messages", "toggleCarSelectionPage"],
+  inject: ["presentation", "messages"],
   created() {},
   data() {
     return {

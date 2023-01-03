@@ -16,7 +16,6 @@ export default {
   },
   data() {
     return {
-      activeBodyComponent: null,
       presentation: {
         title: "Noleggia una macchina di lusso",
         subtitle: "Scegli l'auto, lascia un recapito e pensiamo a tutto noi!",
@@ -39,23 +38,12 @@ export default {
       ],
     };
   },
-  methods: {
-    changeActiveBodyComponent(component) {
-      this.activeBodyComponent = component;
-      console.log(
-        `[LOG]: active body component => ${this.activeBodyComponent}`
-      );
-    },
-  },
   provide() {
     return {
-      changeActiveBodyComponent: this.changeActiveBodyComponent,
-      activeBodyComponent: this.activeBodyComponent,
       presentation: this.presentation,
       messages: this.messages,
     };
   },
-  created() {},
 };
 </script>
 

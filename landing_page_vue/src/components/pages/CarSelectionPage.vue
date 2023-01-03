@@ -1,7 +1,5 @@
 <template>
-  <!-- provvisiorio -->
-  <the-header />
-  <!-- permanente -->
+  <the-header v-if="showHeader" />
   <the-body />
 </template>
 
@@ -14,6 +12,7 @@ export default {
     TheHeader,
     TheBody,
   },
+  inject: ["showHeader"],
   created() {
     window.scrollTo({ top: 0 });
   },
@@ -28,8 +27,6 @@ export default {
       leadMessage: this.leadMessage,
     };
   },
-  props: {},
-  methods: {},
 };
 </script>
 
