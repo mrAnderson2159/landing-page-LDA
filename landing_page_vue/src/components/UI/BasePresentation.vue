@@ -149,5 +149,9 @@ $height: v-bind(rightHeight);
     font-size: 4.5vw;
     line-height: normal;
   }
+
+  button {
+    margin: 2rem 0;
+  }
 }
 </style>

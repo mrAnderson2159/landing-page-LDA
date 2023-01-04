@@ -19,9 +19,24 @@
       :color="color"
     />
   </div>
-  <div id="footer-container" class="container-fluid not-mobile p-0">
+  <div id="not-mobile-footer-container" class="container-fluid not-mobile p-0">
     <base-presentation v-bind="{ ...presentation, mode: 'footer-not-mobile' }" />
-    <div id="links" class="lead">
+    <div id="not-mobile-links" class="lead">
+      <ul class="text-light">
+        <li>
+          <a href="#">Chi siamo</a>
+        </li>
+        <li>
+          <a href="#">Termini e Condizioni</a>
+        </li>
+        <li>
+          <a href="#">Note Legali</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="mobile-footer-container" class="container-fluid mobile p-0">
+    <div id="mobile-links" class="lead">
       <ul class="text-light">
         <li>
           <a href="#">Chi siamo</a>
@@ -149,6 +164,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@mixin link-list($position) {
+  & ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    & li {
+      padding: 1.618em;
+      & a {
+        text-decoration: none;
+        color: whitesmoke;
+        position: $position;
+
+        &:hover {
+          font-size: 1.1em;
+        }
+      }
+    }
+  }
+}
+
+@mixin footer-container($height) {
+  height: $height;
+  background-color: v-bind(computedColor);
+}
+
 $left: v-bind(leftTriangleWidth);
 $right: v-bind(rightTriangleWidth);
 $height: v-bind(rightTrianglesHeight);
@@ -162,31 +202,26 @@ $height: v-bind(rightTrianglesHeight);
   left: $left;
 }
 
-#footer-container {
-  height: 50vh;
-  background-color: v-bind(computedColor);
+#not-mobile-footer-container {
+  @include footer-container(50vh);
 }
 
-#links {
+#mobile-footer-container {
+  margin-top: 10vh;
+  @include footer-container(35vh);
+}
+
+#not-mobile-links {
   width: 25%;
   position: relative;
   bottom: 46%;
   float: right;
 
-  & ul {
-    list-style: none;
-    & li {
-      padding: 1.618em;
-      & a {
-        text-decoration: none;
-        color: whitesmoke;
-        position: absolute;
+  @include link-list(absolute);
+}
 
-        &:hover {
-          font-size: 1.1em;
-        }
-      }
-    }
-  }
+#mobile-links {
+  @include link-list(inherit);
+  text-align: center;
 }
 </style>
