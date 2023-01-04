@@ -137,6 +137,16 @@ body {
   box-sizing: border-box;
 }
 
+.mobile {
+    display: none;
+}
+
+@include media-breakpoint-down(lg) { 
+    .mobile {
+        display: block;
+    } 
+}
+
 .not-mobile {
     display: none;
 }
