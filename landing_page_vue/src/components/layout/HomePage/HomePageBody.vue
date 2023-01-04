@@ -1,4 +1,5 @@
 <template>
+  <!-- Not Mobile -->
   <div
     class="container-fluid p-0 not-mobile position-relative"
     :style="{ height: settings.notMobile.height }"
@@ -10,11 +11,15 @@
   <div class="container-lg not-mobile">
     <the-instructions v-bind="settings.notMobile.instructions" />
   </div>
-  <div class="container-fluid mobile p-0">
+  <!-- Mobile -->
+  <div class="container-fluid mobile p-0" id="mobile-body-container">
     <div id="image-container">
       <base-background-image id="image" v-bind="settings.mobile.image" />
     </div>
-    <!-- <base-presentation v-bind="settings.mobile.presentation" /> -->
+    <base-presentation v-bind="settings.mobile.presentation" />
+  </div>
+  <div class="mobile">
+    <the-instructions v-bind="settings.mobile.instructions" />
   </div>
 </template>
 
@@ -58,7 +63,12 @@ export default {
           },
           presentation: {
             ...this.presentation,
-            mode: "body",
+            mode: "body-mobile",
+          },
+          instructions: {
+            messages: this.messages,
+            breakpoint: "lg",
+            divClasses: "lead p-5 text-center",
           },
         },
         notMobile: {
@@ -75,7 +85,7 @@ export default {
           },
           presentation: {
             ...this.presentation,
-            mode: "body",
+            mode: "body-not-mobile",
           },
           instructions: {
             messages: this.messages,
@@ -131,8 +141,8 @@ export default {
   // }
 }
 
-.mobile {
-  height: 75vh !important;
-  background-color: #aaa;
+#mobile-body-container {
+  // min-height: 75vh !important;
+  background-color: #ccc;
 }
 </style>

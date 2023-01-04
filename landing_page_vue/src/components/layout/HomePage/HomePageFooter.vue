@@ -20,7 +20,7 @@
     />
   </div>
   <div id="footer-container" class="container-fluid not-mobile p-0">
-    <base-presentation v-bind="{ ...presentation, mode: 'footer' }" />
+    <base-presentation v-bind="{ ...presentation, mode: 'footer-not-mobile' }" />
     <div id="links" class="lead">
       <ul class="text-light">
         <li>
@@ -170,7 +170,7 @@ $height: v-bind(rightTrianglesHeight);
 #links {
   width: 25%;
   position: relative;
-  bottom: 36%;
+  bottom: 46%;
   float: right;
 
   & ul {

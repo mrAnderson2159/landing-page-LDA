@@ -1,6 +1,8 @@
 <template>
+  <!-- body-not-mobile -->
   <div
-    v-if="mode === 'body'"
+    v-if="mode === 'body-not-mobile'"
+    id="body-not-mobile"
     class="row main-text-container text-light position-relative"
   >
     <div class="main-text col-md-6">
@@ -17,8 +19,24 @@
       </div>
     </div>
   </div>
+  <!-- body-mobile -->
+  <div v-else-if="mode === 'body-mobile'" class="container-fluid" id="body-mobile">
+    <h1 class="title">{{ title }}</h1>
+    <p class="subtitle lead text-secondary">{{ subtitle }}</p>
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button
+        type="submit"
+        class="btn btn-warning text-nowrap submit"
+        @click="submitAction"
+      >
+        {{ submit }}
+      </button>
+    </div>
+  </div>
+  <!-- footer-not-mobile -->
   <div
-    v-else-if="mode === 'footer'"
+    v-else-if="mode === 'footer-not-mobile'"
+    id="footer-not-mobile"
     class="row main-text-container text-light position-relative footer ms-5"
   >
     <div class="col">
@@ -38,8 +56,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 import { requiredString, notRequiredCssUnit } from "../../utilities/props";
 
 export default {
@@ -56,36 +72,16 @@ export default {
     mode: {
       ...requiredString,
       validator(value) {
-        return ["body", "footer"].includes(value);
+        return [
+          "body-not-mobile",
+          "footer-not-mobile",
+          "body-mobile",
+          "footer-mobile",
+        ].includes(value);
       },
     },
   },
   methods: {
-    // async sendRequest() {
-    //   const request = {
-    //     data: "hi there, server!",
-    //   };
-
-    //   try {
-    //     const response = await axios.post(
-    //       "http://localhost:8000/form/",
-    //       request
-    //     );
-    //     // Append the returned data to the tasks array
-    //     console.log(
-    //       `POST request ${JSON.stringify(
-    //         request
-    //       )} sent to the server with answer ${JSON.stringify(response.data)}`
-    //     );
-    //   } catch (error) {
-    //     // Log the error
-    //     console.log(
-    //       `POST request "${JSON.stringify(
-    //         request
-    //       )}" sent to the server with error ${error}`
-    //     );
-    //   }
-    // },
     submitAction() {
       this.toggleCarSelectionPage();
     },
@@ -113,7 +109,6 @@ $height: v-bind(rightHeight);
 
     & .title {
       font-family: "Mukta", sans-serif;
-      text-transform: uppercase;
     }
   }
 }
@@ -132,10 +127,27 @@ $height: v-bind(rightHeight);
   }
 }
 
+.title {
+  text-transform: uppercase;
+}
+
 .title,
 .subtitle {
   &:hover {
     cursor: default;
+  }
+}
+
+#body-mobile {
+  padding: 3rem 2rem;
+
+  .title {
+    font-size: 5.725vw;
+  }
+
+  .subtitle {
+    font-size: 4.5vw;
+    line-height: normal;
   }
 }
 </style>
