@@ -10,9 +10,11 @@
   <div class="container-lg not-mobile">
     <the-instructions v-bind="settings.notMobile.instructions" />
   </div>
-  <div class="container-fluid mobile p-0" :style="{ height: settings.mobile.height }">
-    <base-background-image v-bind="settings.mobile.image" />
-    <base-presentation v-bind="settings.mobile.presentation" />
+  <div class="container-fluid mobile p-0">
+    <div id="image-container">
+      <base-background-image id="image" v-bind="settings.mobile.image" />
+    </div>
+    <!-- <base-presentation v-bind="settings.mobile.presentation" /> -->
   </div>
 </template>
 
@@ -49,7 +51,7 @@ export default {
           },
         },
         mobile: {
-          height: "50vh",
+          height: "40vh",
           image: {
             bgImage: this.mainBackground,
             imgMinWidth: "550px",
@@ -96,7 +98,7 @@ export default {
       const breakpoint = breakpoints[selectedBreakpoint];
       const windowWidth = this.settings.global.window.width;
 
-      console.log({ breakpoints, selectedBreakpoint, breakpoint, windowWidth });
+      // console.log({ breakpoints, selectedBreakpoint, breakpoint, windowWidth });
 
       if (windowWidth > breakpoint) return this.settings.notMobile.height;
       else return this.settings.mobile.height;
@@ -116,4 +118,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#image-container {
+  // width: 90%;
+  // margin: 0 auto;
+  border-bottom-left-radius: 4rem 2rem;
+  border-bottom-right-radius: 4rem 2rem;
+  overflow: hidden;
+
+  // & div {
+  //   margin-top: 3%;
+  // }
+}
+
+.mobile {
+  height: 75vh !important;
+  background-color: #aaa;
+}
+</style>

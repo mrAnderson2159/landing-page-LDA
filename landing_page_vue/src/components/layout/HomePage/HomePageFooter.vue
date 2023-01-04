@@ -41,10 +41,7 @@
 import BaseBackgroundShape from "../../UI/BaseBackgroundShape.vue";
 import BasePresentation from "../../UI/BasePresentation.vue";
 
-import {
-  notRequiredNumber,
-  notRequiredArrayOfNumbers,
-} from "../../../utilities/props";
+import { notRequiredNumber, notRequiredArrayOfNumbers } from "../../../utilities/props";
 import { ratioValidator } from "../../../utilities/validators";
 
 const FI = (Math.sqrt(5) + 1) / 2;
@@ -70,7 +67,7 @@ export default {
       rightTrianglesHeight: y + "px",
       theta_1: this.computeTheta(x * this.trianglesProportion[0], y),
       theta_2: this.computeTheta(x * this.trianglesProportion[1], y, -1),
-      color: "#2B1E16",
+      color: "#271E16",
     };
   },
   props: {
@@ -82,10 +79,7 @@ export default {
     trianglesProportion: {
       ...notRequiredArrayOfNumbers,
       validator(value) {
-        return (
-          notRequiredArrayOfNumbers.validator(value) &&
-          value.every(ratioValidator)
-        );
+        return notRequiredArrayOfNumbers.validator(value) && value.every(ratioValidator);
       },
       default: [FI - 1, 1 / (FI + 1)],
     },
@@ -104,8 +98,7 @@ export default {
         const color = this.color.substring(1);
         let rgb = [];
 
-        for (let i = 0; i < 3; i++)
-          rgb.push(color.substring(2 * i, 2 * (i + 1)));
+        for (let i = 0; i < 3; i++) rgb.push(color.substring(2 * i, 2 * (i + 1)));
 
         rgb = rgb.map((x) => parseInt(x, 16));
 
