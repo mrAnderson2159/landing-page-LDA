@@ -23,8 +23,8 @@ export default {
   data() {
     return {
       thanksMessages: [
-        "Grazie per averci scelto.",
-        "Ti contatteremo entro 24H per un preventivo.",
+        "Grazie per averci scelto",
+        "Ti contatteremo entro 24H per un preventivo",
         "A presto!",
       ],
     };

@@ -61,31 +61,31 @@ export default {
     },
   },
   methods: {
-    async sendRequest() {
-      const request = {
-        data: "hi there, server!",
-      };
+    // async sendRequest() {
+    //   const request = {
+    //     data: "hi there, server!",
+    //   };
 
-      try {
-        const response = await axios.post(
-          "http://localhost:8000/form/",
-          request
-        );
-        // Append the returned data to the tasks array
-        console.log(
-          `POST request ${JSON.stringify(
-            request
-          )} sent to the server with answer ${JSON.stringify(response.data)}`
-        );
-      } catch (error) {
-        // Log the error
-        console.log(
-          `POST request "${JSON.stringify(
-            request
-          )}" sent to the server with error ${error}`
-        );
-      }
-    },
+    //   try {
+    //     const response = await axios.post(
+    //       "http://localhost:8000/form/",
+    //       request
+    //     );
+    //     // Append the returned data to the tasks array
+    //     console.log(
+    //       `POST request ${JSON.stringify(
+    //         request
+    //       )} sent to the server with answer ${JSON.stringify(response.data)}`
+    //     );
+    //   } catch (error) {
+    //     // Log the error
+    //     console.log(
+    //       `POST request "${JSON.stringify(
+    //         request
+    //       )}" sent to the server with error ${error}`
+    //     );
+    //   }
+    // },
     submitAction() {
       this.toggleCarSelectionPage();
     },

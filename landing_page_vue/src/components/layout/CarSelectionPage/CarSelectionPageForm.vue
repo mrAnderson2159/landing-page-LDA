@@ -115,7 +115,7 @@ export default {
     this.$refs.nome.focus();
   },
   emits: ["close"],
-  inject: ["toggleThanksgivingPage"],
+  inject: ["toggleThanksgivingPage", "postRequest"],
   data() {
     return {
       activeInput: "from",
@@ -176,7 +176,7 @@ export default {
       } else {
         [from, to] = [from, to].map(this.reverseDate);
         const request = { userName, email, from, to, notes };
-        console.log(JSON.stringify(request));
+        this.postRequest(request);
         this.toggleThanksgivingPage();
       }
     },
