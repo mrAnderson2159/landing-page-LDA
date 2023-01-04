@@ -126,6 +126,7 @@ export default {
         from: "2023-01-12",
         to: "2023-01-19",
         notes: "",
+        car: this.car,
       },
       inputs: [
         {
@@ -169,13 +170,13 @@ export default {
       this.$emit("close");
     },
     submit() {
-      let { userName, email, confirmEmail, from, to, notes } = this.form;
+      let { userName, email, confirmEmail, from, to, notes, car } = this.form;
 
       if (email !== confirmEmail) {
         // Handle email
       } else {
         [from, to] = [from, to].map(this.reverseDate);
-        const request = { userName, email, from, to, notes };
+        const request = { car, userName, email, from, to, notes };
         this.postRequest(request);
         this.toggleThanksgivingPage();
       }
