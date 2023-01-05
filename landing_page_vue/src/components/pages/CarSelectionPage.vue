@@ -17,7 +17,6 @@ export default {
   created() {
     window.scrollTo({ top: 0 });
   },
-  data() {},
   computed: {
     cars() {
       const w = "https://images.wallpaperscraft.com/image/single/";

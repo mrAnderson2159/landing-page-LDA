@@ -1,43 +1,49 @@
 <template>
-  <component :is="currentPage" />
+  <component :is="currentPage" v-bind="componentProps" />
 </template>
 
 <script>
 import HomePage from "./components/pages/HomePage.vue";
 import CarSelectionPage from "./components/pages/CarSelectionPage.vue";
-import ThanksgivingPage from "./components/pages/ThanksgivingPage.vue";
+import FeedbackPage from "./components/pages/FeedbackPage.vue";
 import axios from "axios";
 
 export default {
   components: {
     HomePage,
     CarSelectionPage,
-    ThanksgivingPage,
+    FeedbackPage,
   },
   data() {
     return {
       currentPage: "HomePage",
       formAddress: "http://localhost:8000/form/",
+      componentProps: null,
     };
   },
   methods: {
     togglePage(page) {
-      return () => (this.currentPage = page);
+      return () => {
+        this.componentProps = null;
+        this.currentPage = page;
+      };
     },
-    async postRequest(request) {
-      try {
-        const response = await axios.post(this.formAddress, request);
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
+    toggleFeedbackPage(fulfillment) {
+      this.componentProps = { fulfillment };
+      this.currentPage = "FeedbackPage";
+    },
+    postRequest(request) {
+      return new Promise((resolve, reject) => {
+        const response = axios.post(this.formAddress, request);
+        response.then((result) => resolve(result)).catch((error) => reject(error));
+      });
     },
   },
   provide() {
     return {
       toggleHomePage: this.togglePage("HomePage"),
       toggleCarSelectionPage: this.togglePage("CarSelectionPage"),
-      toggleThanksgivingPage: this.togglePage("ThanksgivingPage"),
+      toggleFeedbackPage: this.toggleFeedbackPage,
       postRequest: this.postRequest,
       showHeader: true,
     };

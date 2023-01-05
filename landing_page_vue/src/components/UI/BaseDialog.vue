@@ -41,6 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/main.scss";
 .backdrop {
   // Bisogna bloccare l'overflow
   position: fixed;
@@ -54,9 +55,9 @@ export default {
 
 dialog {
   position: fixed;
-  top: 12vh; // IMPORTANT VALUE (formerly 42.5)
+  top: 0;
   width: 30rem;
-  left: calc(50% - 15rem);
+  max-width: 100vw;
   margin: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 12px;
@@ -67,13 +68,12 @@ dialog {
   animation: modal 0.3s ease-out;
 }
 
-/*
-    Possiamo animare la comparsa del dialog senza problemi, tuttavia animarne la
-    scomparsa è impossibile poiché, visto che in App.vue questo elemento viene
-    mostrato con una v-if, quando viene chiuso viene eliminato dal DOM, quindi
-    non è possibile animarlo con il CSS, ma è qui che Vue ci viene in aiuto...
-    (v. prossima lezione)
-*/
+@include media-breakpoint-up(sm) {
+  dialog {
+    top: 12vh; // IMPORTANT VALUE (formerly 42.5)
+    left: calc(50% - 15rem);
+  }
+}
 
 @keyframes modal {
   from {

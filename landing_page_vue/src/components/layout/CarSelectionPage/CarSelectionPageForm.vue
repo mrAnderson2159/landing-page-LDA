@@ -106,6 +106,7 @@
 import BaseDialog from "../../UI/BaseDialog.vue";
 
 import { requiredString } from "../../../utilities/props";
+import { Form, FormDateInput } from "../../../utilities/classes";
 
 export default {
   components: {
@@ -115,32 +116,22 @@ export default {
     this.$refs.nome.focus();
   },
   emits: ["close"],
-  inject: ["toggleThanksgivingPage", "postRequest"],
+  inject: ["toggleFeedbackPage", "postRequest"],
   data() {
     return {
       activeInput: "from",
-      form: {
-        userName: "Valerio",
-        email: "valerioxz@hotmail.it",
-        confirmEmail: "valerioxz@hotmail.it",
-        from: "2023-01-12",
-        to: "2023-01-19",
-        notes: "",
-        car: this.car,
-      },
+      form: new Form(
+        this.car,
+        "Mario Rossi",
+        "mario.rossi@gmail.com",
+        "mario.rossi@gmail.com",
+        "2023-01-15",
+        "2023-01-19",
+        ""
+      ),
       inputs: [
-        {
-          name: "from",
-          text: "A partire dal",
-          buttonId: "button-from",
-          inputId: "date-from",
-        },
-        {
-          name: "to",
-          text: "Fino al",
-          buttonId: "button-to",
-          inputId: "date-to",
-        },
+        new FormDateInput("from", "A partire dal", "button-from", "date-from"),
+        new FormDateInput("to", "Fino al", "button-to", "date-to"),
       ],
     };
   },
@@ -149,7 +140,7 @@ export default {
       return `Prenota una ${this.car}`;
     },
     rentInterval() {
-      const [from, to] = [this.form.from, this.form.to].map(this.reverseDate);
+      const [from, to] = this.form.reverseDates();
       return `Dal ${from} al ${to}`;
     },
   },
@@ -163,22 +154,26 @@ export default {
     toggleActiveInput(input) {
       this.activeInput = input;
     },
-    reverseDate(date) {
-      return date.split("-").reverse().join("-");
-    },
     closeDialog() {
       this.$emit("close");
     },
-    submit() {
-      let { userName, email, confirmEmail, from, to, notes, car } = this.form;
-
-      if (email !== confirmEmail) {
-        // Handle email
+    async submit() {
+      if (this.form.isValid()) {
+        try {
+          const result = await this.postRequest(this.form.request());
+          console.log(`Server: ${result.status}`);
+          this.toggleFeedbackPage("SUCCESS");
+        } catch (error) {
+          if (error.name === "AxiosError") {
+            if (error.code === "ERR_NETWORK") {
+              console.log(`CONNECTION REFUSED: ${error.message}`);
+              this.toggleFeedbackPage("FAILURE");
+            }
+          } else console.log(error);
+        }
       } else {
-        [from, to] = [from, to].map(this.reverseDate);
-        const request = { car, userName, email, from, to, notes };
-        this.postRequest(request);
-        this.toggleThanksgivingPage();
+        const errors = this.form.getErrors();
+        console.log(errors);
       }
     },
   },
