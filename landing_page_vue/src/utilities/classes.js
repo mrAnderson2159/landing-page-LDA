@@ -66,9 +66,11 @@ export class Form {
     return [this.from, this.to].map((x) => x.split("-").reverse().join("-"));
   }
 
-  request() {
+  request(reverseDate = false) {
     const { car, userName, email, notes } = this;
-    const [from, to] = this.reverseDates();
+    let from, to;
+    if (reverseDate) [from, to] = this.reverseDates();
+    else ({ from, to } = this);
     return { car, userName, email, from, to, notes };
   }
 

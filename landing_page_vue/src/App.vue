@@ -33,6 +33,7 @@ export default {
       this.currentPage = "FeedbackPage";
     },
     postRequest(request) {
+      // utilizzato in CarSelectionPageForm
       return new Promise((resolve, reject) => {
         const response = axios.post(this.formAddress, request);
         response.then((result) => resolve(result)).catch((error) => reject(error));
