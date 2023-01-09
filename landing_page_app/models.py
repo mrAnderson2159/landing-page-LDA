@@ -1,14 +1,21 @@
 from django.db import models
 
+from datetime import datetime
+
+# def new_user(*, start: datetime, end: datetime, name: str, car: str, email: str, notes: str):
+#     start = Date(date=start)
+#     end = Date(date=end)
+
+
 # Create your models here.
 class Date(models.Model):
     # Il DateField si aspetta un dato in formato datetime.datetime.date(), quindi il server
     # che accetta la richiesta in post di axios deve assicurarsi di convertire il dato in
     # formato str(aaaa/mm/dd) in formato datetime.date()
-    date = models.DateField()
+    date = models.DateField(unique=True)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 class Car(models.Model):
@@ -29,3 +36,4 @@ class User(models.Model):
 
     def __str__(self):
         return f"{self.name}: {self.email}"
+
