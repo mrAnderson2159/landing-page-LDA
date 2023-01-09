@@ -11,9 +11,6 @@ from datetime import datetime
 def str_to_date(strdate: str):
     return datetime(*list(map(int, strdate.split('-'))))
 
-
-
-
 def visualization(request_object):
     car = request_object['car']
     user = request_object['userName']
@@ -28,8 +25,6 @@ def visualization(request_object):
            f"ha prenotato una {colored(car, 'green')} per la data\n\t{colored(start, 'yellow')}\n" \
            f"da restituire in data\n\t{colored(stop, 'red')}\ne ha scritto le seguenti note:" \
            f"{colored(notes, 'magenta')}"
-
-
 
 # Create your views here.
 

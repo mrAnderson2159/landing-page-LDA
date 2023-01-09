@@ -1,4 +1,6 @@
 <template>
+  <!-- TODO: Aggiungere un piccolo riquadro per il prezzo e accettare le caratteristiche 
+  della macchina -->
   <div>
     <slot></slot>
   </div>

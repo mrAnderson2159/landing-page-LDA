@@ -121,13 +121,14 @@ export default {
     return {
       activeInput: "from",
       form: new Form(
-        this.car,
-        "Mario Rossi",
-        "mario.rossi@gmail.com",
-        "mario.rossi@gmail.com",
-        "2023-01-15",
-        "2023-01-19",
-        ""
+        this.car
+        //,
+        // "Mario Rossi",
+        // "mario.rossi@gmail.com",
+        // "mario.rossi@gmail.com",
+        // "2023-01-15",
+        // "2023-01-19",
+        // ""
       ),
       inputs: [
         new FormDateInput("from", "A partire dal", "button-from", "date-from"),
