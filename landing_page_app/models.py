@@ -1,11 +1,5 @@
 from django.db import models
 
-from datetime import datetime
-
-# def new_user(*, start: datetime, end: datetime, name: str, car: str, email: str, notes: str):
-#     start = Date(date=start)
-#     end = Date(date=end)
-
 
 # Create your models here.
 class Date(models.Model):
