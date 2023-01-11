@@ -33,11 +33,20 @@ fake.add_provider(car_provider)
 def add_car():
     # Model.objects.get_or_create() restituisce la tupla (object: Model, created: bool),
     # quindi selezioniamo [0] per ottenere un puntatore all'oggetto creato
-    car = Car.objects.get_or_create(
-        name=fake.car(),
-        img=fake.image_url(),
-        url=fake.url()
-    )[0]
+    name=fake.car()
+    img=fake.image_url()
+    url=fake.url()
+
+    try:
+        car = Car.objects.get_or_create(
+            name=name,
+            img=img,
+            url=url
+        )[0]
+    except django.db.utils.IntegrityError as e:
+        print(name, img, url)
+        raise e
+
     car.save()
     return car
 
