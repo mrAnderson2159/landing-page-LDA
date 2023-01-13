@@ -9,4 +9,4 @@ for field in dir(models):
         print(f'Registered "{field}" model to admin site')
 
 
-# Reminder: At this point we create a superuser by "python3 manage.py createsuperuser
+# Reminder: At this point we create a superuser by "python3 manage.py createsuperuser"

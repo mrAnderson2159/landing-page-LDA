@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 # to send the response to the client
 from django.http import JsonResponse
 
+from .models import *
+
 from termcolor import colored
 from datetime import datetime
 
@@ -23,7 +25,7 @@ def visualization(request_object):
 
     return f"{colored(user, 'cyan')} con indirizzo email {colored(email, 'cyan')} " \
            f"ha prenotato una {colored(car, 'green')} per la data\n\t{colored(start, 'yellow')}\n" \
-           f"da restituire in data\n\t{colored(stop, 'red')}\ne ha scritto le seguenti note:" \
+           f"da restituire in data\n\t{colored(stop, 'red')}\ne ha scritto le seguenti note: " \
            f"{colored(notes, 'magenta')}"
 
 # Create your views here.
@@ -33,4 +35,31 @@ def form(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         print(visualization(data))
+
+        car = data['car']
+        username = data['userName']
+        email = data['email']
+        start = data['from']
+        stop = data['to']
+        notes = data['notes']
+
+        start, stop = map(str_to_date, (start, stop))
+
+        car = Car.objects.get_or_create(name=car)[0]
+        start = Date.objects.get_or_create(date=start)[0]
+        stop = Date.objects.get_or_create(date=stop)[0]
+        user, user_created = User.objects.get_or_create(email=email)
+        if user_created:
+            user.name = username
+        query = Request.objects.get_or_create(
+            user=user,
+            car=car,
+            start=start,
+            stop=stop,
+            notes=notes
+        )[0]
+
+        for field in (car, start, stop, user, query):
+            field.save()
+
         return JsonResponse(data, safe=False)
