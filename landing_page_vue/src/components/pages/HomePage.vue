@@ -24,22 +24,6 @@ export default {
       if (env === "DEVELOPMENT") return "src/assets/images/main_background.png";
       else if (env === "PRODUCTION") return "static/images/main_background.png";
     },
-    //   mainBackground() {
-    //     const address = `/${encrypt("main_background")}/`;
-    //     return new Promise((resolve, reject) => {
-    //       axios({
-    //         method: "GET",
-    //         url: address,
-    //         responseType: "blob",
-    //         headers: {
-    //           accept: "blob",
-    //           "Access-Control-Allow-Origin": "*",
-    //         },
-    //       })
-    //         .then((image) => resolve(image))
-    //         .catch((error) => reject(error));
-    //     });
-    //   },
   },
   provide() {
     return {

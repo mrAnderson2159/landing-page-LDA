@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 # to parse data from a client
 from rest_framework.parsers import JSONParser
@@ -7,12 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 
 from .models import *
+from .functions import str_to_date, jsonify
 
 from termcolor import colored
-from datetime import datetime
-
-def str_to_date(strdate: str):
-    return datetime(*list(map(int, strdate.split('-'))))
 
 def visualization(request_object):
     car = request_object['car']
@@ -72,3 +70,9 @@ def main_background(request):
         with open('static/images/main_background.png', 'rb') as image:
             img = image.read()
             return HttpResponse(img, content_type="image/jpeg")
+
+
+def cars(request):
+    if request.method == 'GET':
+        cars = Car.objects.all()
+        return JsonResponse(data=jsonify(cars), content_type='application/json', safe=False)

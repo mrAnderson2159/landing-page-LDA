@@ -8,6 +8,9 @@
 import HomePage from "./components/pages/HomePage.vue";
 import CarSelectionPage from "./components/pages/CarSelectionPage.vue";
 import FeedbackPage from "./components/pages/FeedbackPage.vue";
+import { urlServer } from "./utilities/hashing";
+
+import axios from "axios";
 
 export default {
   components: {
@@ -18,7 +21,7 @@ export default {
   data() {
     return {
       currentPage: "HomePage",
-      formAddress: "http://localhost:8000/form/",
+      formAddress: urlServer("form"),
       componentProps: null,
     };
   },
@@ -36,7 +39,7 @@ export default {
     postRequest(request) {
       // utilizzato in CarSelectionPageForm
       return new Promise((resolve, reject) => {
-        const response = this.axios.post(this.formAddress, request);
+        const response = axios.post(this.formAddress, request);
         response.then((result) => resolve(result)).catch((error) => reject(error));
       });
     },

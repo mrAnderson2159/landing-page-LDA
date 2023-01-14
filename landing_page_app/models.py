@@ -15,7 +15,7 @@ class Date(models.Model):
 class Car(models.Model):
     name = models.CharField(max_length=64, unique=True)
     img = models.URLField()
-    url = models.URLField()
+    url = models.URLField(blank=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -33,7 +33,7 @@ class Request(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     start = models.ForeignKey(Date, on_delete=models.CASCADE, related_name='%(class)s_start_date')
     stop = models.ForeignKey(Date, on_delete=models.CASCADE, related_name='%(class)s_end_date')
-    notes = models.CharField(max_length=256)
+    notes = models.CharField(max_length=256, blank=True)
     completed = models.BooleanField(default=False)
 
     def __str__(self):
