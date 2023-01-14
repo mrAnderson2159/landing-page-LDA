@@ -8,7 +8,6 @@
 import HomePage from "./components/pages/HomePage.vue";
 import CarSelectionPage from "./components/pages/CarSelectionPage.vue";
 import FeedbackPage from "./components/pages/FeedbackPage.vue";
-import axios from "axios";
 
 export default {
   components: {
@@ -37,9 +36,13 @@ export default {
     postRequest(request) {
       // utilizzato in CarSelectionPageForm
       return new Promise((resolve, reject) => {
-        const response = axios.post(this.formAddress, request);
+        const response = this.axios.post(this.formAddress, request);
         response.then((result) => resolve(result)).catch((error) => reject(error));
       });
+    },
+    env() {
+      if (/5173/.test(window.location.href)) return "DEVELOPMENT";
+      else return "PRODUCTION";
     },
   },
   provide() {
@@ -48,6 +51,7 @@ export default {
       toggleCarSelectionPage: this.togglePage("CarSelectionPage"),
       toggleFeedbackPage: this.toggleFeedbackPage,
       postRequest: this.postRequest,
+      env: this.env,
       showHeader: true,
     };
   },

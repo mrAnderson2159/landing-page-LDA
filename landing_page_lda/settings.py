@@ -38,12 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django-vite',
     'landing_page_app',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # cors
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware' # cors
 ]
 
 ROOT_URLCONF = 'landing_page_lda.urls'
@@ -116,14 +118,18 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Django-vite
+# DJANGO_VITE_ASSETS_PATH = STATIC_DIR / 'src/vue/dist/'
+# DJANGO_VITE_DEV_MODE = DEBUG
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'var/static_root/'
 STATICFILES_DIRS = [
     STATIC_DIR,
-
+    # DJANGO_VITE_ASSETS_PATH
 ]
 
 # Default primary key field type
@@ -132,5 +138,9 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Cross Origin Resource Sharing settings
-CORS_ALLOW_ALL_ORIGINS = True
-
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:8000',
+    "http://127.0.0.1:9000",
+]

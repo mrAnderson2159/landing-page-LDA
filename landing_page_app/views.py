@@ -1,9 +1,10 @@
+from django.shortcuts import render
 # to parse data from a client
 from rest_framework.parsers import JSONParser
 # to bypass having a csrf token
 from django.views.decorators.csrf import csrf_exempt
 # to send the response to the client
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .models import *
 
@@ -29,6 +30,8 @@ def visualization(request_object):
            f"{colored(notes, 'magenta')}"
 
 # Create your views here.
+def index(request):
+    return render(request, 'landing_page_app/index.html')
 
 @csrf_exempt
 def form(request):
@@ -63,3 +66,9 @@ def form(request):
             field.save()
 
         return JsonResponse(data, safe=False)
+
+def main_background(request):
+    if request.method == 'GET':
+        with open('static/images/main_background.png', 'rb') as image:
+            img = image.read()
+            return HttpResponse(img, content_type="image/jpeg")

@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
-from landing_page_app.views import form
+from landing_page_app.views import form, index, main_background
+from landing_page_app.functions import encrypt
 
 urlpatterns = [
+    path('', index, name='index'),
     path('admin/', admin.site.urls),
-    path('form/', form, name='form')
+    path('form/', form, name='form'),
+    path(f'{encrypt("main_background")}/', main_background)
 ]
