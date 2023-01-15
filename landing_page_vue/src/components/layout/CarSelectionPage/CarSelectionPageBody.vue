@@ -54,6 +54,7 @@ export default {
     },
     closeForm() {
       this.showForm = false;
+      this.activeCar = null;
     },
   },
 };

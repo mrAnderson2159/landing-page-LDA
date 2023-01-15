@@ -58,6 +58,8 @@ dialog {
   top: 0;
   width: 30rem;
   max-width: 100vw;
+  max-height: 95vh;
+  overflow: scroll;
   margin: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 12px;
