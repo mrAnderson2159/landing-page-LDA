@@ -10,7 +10,7 @@
             class="col-lg-8"
             @click="toggleActiveCar(car.name)"
           >
-            <img :src="car.url" :alt="car.name" class="pt-3" />
+            <img :src="car.url" :alt="car.name" class="pt-1" />
             <p class="lead mt-3 mb-0 text-light">{{ car.name }}</p>
           </base-car-image-card>
         </div>
@@ -62,5 +62,9 @@ export default {
 <style lang="scss" scoped>
 p {
   color: #343a40;
+}
+
+img {
+  width: 96%;
 }
 </style>

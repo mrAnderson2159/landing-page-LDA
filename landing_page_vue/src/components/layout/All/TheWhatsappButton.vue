@@ -26,8 +26,8 @@ export default {
 <style lang="scss" scoped>
 a#whatsapp {
   position: fixed;
-  left: 92vw;
-  top: 75vh;
+  right: 40px;
+  top: 80vh;
   z-index: 9999;
   width: 80px;
 }

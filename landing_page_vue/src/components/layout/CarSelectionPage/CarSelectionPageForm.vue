@@ -13,7 +13,7 @@
             type="text"
             class="form-control"
             id="name"
-            placeholder="Nome e/o cognome"
+            placeholder="Nome e cognome"
             ref="nome"
             required
             v-model="form.userName"
