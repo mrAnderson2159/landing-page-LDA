@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-%&gg07omzzrzt$u0u&rtecyh9-8z!_97!^qcogxsu5^2yp$*9_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "valeriomolinari.pythonanywhere.com"
-
+    "valeriomolinari.pythonanywhere.com",
+    "127.0.0.1"
 ]
 
 
@@ -141,7 +141,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Cross Origin Resource Sharing settings
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ORIGIN_WHITELIST = [
 #     'http://127.0.0.1:5173',
