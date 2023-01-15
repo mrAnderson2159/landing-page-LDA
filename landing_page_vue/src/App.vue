@@ -50,7 +50,9 @@ export default {
       else return "PRODUCTION";
     },
     localhost() {
-      return this.env() === "DEVELOPMENT" ? window.location.href : "http://15.188.51.48/";
+      return this.env() === "DEVELOPMENT"
+        ? "http://localhost:8000"
+        : "http://15.188.51.48/";
     },
   },
   provide() {

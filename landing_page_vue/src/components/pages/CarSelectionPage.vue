@@ -29,7 +29,7 @@ export default {
   methods: {
     async getCars() {
       const address = urlServer(this.localhost, "cars");
-      console.log(address);
+      // console.log(address);
       const response = await axios(address);
       let cars = JSON.parse(response.data);
       cars = cars.map((c) => new Car(c.name, c.img));
