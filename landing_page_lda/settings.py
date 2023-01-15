@@ -25,7 +25,7 @@ STATIC_DIR = BASE_DIR / 'static'
 SECRET_KEY = 'django-insecure-%&gg07omzzrzt$u0u&rtecyh9-8z!_97!^qcogxsu5^2yp$*9_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # Disattivandolo esce fuori l'errore "error logs/127.0.0.1-1673797053221.log"
 
 
@@ -133,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = 'var/static_root/'
+STATIC_ROOT = '/var/www/landing_page_lda/assets'
 STATICFILES_DIRS = [
     STATIC_DIR,
     # DJANGO_VITE_ASSETS_PATH
@@ -147,8 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Cross Origin Resource Sharing settings
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:8000',
-    "http://127.0.0.1:9000",
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://127.0.0.1:5173',
+#     'http://127.0.0.1:8000',
+#     "http://127.0.0.1:9000",
+# ]
