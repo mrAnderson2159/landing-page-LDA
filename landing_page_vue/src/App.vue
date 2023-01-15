@@ -2,12 +2,14 @@
   <component :is="currentPage" v-bind="componentProps" />
   <!-- Aggiungere il collegamento whatsapp come su questo sito 
   https://emiratesvisa.com/ -->
+  <the-whatsapp-button number="393394505775" />
 </template>
 
 <script>
 import HomePage from "./components/pages/HomePage.vue";
 import CarSelectionPage from "./components/pages/CarSelectionPage.vue";
 import FeedbackPage from "./components/pages/FeedbackPage.vue";
+import TheWhatsappButton from "./components/layout/All/TheWhatsappButton.vue";
 import { urlServer } from "./utilities/hashing";
 
 import axios from "axios";
@@ -17,6 +19,7 @@ export default {
     HomePage,
     CarSelectionPage,
     FeedbackPage,
+    TheWhatsappButton,
   },
   data() {
     return {
