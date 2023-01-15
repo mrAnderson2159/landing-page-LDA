@@ -63,6 +63,9 @@ export default {
       showHeader: true,
     };
   },
+  mounted() {
+    console.log(`localhost:${this.localhost}`);
+  },
 };
 </script>
 
