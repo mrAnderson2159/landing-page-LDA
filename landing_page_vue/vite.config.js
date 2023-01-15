@@ -13,7 +13,7 @@ export default defineConfig({
     },
   },
   base: "static/",
-  publicDir: "/static/src/vue/dist/", // Should be STATIC_URL + path/to/build
+  // publicDir: "/static/src/vue/dist/", // Should be STATIC_URL + path/to/build
   build: {
     /* eslint-disable no-undef */
     outDir: path.resolve(__dirname, "../static/src/vue/dist/"), // Output to a directory in STATICFILES_DIRS
