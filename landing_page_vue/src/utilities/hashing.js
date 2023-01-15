@@ -8,6 +8,6 @@ export function encrypt(string, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
   return alg.getHash("HEX");
 }
 
-export function urlServer(string, host, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
+export function urlServer(host, string, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
   return `${host}/${encrypt(string, algorithm)}/`;
 }
