@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 # to send the response to the client
 from django.http import JsonResponse, HttpResponse
 
+from django.db.utils import IntegrityError
+
 from .models import *
 from .functions import str_to_date, jsonify
 
@@ -37,8 +39,10 @@ def form(request):
         data = JSONParser().parse(request)
         print(visualization(data))
 
+        errors = []
+
         car = data['car']
-        username = data['userName']
+        username = data['userName'].title()
         email = data['email']
         start = data['from']
         stop = data['to']
@@ -49,21 +53,37 @@ def form(request):
         car = Car.objects.get_or_create(name=car)[0]
         start = Date.objects.get_or_create(date=start)[0]
         stop = Date.objects.get_or_create(date=stop)[0]
-        user, user_created = User.objects.get_or_create(email=email)
+        query = user = None
+        query_created = user_created = False
+
+        try:
+            user, user_created = User.objects.get_or_create(name=username, email=email)
+        except IntegrityError:
+            errors.append('CONFLICT_USER_EMAIL')
+
         if user_created:
             user.name = username
-        query = Request.objects.get_or_create(
-            user=user,
-            car=car,
-            start=start,
-            stop=stop,
-            notes=notes
-        )[0]
+        if user:
+            try:
+                query, query_created = Request.objects.get_or_create(
+                    user=user,
+                    car=car,
+                    start=start,
+                    stop=stop,
+                    notes=notes
+                )
+            except IntegrityError:
+                errors.append('QUERY_EXISTS')
 
-        for field in (car, start, stop, user, query):
-            field.save()
+        if not query_created:
+            errors.append('QUERY_EXISTS')
 
-        return JsonResponse(data, safe=False)
+        if len(errors):
+            return JsonResponse({'code':1, 'errors':errors})
+        else:
+            for field in (car, start, stop, user, query):
+                field.save()
+            return JsonResponse({'code':0}, safe=False)
 
 def main_background(request):
     if request.method == 'GET':

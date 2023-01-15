@@ -47,15 +47,48 @@ export class Form {
     this.notes = notes;
   }
 
+  includesAny(array, ...values) {
+    for (const value of values) {
+      if (array.includes(value)) return true;
+    }
+    return false;
+  }
+
   getErrors() {
     const errors = [];
-    if (this.email !== this.confirmEmail) errors.push("EMAIL_VALIDATION");
-    if (this.from >= this.to) errors.push("DATE_VALIDATION");
-    return errors;
+    const valids = [];
+    if (!this.userName) errors.push("USERNAME_MISSING");
+    else if (!/\s/.test(this.userName)) errors.push("SURNAME_MISSING");
+    if (!this.includesAny(errors, "USERNAME_MISSING", "SURNAME_MISSING"))
+      valids.push("userName");
+    if (!this.email) errors.push("EMAIL_MISSING");
+    if (!this.email) errors.push("CONFIRMEMAIL_MISSING");
+    if (this.email && this.confirmEmail && this.email !== this.confirmEmail)
+      errors.push("EMAIL_VALIDATION");
+    if (
+      !this.includesAny(
+        errors,
+        "EMAIL_MISSING",
+        "CONFIRMEMAIL_MISSING",
+        "EMAIL_VALIDATION"
+      )
+    ) {
+      valids.push("email");
+      valids.push("confirmEmail");
+    }
+    if (!this.from) errors.push("FROM_MISSING");
+    else if (!this.to) errors.push("TO_MISSING");
+    if (this.from && this.to && this.from >= this.to)
+      errors.push("DATE_VALIDATION");
+    if (
+      !this.includesAny(errors, "FROM_MISSING", "TO_MISSING", "DATE_VALIDATION")
+    )
+      valids.push("dates");
+    return { errors, valids };
   }
 
   isValid() {
-    return this.email === this.confirmEmail && this.from < this.to;
+    return !this.getErrors().errors.length;
   }
 
   isInvalid() {

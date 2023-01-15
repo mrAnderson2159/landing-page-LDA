@@ -70,7 +70,7 @@ dialog {
 
 @include media-breakpoint-up(sm) {
   dialog {
-    top: 12vh; // IMPORTANT VALUE (formerly 42.5)
+    top: 4vh; // IMPORTANT VALUE (formerly 42.5)
     left: calc(50% - 15rem);
   }
 }
