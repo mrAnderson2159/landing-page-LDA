@@ -28,7 +28,9 @@ export default {
   computed: {},
   methods: {
     async getCars() {
-      const response = await axios(urlServer(this.localhost, "cars"));
+      const address = urlServer(this.localhost, "cars");
+      console.log(address);
+      const response = await axios(address);
       let cars = JSON.parse(response.data);
       cars = cars.map((c) => new Car(c.name, c.img));
       this.cars = cars;

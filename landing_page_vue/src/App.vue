@@ -42,13 +42,14 @@ export default {
     postRequest(request) {
       // utilizzato in CarSelectionPageForm
       const formUrl = urlServer(this.localhost, "form");
+      console.log(formUrl);
       return new Promise((resolve, reject) => {
         const response = axios.post(formUrl, request);
         response.then((result) => resolve(result)).catch((error) => reject(error));
       });
     },
     env() {
-      if (/5173/.test(this.localhost)) return "DEVELOPMENT";
+      if (/5173/.test(window.location.href)) return "DEVELOPMENT";
       else return "PRODUCTION";
     },
   },
@@ -63,9 +64,7 @@ export default {
       showHeader: true,
     };
   },
-  mounted() {
-    console.log(`localhost:${this.localhost}`);
-  },
+  mounted() {},
 };
 </script>
 
