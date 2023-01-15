@@ -1,7 +1,5 @@
 <template>
   <component :is="currentPage" v-bind="componentProps" />
-  <!-- Aggiungere il collegamento whatsapp come su questo sito 
-  https://emiratesvisa.com/ -->
   <the-whatsapp-button number="393394505775" />
 </template>
 

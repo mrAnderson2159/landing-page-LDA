@@ -9,5 +9,7 @@ export function encrypt(string, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
 }
 
 export function urlServer(host, string, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
-  return `${host}/${encrypt(string, algorithm)}/`;
+  const url = `${host}/${encrypt(string, algorithm)}/`;
+  console.log(url);
+  return url;
 }
