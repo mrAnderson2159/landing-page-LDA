@@ -167,6 +167,7 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
+    validateForm() {},
     async submit(event) {
       const form = event.target;
       if (this.form.isValid()) {
@@ -217,6 +218,7 @@ export default {
               form.confirmEmail.classList.add("is-invalid");
               break;
             case "EMAIL_VALIDATION":
+              this.errors.email = "";
               this.errors.confirmEmail = "Le email non coincidono";
               form.email.classList.add("is-invalid");
               form.confirmEmail.classList.add("is-invalid");

@@ -1,9 +1,6 @@
 <template>
-  <a :href="address" id="whatsapp">
-    <img
-      src="https://image.similarpng.com/very-thumbnail/2020/07/Whatsapp-icon-vector-PNG.png"
-      alt="Whatsapp"
-    />
+  <a :href="address" id="whatsapp" ref="link">
+    <img :src="logo" alt="Whatsapp" />
   </a>
 </template>
 
@@ -11,15 +8,39 @@
 import { requiredNumber } from "../../../utilities/props";
 
 export default {
+  inject: ["env"],
   props: {
     number: requiredNumber,
+  },
+  data() {
+    return {
+      logo: this.defaultLogo(),
+    };
   },
   computed: {
     address() {
       return "https://api.whatsapp.com/send?phone=" + this.number;
     },
   },
-  methods: {},
+  methods: {
+    defaultLogo(hover = false) {
+      const addhover = hover ? "-hover" : "";
+      if (this.env() === "DEVELOPMENT") {
+        return `src/assets/images/whatsapp-logo${addhover}.png`;
+      } else {
+        return `static/images/whatsapp-logo${addhover}.png`;
+      }
+    },
+  },
+  mounted() {
+    const link = this.$refs.link;
+    link.addEventListener("mouseover", (event) => {
+      event.target.src = this.defaultLogo(true);
+    });
+    link.addEventListener("mouseout", (event) => {
+      event.target.src = this.defaultLogo();
+    });
+  },
 };
 </script>
 
