@@ -25,7 +25,7 @@ export default {
     return {
       currentPage: "HomePage",
       componentProps: null,
-      localhost: "http://15.188.51.48/",
+      localhost: window.location.href, // "http://15.188.51.48/",
     };
   },
   methods: {
