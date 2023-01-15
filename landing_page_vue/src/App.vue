@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       currentPage: "HomePage",
-      formAddress: urlServer("form"),
       componentProps: null,
+      localhost: window.location.href,
     };
   },
   methods: {
@@ -41,13 +41,14 @@ export default {
     },
     postRequest(request) {
       // utilizzato in CarSelectionPageForm
+      const formUrl = urlServer(this.localhost, "form");
       return new Promise((resolve, reject) => {
-        const response = axios.post(this.formAddress, request);
+        const response = axios.post(formUrl, request);
         response.then((result) => resolve(result)).catch((error) => reject(error));
       });
     },
     env() {
-      if (/5173/.test(window.location.href)) return "DEVELOPMENT";
+      if (/5173/.test(this.localhost)) return "DEVELOPMENT";
       else return "PRODUCTION";
     },
   },
@@ -58,6 +59,7 @@ export default {
       toggleFeedbackPage: this.toggleFeedbackPage,
       postRequest: this.postRequest,
       env: this.env,
+      localhost: this.localhost,
       showHeader: true,
     };
   },

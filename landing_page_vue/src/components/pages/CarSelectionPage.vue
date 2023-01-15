@@ -15,7 +15,7 @@ export default {
     TheHeader,
     CarSelectionPageBody,
   },
-  inject: ["showHeader"],
+  inject: ["showHeader", "localhost"],
   created() {
     window.scrollTo({ top: 0 });
     this.getCars();
@@ -28,7 +28,7 @@ export default {
   computed: {},
   methods: {
     async getCars() {
-      const response = await axios(urlServer("cars"));
+      const response = await axios(urlServer(this.localhost, "cars"));
       let cars = JSON.parse(response.data);
       cars = cars.map((c) => new Car(c.name, c.img));
       this.cars = cars;

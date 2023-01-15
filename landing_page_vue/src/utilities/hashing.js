@@ -8,10 +8,6 @@ export function encrypt(string, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
   return alg.getHash("HEX");
 }
 
-export function urlServer(
-  string,
-  port = 8000,
-  algorithm = DEFAULT_ENCRYPT_ALGORITHM
-) {
-  return `http://localhost:${port}/${encrypt(string, algorithm)}/`;
+export function urlServer(string, host, algorithm = DEFAULT_ENCRYPT_ALGORITHM) {
+  return `${host}/${encrypt(string, algorithm)}/`;
 }
