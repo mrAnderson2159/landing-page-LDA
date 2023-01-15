@@ -13,5 +13,5 @@ export function urlServer(
   port = 8000,
   algorithm = DEFAULT_ENCRYPT_ALGORITHM
 ) {
-  return `http://127.0.0.1:${port}/${encrypt(string, algorithm)}/`;
+  return `http://localhost:${port}/${encrypt(string, algorithm)}/`;
 }
