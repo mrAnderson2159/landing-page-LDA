@@ -52,7 +52,7 @@ export default {
     },
     localhost() {
       return this.env() === "DEVELOPMENT"
-        ? "http://localhost:8000"
+        ? "http://localhost:9000"
         : "http://15.188.51.48/";
     },
   },
