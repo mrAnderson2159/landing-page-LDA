@@ -30,7 +30,6 @@ DEBUG = False
 
 
 ALLOWED_HOSTS = [
-    # "valeriomolinari.pythonanywhere.com",
     "15.188.51.48",
     "127.0.0.1",
     "localhost",

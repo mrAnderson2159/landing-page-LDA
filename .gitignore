@@ -2,3 +2,4 @@ faker_populate_db.py
 screenshots/
 .idea
 error\ logs/
+db.sqlite3
