@@ -1,6 +1,6 @@
 <template>
   <component :is="currentPage" v-bind="componentProps" />
-  <the-whatsapp-button number="393394505775" />
+  <the-whatsapp-button number="393933003009" />
 </template>
 
 <script>
