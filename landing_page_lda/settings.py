@@ -133,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/var/www/landing_page_lda/assets/'
+STATIC_ROOT = '/var/www/mysite/assets/'
 STATICFILES_DIRS = [
     STATIC_DIR,
     # DJANGO_VITE_ASSETS_PATH
