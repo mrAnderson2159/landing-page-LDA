@@ -49,7 +49,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 10;
+  z-index: 9998;
   background-color: rgba(0, 0, 0, 0.75);
 }
 
@@ -65,7 +65,7 @@ dialog {
   border-radius: 12px;
   padding: 1rem;
   background-color: white;
-  z-index: 100;
+  z-index: 9999;
   border: none;
   animation: modal 0.3s ease-out;
 }

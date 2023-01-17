@@ -1,5 +1,5 @@
 <template>
-  <a :href="address" id="whatsapp" ref="link">
+  <a :href="address" id="whatsapp" ref="link" target="_blank">
     <img :src="logo" alt="Whatsapp" />
   </a>
 </template>
@@ -49,7 +49,7 @@ a#whatsapp {
   position: fixed;
   right: 40px;
   top: 80vh;
-  z-index: 9999;
+  z-index: 999;
   width: 80px;
 }
 </style>
