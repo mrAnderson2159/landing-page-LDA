@@ -9,6 +9,8 @@ from .functions import str_to_date, jsonify, visualization, get_client_ip
 from .colors import green
 from .decorators import use_client_ip
 
+USE_CLIENT_IP_CALLBACK = lambda ip: green(', '.join(ip))
+
 # Create your views here.
 @use_client_ip(green)
 def index(request: WSGIRequest):
