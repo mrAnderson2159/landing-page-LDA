@@ -12,19 +12,19 @@ from .decorators import use_client_ip
 USE_CLIENT_IP_CALLBACK = lambda ip: green(', '.join(ip))
 
 # Create your views here.
-@use_client_ip(green)
+@use_client_ip(USE_CLIENT_IP_CALLBACK)
 def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
 
 
-@use_client_ip(green)
+@use_client_ip(USE_CLIENT_IP_CALLBACK)
 def cars(request: WSGIRequest):
     if request.method == 'GET':
         cars = Car.objects.all()
         return JsonResponse(data=jsonify(cars), content_type='application/json', safe=False)
 
 
-@use_client_ip(green)
+@use_client_ip(USE_CLIENT_IP_CALLBACK)
 @csrf_exempt
 def form(request: WSGIRequest):
     if request.method == 'POST':
