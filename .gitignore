@@ -1,5 +1,6 @@
-faker_populate_db.py
 screenshots/
 .idea
 error\ logs/
+*/__pycache__
 db.sqlite3
+faker_populate_db.py

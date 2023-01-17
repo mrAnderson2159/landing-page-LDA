@@ -6,23 +6,23 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.db.utils import IntegrityError
 from .models import *
 from .functions import str_to_date, jsonify, visualization, get_client_ip
-from .colors import red
+from .colors import green
 from .decorators import use_client_ip
 
 # Create your views here.
-@use_client_ip(red)
+@use_client_ip(green)
 def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
 
 
-@use_client_ip(red)
+@use_client_ip(green)
 def cars(request: WSGIRequest):
     if request.method == 'GET':
         cars = Car.objects.all()
         return JsonResponse(data=jsonify(cars), content_type='application/json', safe=False)
 
 
-@use_client_ip(red)
+@use_client_ip(green)
 @csrf_exempt
 def form(request: WSGIRequest):
     if request.method == 'POST':
