@@ -1,7 +1,7 @@
 screenshots/
 .idea
 error\ logs/
-**/__pycache__
-**/migrations
+*/__pycache__
+*/migrations
 db.sqlite3
 faker_populate_db.py
