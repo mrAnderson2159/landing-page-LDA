@@ -25,8 +25,8 @@ def cars(request: WSGIRequest):
         return JsonResponse(data=jsonify(car_list), content_type='application/json', safe=False)
 
 
-@unlocked
 @csrf_exempt
+@unlocked
 def form(request: WSGIRequest):
     if request.method == 'POST':
         data = JSONParser().parse(request)
