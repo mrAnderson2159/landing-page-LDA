@@ -77,10 +77,18 @@ def form(request: WSGIRequest):
             return JsonResponse({'code': 0}, safe=False)
 
 
+@unlocked
 def botcatcher(request, url):
-    forbidden = ('.env',)
+    forbidden = ('.env','robots.txt','HNAP1/','boaform/admin/formLogin',
+                 '.git/config','mat','wp-comments-post.php',
+                 'phpMyAdmin-2.11.4/scripts/setup.php', 'druid/index.html',
+                 'config.json','debug/default/view?panel=config',
+                 '_profiler/phpinfo','mysqlmanager/scripts/setup.php',
+                 'sitemap.xml','mysql-admin/scripts/setup.php',
+                 'hudson','portal/redlion','mgmt/tm/util/bash',
+                 )
     # print(request.path, request.path_info, type(request))
     if url in forbidden:
         block_user(request=request)
-        return HttpResponse("<h1><strong>MALICIUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n")
+        return HttpResponse("<h1><strong>MALICIUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n", status=403)
     raise Http404

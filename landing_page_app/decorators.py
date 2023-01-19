@@ -1,12 +1,14 @@
-from .functions import get_client_ip, date_to_datetime
-from .models import Blacklist
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta
 from django.http import HttpResponse
 
+from .functions import get_client_ip, date_to_datetime
+from .models import Blacklist
+from .colors import red
+
 
 def unlocked(function):
-    def wrapper(request):
+    def wrapper(request, *args, **kwargs):
         client_ip = get_client_ip(request)
         try:
             blocked_ip = Blacklist.objects.get(ipaddress=client_ip)
@@ -17,9 +19,10 @@ def unlocked(function):
 
             if expiration_date < today:
                 blocked_ip.delete()
-                return function(request)
+                return function(request, *args, **kwargs)
 
-            return HttpResponse(f"<h1><strong>USER BLOCKED UNTIL DAY {expiration_date}</strong></h1>")
+            red(f'{request} rejected from user {client_ip} due to block in date {record_date}')
+            return HttpResponse(f"<h1><strong>USER BLOCKED UNTIL DAY {expiration_date}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
-            return function(request)
+            return function(request, *args, **kwargs)
     return wrapper

@@ -44,6 +44,7 @@ class Request(models.Model):
 class Blacklist(models.Model):
     ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
     record = models.DateField(auto_now_add=True)
+    path = models.CharField(max_length=512, blank=True)
 
     def __str__(self):
         return f"{self.ipaddress} - {self.record}"
