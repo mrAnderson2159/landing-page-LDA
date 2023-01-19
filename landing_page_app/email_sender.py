@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from django.contrib.auth.models import User
+from .functions import format_IT_date
 
 
 def admin_mail(request_data: dict):
@@ -9,8 +10,8 @@ def admin_mail(request_data: dict):
         <img scr="{request_data["img"]} alt="{request_data["car"]}"/>
         <p>Nome utente: {request_data["username"]}</p>
         <p>Email: {request_data["email"]}</p>
-        <p>Data acquisizione: {request_data["start"]}</p>
-        <p>Data restituzione: {request_data["stop"]}</p>
+        <p>Data acquisizione: {format_IT_date(request_data["start"])}</p>
+        <p>Data restituzione: {format_IT_date(request_data["stop"])}</p>
         <p>Note: {request_data["notes"]}</p>
     """
 

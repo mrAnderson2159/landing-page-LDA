@@ -8,7 +8,7 @@ from django.db.models import Model
 from django.core.serializers import serialize
 from django.core.handlers.wsgi import WSGIRequest
 from django.urls import path
-from .models import Blacklist
+from .models import Blacklist, Date
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red
 
 
@@ -73,3 +73,12 @@ def block_user(*, request=None, ip=None):
     blocked = Blacklist.objects.get_or_create(ipaddress=ip, path=request.path)[0]
     blocked.save()
     red('BLOCKED USER', blocked)
+
+def format_IT_date(date_object: Union [datetime, Date]):
+    if isinstance(date_object, Date):
+        date_object = date_object.date
+    giorni = tuple(map(str.capitalize, "lunedì martedì mercoledì giovedì venerdì sabato domenica".split(' ')))
+    mesi = "gennaio febbraio marzo aprile maggio giugno luglio " \
+           "agosto settembre ottobre novembre dicembre"
+    mesi = list(map(str.capitalize, mesi.split(' ')))
+    return f"{giorni[date_object.weekday()]} {date_object.day} {mesi[date_object.month - 1]} {date_object.year}"

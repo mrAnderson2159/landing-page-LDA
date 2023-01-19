@@ -74,8 +74,6 @@ def form(request: WSGIRequest):
         if len(errors):
             return JsonResponse({'code': 1, 'errors': errors})
         else:
-            for field in (car, start, stop, user, query):
-                field.save()
             send_admin_email({
                 "car": car.name,
                 "img": car.img,
@@ -85,6 +83,8 @@ def form(request: WSGIRequest):
                 "stop": stop,
                 "notes": notes
             })
+            for field in (car, start, stop, user, query):
+                field.save()
             return JsonResponse({'code': 0}, safe=False)
 
 
