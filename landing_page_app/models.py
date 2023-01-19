@@ -47,4 +47,4 @@ class Blacklist(models.Model):
     path = models.CharField(max_length=512, blank=True)
 
     def __str__(self):
-        return f"{self.ipaddress} - {self.record} - GET /{self.path}"
+        return f"{self.ipaddress} - {self.record} - GET {self.path}"
