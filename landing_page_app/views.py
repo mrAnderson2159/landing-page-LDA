@@ -9,6 +9,7 @@ from .decorators import unlocked
 from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip
 from .models import *
 from .colors import yellow
+from .email_sender import send_admin_email
 
 
 # Create your views here.
@@ -75,18 +76,28 @@ def form(request: WSGIRequest):
         else:
             for field in (car, start, stop, user, query):
                 field.save()
+            send_admin_email({
+                "car": car.name,
+                "img": car.img,
+                "username": user.name,
+                "email": email,
+                "start": start,
+                "stop": stop,
+                "notes": notes
+            })
             return JsonResponse({'code': 0}, safe=False)
 
 
 @unlocked
 def botcatcher(request, url):
-    forbidden = ('.env','robots.txt','HNAP1/','boaform/admin/formLogin',
-                 '.git/config','mat','wp-comments-post.php',
+    forbidden = ('.env', 'robots.txt', 'HNAP1/', 'boaform/admin/formLogin',
+                 '.git/config', 'mat', 'wp-comments-post.php',
                  'phpMyAdmin-2.11.4/scripts/setup.php', 'druid/index.html',
-                 'config.json','debug/default/view?panel=config',
-                 '_profiler/phpinfo','mysqlmanager/scripts/setup.php',
-                 'sitemap.xml','mysql-admin/scripts/setup.php',
-                 'hudson','portal/redlion','mgmt/tm/util/bash',
+                 'config.json', 'debug/default/view?panel=config',
+                 '_profiler/phpinfo', 'mysqlmanager/scripts/setup.php',
+                 'sitemap.xml', 'mysql-admin/scripts/setup.php',
+                 'hudson', 'portal/redlion', 'mgmt/tm/util/bash',
+                 '/aaa9', '/aab8'
                  )
     # print(request.path, request.path_info, type(request))
     if url in forbidden:
