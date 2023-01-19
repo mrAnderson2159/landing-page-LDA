@@ -6,8 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
 from .decorators import unlocked
-from .functions import str_to_date, jsonify, visualization, block_user
+from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip
 from .models import *
+from .colors import yellow
 
 
 # Create your views here.
@@ -91,4 +92,5 @@ def botcatcher(request, url):
     if url in forbidden:
         block_user(request=request)
         return HttpResponse("<h1><strong>MALICIUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n", status=403)
+    yellow(f'MAYBE TO BE BLOCKED USER {get_client_ip(request)} for {request}')
     raise Http404
