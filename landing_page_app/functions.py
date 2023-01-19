@@ -2,12 +2,13 @@ import json
 import landing_page_app.views as views
 from typing import *
 from hashlib import sha512
-from datetime import datetime
+from datetime import datetime, date
 from typing import Type
 from django.db.models import Model
 from django.core.serializers import serialize
 from django.core.handlers.wsgi import WSGIRequest
 from django.urls import path
+from .models import Blacklist
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta
 
 
@@ -16,8 +17,10 @@ def encrypt(string: str, algorithm: Callable[AnyStr, Hashable] = sha512) -> str:
     alg.update(string.encode())
     return alg.hexdigest()
 
-def str_to_date(strdate: str) -> datetime:
-    return datetime(*list(map(int, strdate.split('-'))))
+
+def str_to_date(str_date: str) -> datetime:
+    return datetime(*list(map(int, str_date.split('-'))))
+
 
 def jsonify(models: list[Type[Model]]) -> str:
     serialized = serialize('json', models)
@@ -25,11 +28,14 @@ def jsonify(models: list[Type[Model]]) -> str:
     fields_filtered = list(map(lambda o: o['fields'], objectified))
     return json.dumps(fields_filtered)
 
+
 def standard_view(name):
     return path(f'{name}/', getattr(views, name), name=name)
 
+
 def encrypted_view(name):
     return path(f'{encrypt(name)}/', getattr(views, name), name=name)
+
 
 def visualization(request_object: dict):
     car = request_object['car']
@@ -46,9 +52,24 @@ def visualization(request_object: dict):
            f"da restituire in data\n\t{c_red(stop)}\ne ha scritto le seguenti note: " \
            f"{c_magenta(notes)}"
 
+
+def date_to_datetime(datetime_date: date):
+    return datetime.combine(datetime_date, datetime.min.time())
+
+
 def get_client_ip(request: WSGIRequest) -> list[str]:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         return x_forwarded_for.split(',')
     else:
         return [request.META.get('REMOTE_ADDR')]
+
+
+def block_user(*, request=None, ip=None):
+    if request:
+        ip = get_client_ip(request)
+    elif not ip:
+        raise TypeError("block_user() needs at least 1 keyword argument: 'request' or 'ip'")
+    blocked = Blacklist.objects.get_or_create(ipaddress=ip)[0]
+    blocked.save()
+    print('BLOCKED USER', blocked)

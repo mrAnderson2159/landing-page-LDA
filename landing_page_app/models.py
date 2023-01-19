@@ -20,6 +20,7 @@ class Car(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
 class User(models.Model):
     name = models.CharField(max_length=64)
     email = models.EmailField(max_length=128, unique=True)
@@ -38,3 +39,11 @@ class Request(models.Model):
 
     def __str__(self):
         return f"{self.user} for {self.car} from {self.start} to {self.stop}"
+
+
+class Blacklist(models.Model):
+    ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
+    record = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.ipaddress} - {self.record}"

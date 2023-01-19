@@ -1,30 +1,29 @@
-from django.shortcuts import render
-from rest_framework.parsers import JSONParser
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse #, HttpResponse
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.utils import IntegrityError
-from .models import *
-from .functions import str_to_date, jsonify, visualization, get_client_ip
-from .colors import green
-from .decorators import use_client_ip
+from django.http import JsonResponse, HttpResponse, Http404
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 
-USE_CLIENT_IP_CALLBACK = lambda ip: green(', '.join(ip))
+from .decorators import unlocked
+from .functions import str_to_date, jsonify, visualization, block_user
+from .models import *
+
 
 # Create your views here.
-@use_client_ip(USE_CLIENT_IP_CALLBACK)
+@unlocked
 def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
 
 
-@use_client_ip(USE_CLIENT_IP_CALLBACK)
+@unlocked
 def cars(request: WSGIRequest):
     if request.method == 'GET':
-        cars = Car.objects.all()
-        return JsonResponse(data=jsonify(cars), content_type='application/json', safe=False)
+        car_list = Car.objects.all()
+        return JsonResponse(data=jsonify(car_list), content_type='application/json', safe=False)
 
 
-@use_client_ip(USE_CLIENT_IP_CALLBACK)
+@unlocked
 @csrf_exempt
 def form(request: WSGIRequest):
     if request.method == 'POST':
@@ -71,8 +70,17 @@ def form(request: WSGIRequest):
             errors.append('QUERY_EXISTS')
 
         if len(errors):
-            return JsonResponse({'code':1, 'errors':errors})
+            return JsonResponse({'code': 1, 'errors': errors})
         else:
             for field in (car, start, stop, user, query):
                 field.save()
-            return JsonResponse({'code':0}, safe=False)
+            return JsonResponse({'code': 0}, safe=False)
+
+
+def botcatcher(request, url):
+    forbidden = ('.env',)
+    # print(request.path, request.path_info, type(request))
+    if url in forbidden:
+        block_user(request=request)
+        return HttpResponse("<h1><strong>MALICIUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n")
+    raise Http404
