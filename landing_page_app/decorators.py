@@ -12,6 +12,8 @@ def unlocked(function):
         client_ip = get_client_ip(request)
         try:
             blocked_ip = Blacklist.objects.get(ipaddress=client_ip)
+            if blocked_ip.blocked_forever:
+                return HttpResponse(f"<h1><strong>USER BLOCKED FOREVER</strong></h1>\n", status=403)
             record_date = date_to_datetime(blocked_ip.record)
             block_days = timedelta(days=3)
             today = datetime.today()
