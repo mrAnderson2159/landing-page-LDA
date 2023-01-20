@@ -199,7 +199,7 @@ export default {
         }
       } else {
         const { errors, valids } = this.form.getErrors();
-        console.log(errors);
+        // console.log(errors);
         for (const error of errors) {
           switch (error) {
             case "USERNAME_MISSING":
@@ -246,7 +246,7 @@ export default {
           }
         }
         for (const valid of valids) {
-          console.log({ valid, form_valid: form[valid] });
+          // console.log({ valid, form_valid: form[valid] });
           form[valid].classList.remove("is-invalid");
           form[valid].classList.add("is-valid");
         }
