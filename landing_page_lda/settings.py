@@ -25,7 +25,7 @@ STATIC_DIR = BASE_DIR / 'static'
 SECRET_KEY = 'django-insecure-%&gg07omzzrzt$u0u&rtecyh9-8z!_97!^qcogxsu5^2yp$*9_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # Disattivandolo esce fuori l'errore "error logs/127.0.0.1-1673797053221.log"
 
 

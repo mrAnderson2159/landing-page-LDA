@@ -50,7 +50,7 @@ def form(request: WSGIRequest):
         query_created = user_created = False
 
         try:
-            user, user_created = User.objects.get_or_create(name=username, email=email)
+            user, user_created = Client.objects.get_or_create(name=username, email=email)
         except IntegrityError:
             errors.append('CONFLICT_USER_EMAIL')
 

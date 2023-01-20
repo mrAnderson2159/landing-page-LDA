@@ -81,7 +81,7 @@ def add_user(car: Car, start: Date, end: Date):
     name = fake.name()
     email = fake.free_email()
     notes = fake.sentence(nb_words=10)
-    user = User.objects.get_or_create(
+    user = Client.objects.get_or_create(
         name=name,
         email=email,
         car=car,
