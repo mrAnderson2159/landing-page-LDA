@@ -7,6 +7,3 @@ for field in dir(models):
         model = getattr(models, field)
         admin.site.register(model)
         print(f'Registered "{field}" model to admin site')
-
-
-# Reminder: At this point we create a superuser by "python3 manage.py createsuperuser"

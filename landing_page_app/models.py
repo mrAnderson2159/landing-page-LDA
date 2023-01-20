@@ -49,3 +49,13 @@ class Blacklist(models.Model):
 
     def __str__(self):
         return f"{self.ipaddress} - {self.record} - GET {self.path}"
+
+class Whitelist(models.Model):
+    ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        res = ''
+        if self.user:
+            res = f"{self.user.name} - "
+        return res + self.ipaddress

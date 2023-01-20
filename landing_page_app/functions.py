@@ -7,9 +7,10 @@ from typing import Type
 from django.db.models import Model
 from django.core.serializers import serialize
 from django.core.handlers.wsgi import WSGIRequest
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import path
-from .models import Blacklist, Date
-from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red
+from .models import Blacklist, Date, Whitelist
+from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green
 
 
 def encrypt(string: str, algorithm: Callable[AnyStr, Hashable] = sha512) -> str:
@@ -70,9 +71,13 @@ def block_user(*, request=None, ip=None):
         ip = get_client_ip(request)
     elif not ip:
         raise TypeError("block_user() needs at least 1 keyword argument: 'request' or 'ip'")
-    blocked = Blacklist.objects.get_or_create(ipaddress=ip, path=request.path)[0]
-    blocked.save()
-    red('BLOCKED USER', blocked)
+    try:
+        Whitelist.objects.get(ipaddress=ip)
+        green(f"{ip} not blocked because in whitelist")
+    except ObjectDoesNotExist:
+        blocked = Blacklist.objects.get_or_create(ipaddress=ip, path=request.path)[0]
+        blocked.save()
+        red('BLOCKED USER', blocked)
 
 def format_IT_date(date_object: Union [datetime, Date]):
     if isinstance(date_object, Date):
