@@ -20,7 +20,7 @@ from landing_page_app.functions import encrypted_view
 
 urlpatterns = [
     path('', index, name='index'),
-    path('admin/', admin.site.urls),
+    path('admin-lda/', admin.site.urls),
     encrypted_view('form'),
     encrypted_view("cars"),
     path('<path:url>', botcatcher, name='default')
