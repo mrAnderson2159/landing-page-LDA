@@ -6,6 +6,7 @@ from .functions import get_client_ip, date_to_datetime
 from .models import Blacklist
 from .colors import red, green
 
+BLOCK_DAYS = 5
 
 def unlocked(function):
     def wrapper(request, *args, **kwargs):
@@ -15,7 +16,7 @@ def unlocked(function):
             if blocked_ip.blocked_forever:
                 return HttpResponse(f"<h1><strong>USER BLOCKED FOREVER</strong></h1>\n", status=403)
             record_date = date_to_datetime(blocked_ip.record)
-            block_days = timedelta(days=3)
+            block_days = timedelta(days=BLOCK_DAYS)
             today = datetime.today()
             expiration_date = record_date + block_days
 
