@@ -60,9 +60,9 @@ def date_to_datetime(datetime_date: date):
 def get_client_ip(request: WSGIRequest) -> list[str]:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
-        return x_forwarded_for.split(',')
+        return x_forwarded_for.split(',')[0]
     else:
-        return [request.META.get('REMOTE_ADDR')]
+        return request.META.get('REMOTE_ADDR')
 
 
 def block_user(*, request=None, ip=None):
