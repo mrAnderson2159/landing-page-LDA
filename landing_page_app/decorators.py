@@ -2,13 +2,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta
 from django.http import HttpResponse
 
-from .functions import get_client_ip, date_to_datetime
+from .functions import get_client_ip, date_to_datetime, format_EN_date
 from .models import Blacklist
 from .colors import red, green
 
-BLOCK_DAYS = 7
 
 def unlocked(function):
+    BLOCK_DAYS = 7
+
     def wrapper(request, *args, **kwargs):
         client_ip = get_client_ip(request)
         try:
@@ -25,8 +26,8 @@ def unlocked(function):
                 blocked_ip.delete()
                 return function(request, *args, **kwargs)
 
-            red(f'{request} rejected from user {client_ip} due to block in date {record_date}')
-            return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {expiration_date.strftime('%A %d of %B %Y').upper()}</strong></h1>\n", status=403)
+            red(f'{request} rejected from user {client_ip} due to block in date {format_EN_date(record_date)}')
+            return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {format_EN_date(expiration_date).upper()}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
             green(client_ip)
             return function(request, *args, **kwargs)

@@ -49,8 +49,8 @@ def visualization(request_object: dict):
     start, stop = map(str_to_date, (start, stop))
 
     return f"{c_cyan(user)} con indirizzo email {c_cyan(email)} " \
-           f"ha prenotato una {c_green(car)} per la data\n\t{c_yellow(start)}\n" \
-           f"da restituire in data\n\t{c_red(stop)}\ne ha scritto le seguenti note: " \
+           f"ha prenotato una {c_green(car)} per la data\n\t{c_yellow(format_IT_date(start))}\n" \
+           f"da restituire in data\n\t{c_red(format_IT_date(stop))}\ne ha scritto le seguenti note: " \
            f"{c_magenta(notes)}"
 
 
@@ -81,7 +81,7 @@ def block_user(*, request=None, ip=None) -> Blacklist:
         red('BLOCKED USER', blocked)
     return blocked
 
-def format_IT_date(date_object: Union [datetime, Date]):
+def format_IT_date(date_object: Union [datetime, Date]) -> str:
     if isinstance(date_object, Date):
         date_object = date_object.date
     giorni = tuple(map(str.capitalize, "lunedì martedì mercoledì giovedì venerdì sabato domenica".split(' ')))
@@ -89,3 +89,8 @@ def format_IT_date(date_object: Union [datetime, Date]):
            "agosto settembre ottobre novembre dicembre"
     mesi = list(map(str.capitalize, mesi.split(' ')))
     return f"{giorni[date_object.weekday()]} {date_object.day} {mesi[date_object.month - 1]} {date_object.year}"
+
+def format_EN_date(date_object: Union[datetime, Date]) -> str:
+    if isinstance(date_object, Date):
+        date_object = date_object.date
+    return date_object.strftime("%A %d of %B %Y")

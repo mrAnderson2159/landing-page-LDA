@@ -20,6 +20,16 @@ export const notRequiredNumber = {
   required: false,
 };
 
+export const requiredBoolean = {
+  type: Boolean,
+  required: true,
+};
+
+export const notRequiredBoolean = {
+  type: Boolean,
+  required: false,
+};
+
 export const requiredCssUnit = {
   ...requiredString,
   validator: unitValidator,

@@ -48,7 +48,7 @@ class Client(models.Model):
     email = models.EmailField(max_length=128, unique=True)
 
     def __str__(self):
-        return f"{self.name}, {self.email}"
+        return f"{self.name}"
 
 
 class Request(models.Model):

@@ -15,7 +15,7 @@ export default {
     TheHeader,
     CarSelectionPageBody,
   },
-  inject: ["showHeader", "localhost"],
+  inject: ["showHeader", "localhost", "delay"],
   created() {
     window.scrollTo({ top: 0 });
     this.getCars();
@@ -29,7 +29,7 @@ export default {
   methods: {
     async getCars() {
       const address = urlServer(this.localhost, "cars");
-      // console.log(address);
+      // await this.delay(2000);
       const response = await axios(address);
       let cars = JSON.parse(response.data);
       cars = cars.map((c) => new Car(c.name, c.img));

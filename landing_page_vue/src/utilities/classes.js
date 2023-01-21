@@ -64,7 +64,7 @@ export class Form {
     if (!this.email) errors.push("EMAIL_MISSING");
     if (!this.email) errors.push("CONFIRMEMAIL_MISSING");
     if (this.email && this.confirmEmail && this.email !== this.confirmEmail) {
-      console.table(this.email, this.confirmEmail);
+      // console.table(this.email, this.confirmEmail);
       errors.push("EMAIL_VALIDATION");
     }
 

@@ -9,6 +9,7 @@
         id="form"
         @submit.prevent="submit"
         class="row g-3 needs-validation"
+        ref="form"
         novalidate
       >
         <!-- Nome -->
@@ -102,10 +103,24 @@
         <div class="form-text mb-3">*I campi con un asterisco sono obbligatori</div>
         <!-- Invio -->
         <div class="my-3 d-grid gap-2 d-md-flex justify-content-md-end">
-          <button type="button" class="btn btn-outline-secondary" @click="closeDialog">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            @click="closeDialog"
+            :disabled="loading"
+          >
             Annulla
           </button>
+          <button v-if="loading" class="btn btn-primary" type="button" disabled>
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Caricamento...
+          </button>
           <input
+            v-else
             type="submit"
             class="btn btn-primary me-md-2"
             value="Richiedi preventivo"
@@ -130,6 +145,15 @@ export default {
   },
   mounted() {
     this.$refs.nome.focus();
+
+    Array.from(this.$refs.form.children).forEach((field) => {
+      const input = field.querySelector("input");
+      if (input !== null) {
+        input.addEventListener("blur", (event) => {
+          this.validateForm();
+        });
+      }
+    });
   },
   emits: ["close"],
   inject: ["toggleFeedbackPage", "postRequest"],
@@ -143,6 +167,7 @@ export default {
       ],
       errors: {},
       requestExistError: false,
+      loading: false,
     };
   },
   computed: {
@@ -167,12 +192,16 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-    validateForm() {},
+    validateForm() {
+      // console.log("bluuuur");
+    },
     async submit(event) {
       const form = event.target;
       if (this.form.isValid()) {
         try {
+          this.loading = true;
           const result = await this.postRequest(this.form.request());
+          this.loading = false;
           if (result.data.code === 0) {
             this.toggleFeedbackPage("SUCCESS");
           } else {

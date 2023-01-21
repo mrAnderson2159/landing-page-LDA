@@ -3,7 +3,7 @@
   <div class="container-lg">
     <p class="lead text-center display-6 pt-5 mt-5">{{ leadMessage }}</p>
     <div id="cars" class="px-5 mx-5 text-center">
-      <div class="row">
+      <div v-if="carsLoaded" class="row">
         <div class="col-lg-6 position-relative" v-for="car in cars" :key="car.name">
           <base-car-image-card
             :key="car.name"
@@ -12,6 +12,12 @@
           >
             <img :src="car.url" :alt="car.name" class="pt-1" />
             <p class="lead mt-3 mb-0 text-light">{{ car.name }}</p>
+          </base-car-image-card>
+        </div>
+      </div>
+      <div v-else class="row">
+        <div class="col-lg-6 position-relative" v-for="i in 6" :key="i">
+          <base-car-image-card :key="i" class="col-lg-8" :car-exists="false">
           </base-car-image-card>
         </div>
       </div>
@@ -41,7 +47,11 @@ export default {
       showForm: false,
     };
   },
-  computed: {},
+  computed: {
+    carsLoaded() {
+      return this.cars.length > 0;
+    },
+  },
   provide() {
     return {
       showForm: this.showForm,
