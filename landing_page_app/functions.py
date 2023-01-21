@@ -66,11 +66,12 @@ def get_client_ip(request: WSGIRequest) -> list[str]:
         return request.META.get('REMOTE_ADDR')
 
 
-def block_user(*, request=None, ip=None):
+def block_user(*, request=None, ip=None) -> Blacklist:
     if request:
         ip = get_client_ip(request)
     elif not ip:
         raise TypeError("block_user() needs at least 1 keyword argument: 'request' or 'ip'")
+    blocked: Blacklist = None
     try:
         Whitelist.objects.get(ipaddress=ip)
         green(f"{ip} not blocked because in whitelist")
@@ -78,6 +79,7 @@ def block_user(*, request=None, ip=None):
         blocked = Blacklist.objects.get_or_create(ipaddress=ip, path=request.path)[0]
         blocked.save()
         red('BLOCKED USER', blocked)
+    return blocked
 
 def format_IT_date(date_object: Union [datetime, Date]):
     if isinstance(date_object, Date):

@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.utils import IntegrityError
 from django.http import JsonResponse, HttpResponse, Http404
@@ -95,5 +96,9 @@ def botcatcher(request, url):
     if url in forbidden:
         block_user(request=request)
         return HttpResponse("<h1><strong>MALICIOUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n", status=403)
-    yellow(f'MAYBE TO BE BLOCKED USER {get_client_ip(request)} for {request}')
+
+    try:
+        Whitelist.objects.get(ipaddress=get_client_ip(request))
+    except ObjectDoesNotExist:
+        yellow(f'MAYBE TO BE BLOCKED USER {get_client_ip(request)} for {request}')
     raise Http404
