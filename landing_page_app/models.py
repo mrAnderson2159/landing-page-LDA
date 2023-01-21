@@ -75,6 +75,8 @@ class Blacklist(models.Model):
         if self.name:
             res = f"{self.name} - "
         res += f"{self.ipaddress} - {Date.format_IT_date(self.record)} - GET {self.path}"
+        if self.blocked_forever:
+            res += ' --- FOREVER'
         return res
 
 
