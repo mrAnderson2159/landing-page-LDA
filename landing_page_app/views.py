@@ -11,7 +11,7 @@ from rest_framework.parsers import JSONParser
 from .decorators import unlocked
 from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip
 from .models import *
-from .colors import yellow
+from .colors import yellow, green
 from .email_sender import send_admin_email
 
 
@@ -98,7 +98,8 @@ def form(request: WSGIRequest):
 @unlocked
 def botcatcher(request, url):
     try:
-        Whitelist.objects.get(ipaddress=get_client_ip(request))
+        w = Whitelist.objects.get(ipaddress=get_client_ip(request))
+        green(f"{w} WHITELIST PASS")
     except ObjectDoesNotExist:
         forbidden = {
         r'php', r'admin/', r'debug', r'^\.', r'actuator', r'api', r'console',
