@@ -3,9 +3,13 @@ import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.utils import IntegrityError
-from django.http import JsonResponse, HttpResponse, Http404
+from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+
 from rest_framework.parsers import JSONParser
 
 from .decorators import unlocked
@@ -13,6 +17,7 @@ from .functions import str_to_date, jsonify, visualization, block_user, get_clie
 from .models import *
 from .colors import yellow, green
 from .email_sender import send_admin_email
+from .forms import LoginForm
 
 
 # Create your views here.
@@ -116,3 +121,38 @@ def botcatcher(request, url):
 
         yellow(f'MAYBE TO BE BLOCKED USER {get_client_ip(request)} for {request}')
     raise Http404
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('requests_management'))
+            else:
+                return HttpResponse("ACCOUNT NOT ACTIVE")
+        else:
+            print(f"Someone tried to login and failed: {username}")
+            return HttpResponse("INVALID USERNAME AND PASSWORD")
+    else:
+        context = {'form': LoginForm()}
+        return render(request, 'landing_page_app/login.html', context)
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
+@login_required
+def requests_management(request):
+    return render(request, 'landing_page_app/requests_management.html')
+
+@login_required
+def text_management(request):
+    return render(request, 'landing_page_app/text_management.html')

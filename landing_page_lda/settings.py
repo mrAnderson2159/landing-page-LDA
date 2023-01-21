@@ -96,6 +96,13 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher', # hasher di default di django
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -124,9 +131,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Django-vite
-# DJANGO_VITE_ASSETS_PATH = STATIC_DIR / 'src/vue/dist/'
-# DJANGO_VITE_DEV_MODE = DEBUG
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -135,13 +139,15 @@ STATIC_URL = 'static/'
 STATIC_ROOT = '/var/www/mysite/assets/'
 STATICFILES_DIRS = [
     STATIC_DIR,
-    # DJANGO_VITE_ASSETS_PATH
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Login
+LOGIN_URL = 'landing_page_app/user_login'
 
 # Cross Origin Resource Sharing settings
 CORS_ALLOW_ALL_ORIGINS = True

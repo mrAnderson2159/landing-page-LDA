@@ -29,7 +29,6 @@ def jsonify(models: list[Type[Model]]) -> str:
     fields_filtered = list(map(lambda o: o['fields'], objectified))
     return json.dumps(fields_filtered)
 
-
 def standard_view(name):
     return path(f'{name}/', getattr(views, name), name=name)
 

@@ -16,12 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from landing_page_app.views import index, botcatcher
-from landing_page_app.functions import encrypted_view
+from landing_page_app.functions import encrypted_view, standard_view
 
 urlpatterns = [
     path('', index, name='index'),
     path('admin-lda/', admin.site.urls),
     encrypted_view('form'),
     encrypted_view("cars"),
+    standard_view("user_login"),
+    standard_view("user_logout"),
+    encrypted_view("requests_management"),
+    encrypted_view("text_management"),
     path('<path:url>', botcatcher, name='default')
 ]
