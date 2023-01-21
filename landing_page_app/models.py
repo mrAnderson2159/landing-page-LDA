@@ -68,23 +68,23 @@ class Blacklist(models.Model):
 
 class Whitelist(models.Model):
     ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
-    #user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         res = ''
-        # if self.user:
-        #     fn = self.user.first_name
-        #     ln = self.user.last_name
-        #     if not (fn or ln):
-        #         res = f"{self.user.username} - "
-        #     else:
-        #         if fn:
-        #             res += fn + ' '
-        #         if ln:
-        #             res += ln + ' '
-        #         res += '- '
-        # elif self.client:
-        #     res = f"{self.client.name} - "
+        if self.user:
+            fn = self.user.first_name
+            ln = self.user.last_name
+            if not (fn or ln):
+                res = f"{self.user.username} - "
+            else:
+                if fn:
+                    res += fn + ' '
+                if ln:
+                    res += ln + ' '
+                res += '- '
+        elif self.client:
+            res = f"{self.client.name} - "
 
         return res + self.ipaddress
