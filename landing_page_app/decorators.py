@@ -14,7 +14,8 @@ def unlocked(function):
         try:
             blocked_ip = Blacklist.objects.get(ipaddress=client_ip)
             if blocked_ip.blocked_forever:
-                return HttpResponse(f"<h1><strong>USER BLOCKED FOREVER</strong></h1>\n", status=403)
+                red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
+                return HttpResponse(f"<h1><strong>YOU ARE BLOCKED FOREVER</strong></h1>\n", status=403)
             record_date = date_to_datetime(blocked_ip.record)
             block_days = timedelta(days=BLOCK_DAYS)
             today = datetime.today()
@@ -25,7 +26,7 @@ def unlocked(function):
                 return function(request, *args, **kwargs)
 
             red(f'{request} rejected from user {client_ip} due to block in date {record_date}')
-            return HttpResponse(f"<h1><strong>USER BLOCKED UNTIL DAY {expiration_date}</strong></h1>\n", status=403)
+            return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {expiration_date}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
             green(client_ip)
             return function(request, *args, **kwargs)

@@ -52,18 +52,23 @@ class Request(models.Model):
 
 
 class Blacklist(models.Model):
+    name = models.CharField(max_length=128, blank=True)
     ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
     record = models.DateField(auto_now_add=True)
     path = models.CharField(max_length=512, blank=True)
     blocked_forever = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.ipaddress} - {self.record} - GET {self.path}"
+        res = ''
+        if self.name:
+            res = f"{self.name} - "
+        res += f"{self.ipaddress} - {self.record} - GET {self.path}"
 
 
 class Whitelist(models.Model):
     ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
     user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         res = ''
@@ -78,5 +83,7 @@ class Whitelist(models.Model):
                 if ln:
                     res += ln + ' '
                 res += '- '
+        elif self.client:
+            res = f"{self.client.name} - "
 
         return res + self.ipaddress
