@@ -63,6 +63,7 @@ class Blacklist(models.Model):
         if self.name:
             res = f"{self.name} - "
         res += f"{self.ipaddress} - {self.record} - GET {self.path}"
+        return res
 
 
 class Whitelist(models.Model):
