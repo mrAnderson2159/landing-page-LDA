@@ -6,7 +6,7 @@ from .functions import get_client_ip, date_to_datetime
 from .models import Blacklist
 from .colors import red, green
 
-BLOCK_DAYS = 5
+BLOCK_DAYS = 7
 
 def unlocked(function):
     def wrapper(request, *args, **kwargs):
@@ -26,7 +26,7 @@ def unlocked(function):
                 return function(request, *args, **kwargs)
 
             red(f'{request} rejected from user {client_ip} due to block in date {record_date}')
-            return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {expiration_date}</strong></h1>\n", status=403)
+            return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {expiration_date.strftime('%A %d of %B %Y').upper()}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
             green(client_ip)
             return function(request, *args, **kwargs)

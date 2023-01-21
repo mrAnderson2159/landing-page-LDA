@@ -9,6 +9,8 @@
 # ]
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+from typing import Union as _Union
 
 
 # Create your models here.
@@ -18,8 +20,18 @@ class Date(models.Model):
     # formato str(aaaa/mm/dd) in formato datetime.date()
     date = models.DateField(unique=True)
 
+    @classmethod
+    def format_IT_date(cls, date_object: _Union[datetime, 'Date']):
+        if isinstance(date_object, cls):
+            date_object = date_object.date
+        giorni = tuple(map(str.capitalize, "lunedì martedì mercoledì giovedì venerdì sabato domenica".split(' ')))
+        mesi = "gennaio febbraio marzo aprile maggio giugno luglio " \
+               "agosto settembre ottobre novembre dicembre"
+        mesi = list(map(str.capitalize, mesi.split(' ')))
+        return f"{giorni[date_object.weekday()]} {date_object.day} {mesi[date_object.month - 1]} {date_object.year}"
+
     def __str__(self):
-        return str(self.date)
+        return self.format_IT_date(self.date)
 
 
 class Car(models.Model):
@@ -48,7 +60,7 @@ class Request(models.Model):
     completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.user} for {self.car} from {self.start} to {self.stop}"
+        return f"{self.user} ha prenotato una {self.car} da {Date.format_IT_date(self.start)} a {Date.format_IT_date(self.stop)}"
 
 
 class Blacklist(models.Model):
@@ -62,7 +74,7 @@ class Blacklist(models.Model):
         res = ''
         if self.name:
             res = f"{self.name} - "
-        res += f"{self.ipaddress} - {self.record} - GET {self.path}"
+        res += f"{self.ipaddress} - {Date.format_IT_date(self.record)} - GET {self.path}"
         return res
 
 

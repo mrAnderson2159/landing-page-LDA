@@ -7,6 +7,7 @@ for field in dir(models):
     if field[0].isupper():
         model = getattr(models, field)
         try:
+            # print(model)
             admin.site.register(model)
             print(f'Registered "{field}" model to admin site')
         except AlreadyRegistered:
