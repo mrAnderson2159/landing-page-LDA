@@ -98,5 +98,5 @@ def format_EN_date(date_object: Union[datetime, Date]) -> str:
     return date_object.strftime("%A %d of %B %Y")
 
 
-def latest_text_layout_mod():
+def latest_text_layout_mod(request):
      return TextLayout.objects.get(name='text_layout').date_modified
