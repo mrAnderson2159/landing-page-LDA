@@ -29,6 +29,7 @@ def jsonify(models: list[Type[Model]]) -> str:
     fields_filtered = list(map(lambda o: o['fields'], objectified))
     return json.dumps(fields_filtered)
 
+
 def standard_view(name):
     return path(f'{name}/', getattr(views, name), name=name)
 
@@ -80,7 +81,8 @@ def block_user(*, request=None, ip=None) -> Blacklist:
         red('BLOCKED USER', blocked)
     return blocked
 
-def format_IT_date(date_object: Union [datetime, Date]) -> str:
+
+def format_IT_date(date_object: Union[datetime, Date]) -> str:
     if isinstance(date_object, Date):
         date_object = date_object.date
     giorni = tuple(map(str.capitalize, "lunedì martedì mercoledì giovedì venerdì sabato domenica".split(' ')))
@@ -89,7 +91,10 @@ def format_IT_date(date_object: Union [datetime, Date]) -> str:
     mesi = list(map(str.capitalize, mesi.split(' ')))
     return f"{giorni[date_object.weekday()]} {date_object.day} {mesi[date_object.month - 1]} {date_object.year}"
 
+
 def format_EN_date(date_object: Union[datetime, Date]) -> str:
     if isinstance(date_object, Date):
         date_object = date_object.date
     return date_object.strftime("%A %d of %B %Y")
+
+

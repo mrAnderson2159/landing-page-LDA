@@ -15,7 +15,7 @@ export default {
     TheHeader,
     CarSelectionPageBody,
   },
-  inject: ["showHeader", "localhost", "delay"],
+  inject: ["showHeader", "localhost", "delay", "textValue"],
   created() {
     window.scrollTo({ top: 0 });
     this.getCars();
@@ -38,8 +38,7 @@ export default {
   },
   provide() {
     return {
-      leadMessage:
-        "Scegli la macchina che preferisci quindi lascia un recapito per essere ricontattato",
+      leadMessage: this.textValue("carSelectionPageLeadMessage"),
     };
   },
   mounted() {},

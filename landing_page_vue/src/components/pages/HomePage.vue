@@ -14,7 +14,8 @@ export default {
     HomePageBody,
     HomePageFooter,
   },
-  inject: ["env"],
+  mounted() {},
+  inject: ["env", "textValue"],
   data() {
     return {};
   },
@@ -28,23 +29,22 @@ export default {
   provide() {
     return {
       presentation: {
-        title: "Noleggia una macchina di lusso",
-        subtitle: "Scegli l'auto, lascia un recapito e pensiamo a tutto noi!",
-        submit: "Scegli una macchina",
+        title: this.textValue("homepageTitle"),
+        subtitle: this.textValue("homePageSubtitle"),
+        submit: this.textValue("homePageSubmit"),
       },
       messages: [
         new TheInstructionsMessage(
-          "Sceglila",
-          "Seleziona una macchina tra quelle disponibili nel nostro catalogo"
+          this.textValue("homePageInstruction1title"),
+          this.textValue("homePageInstruction1message")
         ),
         new TheInstructionsMessage(
-          "Scrivici",
-          "Inviaci un recapito telefonico o una mail su cui possiamo contattarti per concordare \
-          il preventivo"
+          this.textValue("homePageInstruction2title"),
+          this.textValue("homePageInstruction2message")
         ),
         new TheInstructionsMessage(
-          "Ricevila",
-          "Ricevi la macchina chiavi in mano e restituiscila a fine periodo"
+          this.textValue("homePageInstruction3title"),
+          this.textValue("homePageInstruction3message")
         ),
       ],
       mainBackground: this.mainBackground(),

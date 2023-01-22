@@ -102,3 +102,11 @@ class Whitelist(models.Model):
             res = f"{self.client.name} - "
 
         return res + self.ipaddress
+
+
+class TextLayout(models.Model):
+    name = models.CharField(max_length=32, unique=True)
+    data = models.JSONField(max_length=65536)
+
+    def __str__(self):
+        return self.name

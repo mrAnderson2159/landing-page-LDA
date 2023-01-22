@@ -27,5 +27,6 @@ urlpatterns = [
     standard_view("user_logout"),
     encrypted_view("requests_management"),
     encrypted_view("text_management"),
+    encrypted_view("text_layout"),
     path('<path:url>', botcatcher, name='default')
 ]

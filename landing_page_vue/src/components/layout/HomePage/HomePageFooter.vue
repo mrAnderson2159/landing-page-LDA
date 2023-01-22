@@ -39,13 +39,13 @@
     <div id="mobile-links" class="lead">
       <ul class="text-light">
         <li>
-          <a href="#">Chi siamo</a>
+          <a :href="firstLink.url">{{ firstLink.text }}</a>
         </li>
         <li>
-          <a href="#">Termini e Condizioni</a>
+          <a :href="secondLink.url">{{ secondLink.text }}</a>
         </li>
         <li>
-          <a href="#">Note Legali</a>
+          <a :href="thirdLink.url">{{ thirdLink.text }}</a>
         </li>
       </ul>
     </div>
@@ -66,7 +66,7 @@ export default {
     BaseBackgroundShape,
     BasePresentation,
   },
-  inject: ["presentation"],
+  inject: ["presentation", "text"],
   mounted() {
     window.addEventListener("resize", this.resize);
   },
@@ -83,6 +83,9 @@ export default {
       theta_1: this.computeTheta(x * this.trianglesProportion[0], y),
       theta_2: this.computeTheta(x * this.trianglesProportion[1], y, -1),
       color: "#271E16",
+      firstLink: this.link("homePageFooterLink1"),
+      secondLink: this.link("homePageFooterLink2"),
+      thirdLink: this.link("homePageFooterLink3"),
     };
   },
   props: {
@@ -158,6 +161,13 @@ export default {
 
     rad(degrees) {
       return (degrees * Math.PI) / 180;
+    },
+
+    link(field) {
+      return {
+        text: this.text(field).value,
+        url: this.text(field).url,
+      };
     },
   },
 };

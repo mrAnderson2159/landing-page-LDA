@@ -17,21 +17,21 @@ export default {
   components: {
     TheHeader,
   },
-  inject: ["showHeader"],
+  inject: ["showHeader", "textValue"],
   created() {
     window.scrollTo({ top: 0 });
   },
   data() {
     return {
       thanksMessages: [
-        "Grazie per averci scelto",
-        "Ti contatteremo entro 24H per un preventivo",
-        "A presto!",
+        this.textValue("feedbackPageThankMessage1"),
+        this.textValue("feedbackPageThankMessage2"),
+        this.textValue("feedbackPageThankMessage3"),
       ],
       failureMessages: [
-        "Purtroppo qualcosa è andato storto",
-        "Non siamo riusciti ad inoltrare la richiesta",
-        "Ti preghiamo di riprovare più tardi",
+        this.textValue("feedbackPageFailureMessage1"),
+        this.textValue("feedbackPageFailureMessage2"),
+        this.textValue("feedbackPageFailureMessage3"),
       ],
     };
   },

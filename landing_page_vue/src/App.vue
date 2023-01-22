@@ -1,6 +1,8 @@
 <template>
-  <component :is="currentPage" v-bind="componentProps" />
-  <the-whatsapp-button number="393933003009" />
+  <div v-if="textLayout">
+    <component :is="currentPage" v-bind="componentProps" />
+    <the-whatsapp-button :number="phoneNumber" />
+  </div>
 </template>
 
 <script>
@@ -20,11 +22,20 @@ export default {
     FeedbackPage,
     TheWhatsappButton,
   },
+  created() {
+    this.getTextLayout();
+  },
   data() {
     return {
       currentPage: "HomePage",
       componentProps: null,
+      textLayout: null,
     };
+  },
+  computed: {
+    phoneNumber() {
+      return this.textLayout.whatsappPhoneNumber.value;
+    },
   },
   methods: {
     togglePage(page) {
@@ -57,6 +68,10 @@ export default {
         ? "http://localhost:9000"
         : "http://15.188.51.48/";
     },
+    async getTextLayout() {
+      const text = await axios(urlServer(this.localhost(), "text_layout"));
+      this.textLayout = JSON.parse(text.data);
+    },
   },
   provide() {
     return {
@@ -68,6 +83,8 @@ export default {
       localhost: this.localhost(),
       showHeader: true,
       delay: (ms) => new Promise((res) => setTimeout(res, ms)),
+      textValue: (field) => this.textLayout[field].value,
+      text: (field) => this.textLayout[field],
     };
   },
   mounted() {},

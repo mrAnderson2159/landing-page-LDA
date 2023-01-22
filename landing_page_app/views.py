@@ -1,3 +1,4 @@
+import json
 import re
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,6 +19,7 @@ from .models import *
 from .colors import yellow, green
 from .email_sender import send_admin_email
 from .forms import LoginForm
+from .default_text_layout import TEXT_LAYOUT
 
 
 # Create your views here.
@@ -156,3 +158,9 @@ def requests_management(request):
 @login_required
 def text_management(request):
     return render(request, 'landing_page_app/text_management.html')
+
+@unlocked
+def text_layout(request):
+    if request.method == 'GET':
+        text_layout = TextLayout.objects.get(name='text_layout')
+        return JsonResponse(text_layout.data, safe=False)
