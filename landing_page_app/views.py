@@ -20,7 +20,6 @@ from .models import *
 from .colors import yellow, green
 from .email_sender import send_admin_email
 from .forms import LoginForm
-from .default_text_layout import TEXT_LAYOUT
 
 
 # Create your views here.
