@@ -136,15 +136,18 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('requests_management'))
+                return HttpResponseRedirect(reverse('text_management'))
             else:
                 return HttpResponse("ACCOUNT NOT ACTIVE")
         else:
             print(f"Someone tried to login and failed: {username}")
             return HttpResponse("INVALID USERNAME AND PASSWORD")
     else:
-        context = {'form': LoginForm()}
-        return render(request, 'landing_page_app/login.html', context)
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('text_management'))
+        else:
+            context = {'form': LoginForm()}
+            return render(request, 'landing_page_app/login.html', context)
 
 
 @login_required
