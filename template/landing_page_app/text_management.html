@@ -32,11 +32,16 @@
                 />
             </div>
             {% endfor %}
-            <input
+            <div class='container m-0 p-0'>
+                <div class="form-text float-start text-danger pt-2">
+                    <span id="helptext" class="align-middle"></span>
+                </div>
+                <input
                 type="submit"
                 value="Modifica il sito"
                 class="btn btn-primary float-end my-3"
             />
+            </div>
         </form>
         <div id="bottom-space"></div>
     </div>
@@ -61,11 +66,38 @@
 {% endblock body_block %} 
 
 {% block script_block %}
-<script>
-    $(".form-field").each((i, el) => {
-        el.style.backgroundColor = i % 2 == 0 ? "#f0f1f2" : "#f9fafb";
-    });
-</script>
+    {% if type == 'modify' %}
+    <script>
+        function convertFormToJSON(form) {
+            const array = $(form).serializeArray(); // Encodes the set of form elements as an array of names and values.
+            const json = {};
+            $.each(array, function () {
+                json[this.name] = this.value || "";
+            });
+            return JSON.stringify(json);
+        }
+
+        const original = convertFormToJSON($('form')[0]);
+
+        $(".form-field").each((i, el) => {
+            el.style.backgroundColor = i % 2 == 0 ? "#f0f1f2" : "#f9fafb";
+        });
+
+        $(".form-control").focus(() => $('#helptext').text(''))
+
+        $('form').submit((event) => {
+            const jsonForm = convertFormToJSON(event.target);
+            if (original === jsonForm) {
+                $('#helptext').text("Nessuna modifica effettuata");
+                event.preventDefault();
+            } 
+        })
+    </script>
+    {% elif type == 'thanks'%}
+    <script>
+        setTimeout(() => window.location.href = {% url 'text_management' %}, {{ redirect_time }});
+    </script>
+    {% endif %}
 {% endblock script_block %} 
 
 {% block style_block %}

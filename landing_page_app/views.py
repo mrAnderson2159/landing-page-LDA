@@ -1,25 +1,25 @@
 import json
 import re
+from random import randint
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.utils import IntegrityError
 from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import last_modified
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-
 from rest_framework.parsers import JSONParser
 
+from .colors import yellow, green, c_yellow, c_cyan
 from .decorators import unlocked
-from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip, latest_text_layout_mod
-from .models import *
-from .colors import yellow, green
 from .email_sender import send_admin_email
 from .forms import LoginForm
+from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip, latest_text_layout_mod
+from .models import *
 
 
 # Create your views here.
@@ -158,7 +158,11 @@ def requests_management(request):
 
 @login_required
 def text_management(request):
-    context = {'fields': json.loads(TextLayout.objects.get(name='text_layout').data), 'type':'modify'}
+    raw_json = TextLayout.objects.get(name='text_layout').data
+    context = {
+        'fields': json.loads(raw_json),
+        'type':'modify',
+    }
     if request.method == 'POST':
         data = request.POST
         text_layout = TextLayout.objects.get(name='text_layout')
@@ -170,20 +174,18 @@ def text_management(request):
         diffs = {key: (context['fields'][key]['value'], text_layout_data[key]['value']) for key in text_layout_data.keys() if context['fields'][key] != text_layout_data[key]}
 
         if len(diffs):
-            print('TEXT LAYOUT UPDATED\nDIFFERENCES')
+            green('TEXT LAYOUT UPDATED\n\nDIFFERENCES:')
             for key, value in diffs.items():
-                print(f'{key}:\t{value[0]} -> {value[1]}')
+                print(f'\t{key}:\t{c_cyan(value[0])} {c_yellow("->")} {c_cyan(value[1])}')
+            print()
+
             text_layout.save()
-            context['fields'] = text_layout_data
-            return render(request, 'landing_page_app/text_management.html', {"type":"thanks"})
+
+        context = {"type":"thanks", "redirect_time": randint(1000, 3000)}
+        return render(request, 'landing_page_app/text_management.html', context)
 
     return render(request, 'landing_page_app/text_management.html', context)
 
-
-@login_required
-@unlocked
-def thanks_text_layout(request):
-    return render(request, 'landing_page_app/text_management.html', {"type":"thanks"})
 
 @unlocked
 def text_layout(request):

@@ -34,9 +34,9 @@
                 >
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         {% if user.is_authenticated %}
-                        <li class="nav-item me-4">
+                        {% comment %} <li class="nav-item me-4">
                             <a class="nav-link active" href="{% url 'requests_management' %}">Gestione Richieste</a>
-                        </li>
+                        </li> {% endcomment %}
                         <li class="nav-item me-4">
                             <a class="nav-link active" href="{% url "text_management" %}">Personalizzazione Testi</a>
                         </li>
