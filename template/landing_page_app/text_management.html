@@ -1,12 +1,95 @@
-{% extends 'landing_page_app/administration.html' %}
+{% extends 'landing_page_app/administration.html' %} 
 {% block head_block %}
-    <title>Personalizzazione Testi</title>
-{% endblock head_block %}
-
+<title>Personalizzazione Testi</title>
+{% endblock head_block %} 
 
 {% block body_block %}
-{% endblock body_block %}
-
+    {% if type == 'modify' %}
+    <div id="form-container" class="container-fluid w-75">
+        <div class="p-5 mb-5 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Gestione dei campi di testo</h1>
+                <p class="fs-4 lead">
+                    Utilizza questa sezione per modificare le parti testuali del
+                    sito internet. Quando hai finito invia le modifiche. Aggiorna la
+                    pagina del sito per vedere i cambiamenti.
+                </p>
+            </div>
+        </div>
+        <form method="POST">
+            {% csrf_token %} 
+            {% for field, item in fields.items %}
+            <div class="mb-5 form-field">
+                <label for="{{ field }}" class="form-label">
+                    {{ item.label }}
+                </label>
+                <input
+                    id="{{ field }}"
+                    type="text"
+                    name="{{ field }}"
+                    value="{{ item.value }}"
+                    class="form-control"
+                />
+            </div>
+            {% endfor %}
+            <input
+                type="submit"
+                value="Modifica il sito"
+                class="btn btn-primary float-end my-3"
+            />
+        </form>
+        <div id="bottom-space"></div>
+    </div>
+    {% elif type == 'thanks' %}
+    <div class="container-fluid w-75">
+        <div class="p-5 mb-5 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Gestione dei campi di testo</h1>
+                <p class="fs-4 lead">
+                    Le tue modifiche sono state inviate al server. A breve verrai reindirizzato
+                    alla pagina di modifica.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock body_block %} 
 
 {% block script_block %}
-{% endblock script_block %}
+<script>
+    $(".form-field").each((i, el) => {
+        el.style.backgroundColor = i % 2 == 0 ? "#f0f1f2" : "#f9fafb";
+    });
+</script>
+{% endblock script_block %} 
+
+{% block style_block %}
+<style lang="scss">
+    #form-container form {
+        font-size: 2em;
+    }
+
+    #form-container input {
+        font-size: 0.75em;
+    }
+
+    h1 {
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    #bottom-space {
+        width: 100%;
+        height: 40vh;
+    }
+</style>
+{% endblock style_block %}

@@ -36,8 +36,8 @@ TEXT_LAYOUT = {
         "Titolo del terzo messaggio di istruzioni della Homepage"
     ),
     'homePageInstruction3message': text_field(
-        "Seleziona una macchina tra quelle disponibili nel nostro catalogo",
-        "Ricevi la macchina chiavi in mano e restituiscila a fine periodo"
+        "Ricevi la macchina chiavi in mano e restituiscila a fine periodo",
+        "Testo del terzo messaggio di istruzioni della Homepage"
     ),
     'homePageFooterLink1': text_field(
         "Chi siamo",

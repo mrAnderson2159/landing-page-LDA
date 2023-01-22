@@ -158,7 +158,32 @@ def requests_management(request):
 
 @login_required
 def text_management(request):
-    return render(request, 'landing_page_app/text_management.html')
+    context = {'fields': json.loads(TextLayout.objects.get(name='text_layout').data), 'type':'modify'}
+    if request.method == 'POST':
+        data = request.POST
+        text_layout = TextLayout.objects.get(name='text_layout')
+        text_layout_data = json.loads(text_layout.data)
+        for key, value in data.items():
+            if key in text_layout_data:
+                text_layout_data[key]['value'] = value
+        text_layout.data = json.dumps(text_layout_data)
+        diffs = {key: (context['fields'][key]['value'], text_layout_data[key]['value']) for key in text_layout_data.keys() if context['fields'][key] != text_layout_data[key]}
+
+        if len(diffs):
+            print('TEXT LAYOUT UPDATED\nDIFFERENCES')
+            for key, value in diffs.items():
+                print(f'{key}:\t{value[0]} -> {value[1]}')
+            text_layout.save()
+            context['fields'] = text_layout_data
+            return render(request, 'landing_page_app/text_management.html', {"type":"thanks"})
+
+    return render(request, 'landing_page_app/text_management.html', context)
+
+
+@login_required
+@unlocked
+def thanks_text_layout(request):
+    return render(request, 'landing_page_app/text_management.html', {"type":"thanks"})
 
 @unlocked
 def text_layout(request):
