@@ -9,7 +9,7 @@ from django.core.serializers import serialize
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import path
-from .models import Blacklist, Date, Whitelist
+from .models import Blacklist, Date, Whitelist, TextLayout
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green
 
 
@@ -98,3 +98,5 @@ def format_EN_date(date_object: Union[datetime, Date]) -> str:
     return date_object.strftime("%A %d of %B %Y")
 
 
+def latest_text_layout_mod():
+     return TextLayout.objects.get(name='text_layout').date_modified

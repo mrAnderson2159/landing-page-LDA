@@ -107,6 +107,7 @@ class Whitelist(models.Model):
 class TextLayout(models.Model):
     name = models.CharField(max_length=32, unique=True)
     data = models.JSONField(max_length=65536)
+    date_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name

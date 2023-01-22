@@ -7,6 +7,7 @@ from django.db.utils import IntegrityError
 from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import last_modified
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -14,7 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.parsers import JSONParser
 
 from .decorators import unlocked
-from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip
+from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip, latest_text_layout_mod
 from .models import *
 from .colors import yellow, green
 from .email_sender import send_admin_email
@@ -23,6 +24,7 @@ from .default_text_layout import TEXT_LAYOUT
 
 
 # Create your views here.
+@last_modified(last_modified_func=latest_text_layout_mod)
 @unlocked
 def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
