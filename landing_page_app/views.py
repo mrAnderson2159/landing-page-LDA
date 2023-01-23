@@ -102,6 +102,7 @@ def form(request: WSGIRequest):
             ip: IpAddress = IpAddress.objects.get(address=get_client_ip(request))
             ip.increase_subscriptions()
             ip.save()
+            green(f"{ip} SUBSCRIPTED")
             return JsonResponse({'code': 0}, safe=False)
 
 
