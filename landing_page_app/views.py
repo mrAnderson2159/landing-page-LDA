@@ -58,7 +58,7 @@ def form(request: WSGIRequest):
         start = Date.objects.get_or_create(date=start)[0]
         stop = Date.objects.get_or_create(date=stop)[0]
         query = user = None
-        query_created = user_created = False
+        user_created = False
 
         try:
             user, user_created = Client.objects.get_or_create(name=username, email=email)
@@ -82,7 +82,6 @@ def form(request: WSGIRequest):
             except IntegrityError as e:
                 yellow(e)
                 errors.append('QUERY_EXISTS')
-
 
         if len(errors):
             e = {'name': 'FORM_ERROR', 'code': 1, 'errors': errors}
@@ -110,12 +109,12 @@ def botcatcher(request, url):
         green(f"{w} WHITELIST PASS")
     except ObjectDoesNotExist:
         forbidden = {
-        r'php', r'admin/', r'debug', r'^\.', r'actuator', r'api', r'console',
-        r'owa', r'solr', r'wp-content', r'bedesk', r'metrics', r'test',
-        r'v2', r'HNAP1', r'config', r'druid', r'hudson', r'mat', r'mgmt',
-        r'portal', r'robots', r'\.xml'
+            r'php', r'admin/', r'debug', r'^\.', r'actuator', r'api', r'console',
+            r'owa', r'solr', r'wp-content', r'bedesk', r'metrics', r'test',
+            r'v2', r'HNAP1', r'config', r'druid', r'hudson', r'mat', r'mgmt',
+            r'portal', r'robots', r'\.xml'
 
-    }
+        }
 
         for pattern in forbidden:
             if re.search(pattern, url):
@@ -126,6 +125,7 @@ def botcatcher(request, url):
     raise Http404
 
 
+@unlocked
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -151,20 +151,25 @@ def user_login(request):
 
 
 @login_required
+@unlocked
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
+
 @login_required
+@unlocked
 def requests_management(request):
     return render(request, 'landing_page_app/requests_management.html')
 
+
 @login_required
+@unlocked
 def text_management(request):
     raw_json = TextLayout.objects.get(name='text_layout').data
     context = {
         'fields': json.loads(raw_json),
-        'type':'modify',
+        'type': 'modify',
     }
     if request.method == 'POST':
         data = request.POST
@@ -174,7 +179,8 @@ def text_management(request):
             if key in text_layout_data:
                 text_layout_data[key]['value'] = value
         text_layout.data = json.dumps(text_layout_data)
-        diffs = {key: (context['fields'][key]['value'], text_layout_data[key]['value']) for key in text_layout_data.keys() if context['fields'][key] != text_layout_data[key]}
+        diffs = {key: (context['fields'][key]['value'], text_layout_data[key]['value']) for key in
+                 text_layout_data.keys() if context['fields'][key] != text_layout_data[key]}
 
         if len(diffs):
             green('TEXT LAYOUT UPDATED\n\nDIFFERENCES:')
@@ -184,7 +190,7 @@ def text_management(request):
 
             text_layout.save()
 
-        context = {"type":"thanks", "redirect_time": randint(1000, 3000)}
+        context = {"type": "thanks", "redirect_time": randint(1000, 3000)}
         return render(request, 'landing_page_app/text_management.html', context)
 
     return render(request, 'landing_page_app/text_management.html', context)

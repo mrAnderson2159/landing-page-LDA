@@ -1,7 +1,11 @@
 from .vue_text_layout import text_field
 
 TEXT_LAYOUT = {
-    'whatsappPhoneNumber': text_field(393933003009, "Numero di telefono di Whatsapp"),
+    'whatsappPhoneNumber': text_field(
+        '',
+        "Numero di telefono di Whatsapp",
+        placeholder="Es. +39 371 23 45 451 scritto tutto attaccato 393712345451"
+    ),
     'homepageTitle': text_field(
         "Noleggia una macchina di lusso",
         "Titolo della Homepage"
