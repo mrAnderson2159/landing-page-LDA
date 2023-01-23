@@ -29,7 +29,7 @@ def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
 
 
-@unlocked(increase_views=True)
+@unlocked(increase_views=False)
 def cars(request: WSGIRequest):
     if request.method == 'GET':
         car_list = Car.objects.all()
@@ -201,7 +201,7 @@ def text_management(request):
     return render(request, 'landing_page_app/text_management.html', context)
 
 
-@unlocked(increase_views=False)
+@unlocked(increase_views=True)
 def text_layout(request):
     if request.method == 'GET':
         text_layout = TextLayout.objects.get(name='text_layout')
