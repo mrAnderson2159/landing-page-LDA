@@ -13,7 +13,7 @@ def unlocked(function):
     def wrapper(request, *args, **kwargs):
         client_ip = get_client_ip(request)
         try:
-            blocked_ip = Blacklist.objects.get(ipaddress=client_ip)
+            blocked_ip = Blacklist.objects.get(ipaddress_text=client_ip)
             if blocked_ip.blocked_forever:
                 red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
                 return HttpResponse(f"<h1><strong>YOU ARE BLOCKED FOREVER</strong></h1>\n", status=403)
