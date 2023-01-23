@@ -24,12 +24,12 @@ from .models import *
 
 # Create your views here.
 @last_modified(last_modified_func=latest_text_layout_mod)
-@unlocked
+@unlocked(increase_views=False)
 def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
 
 
-@unlocked
+@unlocked(increase_views=True)
 def cars(request: WSGIRequest):
     if request.method == 'GET':
         car_list = Car.objects.all()
@@ -37,7 +37,7 @@ def cars(request: WSGIRequest):
 
 
 @csrf_exempt
-@unlocked
+@unlocked(increase_views=False)
 def form(request: WSGIRequest):
     if request.method == 'POST':
         data = JSONParser().parse(request)
@@ -100,12 +100,12 @@ def form(request: WSGIRequest):
             for field in (car, start, stop, user, query):
                 field.save()
             ip: IpAddress = IpAddress.objects.get(address=get_client_ip(request))
-            ip.increment_subscriptions()
+            ip.increase_subscriptions()
             ip.save()
             return JsonResponse({'code': 0}, safe=False)
 
 
-@unlocked
+@unlocked(increase_views=False)
 def botcatcher(request, url):
     address = get_client_ip(request)
     ip, _ = IpAddress.objects.get_or_create(address=address)
@@ -130,7 +130,7 @@ def botcatcher(request, url):
     raise Http404
 
 
-@unlocked
+@unlocked(increase_views=False)
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -156,20 +156,20 @@ def user_login(request):
 
 
 @login_required
-@unlocked
+@unlocked(increase_views=False)
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
 
 @login_required
-@unlocked
+@unlocked(increase_views=False)
 def requests_management(request):
     return render(request, 'landing_page_app/requests_management.html')
 
 
 @login_required
-@unlocked
+@unlocked(increase_views=False)
 def text_management(request):
     raw_json = TextLayout.objects.get(name='text_layout').data
     context = {
@@ -201,7 +201,7 @@ def text_management(request):
     return render(request, 'landing_page_app/text_management.html', context)
 
 
-@unlocked
+@unlocked(increase_views=False)
 def text_layout(request):
     if request.method == 'GET':
         text_layout = TextLayout.objects.get(name='text_layout')
