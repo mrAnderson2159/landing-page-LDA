@@ -20,6 +20,7 @@ def unlocked(*,
                 blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)
                 if ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
                     blacklist_ip.block_forever()
+                    red(f'{ip} surpassed 10 bad requests, BLOCKED FOREVER')
                 if blacklist_ip.blocked_forever:
                     red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
                     return HttpResponse(f"<h1><strong>YOU ARE BLOCKED FOREVER</strong></h1>\n", status=403)
