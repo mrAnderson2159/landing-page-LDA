@@ -34,8 +34,7 @@ def unlocked(function):
             return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {format_EN_date(expiration_date).upper()}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
             ip.increment_views()
-            if created:
-                ip.save()
+            ip.save()
             green(client_ip)
             return function(request, *args, **kwargs)
     return wrapper
