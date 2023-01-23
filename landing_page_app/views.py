@@ -101,6 +101,7 @@ def form(request: WSGIRequest):
                 field.save()
             ip: IpAddress = IpAddress.objects.get(address=get_client_ip(request))
             ip.increment_subscriptions()
+            ip.save()
             return JsonResponse({'code': 0}, safe=False)
 
 
