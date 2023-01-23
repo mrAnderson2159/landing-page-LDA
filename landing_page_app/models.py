@@ -69,6 +69,7 @@ class IpAddress(models.Model):
     client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     blocked = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
+    bad_requests = models.IntegerField(default=0)
     subscriptions = models.IntegerField(default=0)
 
     def increase_views(self):
@@ -76,6 +77,9 @@ class IpAddress(models.Model):
 
     def increase_subscriptions(self):
         self.subscriptions += 1
+
+    def increase_bad_requests(self):
+        self.bad_requests += 1
 
     def block(self):
         self.blocked = True
@@ -114,6 +118,9 @@ class Blacklist(models.Model):
     record = models.DateField(auto_now_add=True)
     path = models.CharField(max_length=512, blank=True)
     blocked_forever = models.BooleanField(default=False)
+
+    def block_forever(self):
+        self.blocked_forever = True
 
     def __str__(self):
         res = ''

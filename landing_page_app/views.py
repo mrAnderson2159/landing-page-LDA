@@ -24,12 +24,12 @@ from .models import *
 
 # Create your views here.
 @last_modified(last_modified_func=latest_text_layout_mod)
-@unlocked(increase_views=False)
+@unlocked()
 def index(request: WSGIRequest):
     return render(request, 'landing_page_app/index.html')
 
 
-@unlocked(increase_views=False)
+@unlocked()
 def cars(request: WSGIRequest):
     if request.method == 'GET':
         car_list = Car.objects.all()
@@ -37,7 +37,7 @@ def cars(request: WSGIRequest):
 
 
 @csrf_exempt
-@unlocked(increase_views=False)
+@unlocked()
 def form(request: WSGIRequest):
     if request.method == 'POST':
         data = JSONParser().parse(request)
@@ -105,7 +105,7 @@ def form(request: WSGIRequest):
             return JsonResponse({'code': 0}, safe=False)
 
 
-@unlocked(increase_views=False)
+@unlocked(increase_bad_requests=True)
 def botcatcher(request, url):
     address = get_client_ip(request)
     ip, _ = IpAddress.objects.get_or_create(address=address)
@@ -117,7 +117,7 @@ def botcatcher(request, url):
             r'php', r'admin/', r'debug', r'^\.', r'actuator', r'api', r'console',
             r'owa', r'solr', r'wp-content', r'bedesk', r'metrics', r'test',
             r'v2', r'HNAP1', r'config', r'druid', r'hudson', r'mat', r'mgmt',
-            r'portal', r'robots', r'\.xml'
+            r'portal', r'robots', r'\.xml', r'apple'
 
         }
 
@@ -130,7 +130,7 @@ def botcatcher(request, url):
     raise Http404
 
 
-@unlocked(increase_views=False)
+@unlocked()
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -156,20 +156,20 @@ def user_login(request):
 
 
 @login_required
-@unlocked(increase_views=False)
+@unlocked()
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
 
 @login_required
-@unlocked(increase_views=False)
+@unlocked()
 def requests_management(request):
     return render(request, 'landing_page_app/requests_management.html')
 
 
 @login_required
-@unlocked(increase_views=False)
+@unlocked()
 def text_management(request):
     raw_json = TextLayout.objects.get(name='text_layout').data
     context = {

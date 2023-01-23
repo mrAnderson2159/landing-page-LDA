@@ -7,7 +7,9 @@ from .models import Blacklist, IpAddress
 from .colors import red, green
 
 
-def unlocked(*, increase_views: bool):
+def unlocked(*,
+             increase_views: bool = False,
+             increase_bad_requests: bool = False):
     def init(function):
         BLOCK_DAYS = 7
 
@@ -16,6 +18,8 @@ def unlocked(*, increase_views: bool):
             ip: IpAddress = IpAddress.objects.get_or_create(address=client_ip)[0]
             try:
                 blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)
+                if ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
+                    blacklist_ip.block_forever()
                 if blacklist_ip.blocked_forever:
                     red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
                     return HttpResponse(f"<h1><strong>YOU ARE BLOCKED FOREVER</strong></h1>\n", status=403)
@@ -32,10 +36,13 @@ def unlocked(*, increase_views: bool):
                 red(f'{request} rejected from user {client_ip} due to block in date {format_EN_date(record_date)}')
                 return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {format_EN_date(expiration_date).upper()}</strong></h1>\n", status=403)
             except ObjectDoesNotExist:
+                green(client_ip)
+                return function(request, *args, **kwargs)
+            finally:
+                if increase_bad_requests:
+                    ip.increase_bad_requests()
                 if increase_views:
                     ip.increase_views()
                 ip.save()
-                green(client_ip)
-                return function(request, *args, **kwargs)
         return wrapper
     return init
