@@ -74,18 +74,23 @@ class IpAddress(models.Model):
 
     def increase_views(self):
         self.views += 1
+        self.save()
 
     def increase_subscriptions(self):
         self.subscriptions += 1
+        self.save()
 
     def increase_bad_requests(self):
         self.bad_requests += 1
+        self.save()
 
     def block(self):
         self.blocked = True
+        self.save()
 
     def unlock(self):
         self.blocked = False
+        self.save()
 
     def __str__(self):
         res = ''
@@ -121,6 +126,7 @@ class Blacklist(models.Model):
 
     def block_forever(self):
         self.blocked_forever = True
+        self.save()
 
     def __str__(self):
         res = ''

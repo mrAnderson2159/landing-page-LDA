@@ -22,6 +22,8 @@ def unlocked(*,
                     blacklist_ip.block_forever()
                     blacklist_ip.save()
                     red(f'{ip} surpassed 10 bad requests, BLOCKED FOREVER')
+                if increase_bad_requests:
+                    ip.increase_bad_requests()
                 if blacklist_ip.blocked_forever:
                     red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
                     return HttpResponse(f"<h1><strong>YOU ARE BLOCKED FOREVER</strong></h1>\n", status=403)
@@ -39,12 +41,8 @@ def unlocked(*,
                 return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {format_EN_date(expiration_date).upper()}</strong></h1>\n", status=403)
             except ObjectDoesNotExist:
                 green(client_ip)
-                return function(request, *args, **kwargs)
-            finally:
-                if increase_bad_requests:
-                    ip.increase_bad_requests()
                 if increase_views:
                     ip.increase_views()
-                ip.save()
+                return function(request, *args, **kwargs)
         return wrapper
     return init
