@@ -79,7 +79,7 @@ def block_user(*, request=None, ip=None) -> Blacklist:
             Whitelist.objects.get(ipaddress=ip)
             green(f"{ip} not blocked because in whitelist")
         except ObjectDoesNotExist:
-            blocked = Blacklist.objects.get(ipaddress=ip)
+            blocked = Blacklist.objects.get_or_create(ipaddress=ip)
             blocked.path = request.path
             ip.block()
             blocked.save()
