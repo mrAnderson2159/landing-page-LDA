@@ -104,8 +104,10 @@ def form(request: WSGIRequest):
 
 @unlocked
 def botcatcher(request, url):
+    address = get_client_ip(request)
+    ip, _ = IpAddress.objects.get_or_create(address=address)
     try:
-        w = Whitelist.objects.get(ipaddress=get_client_ip(request))
+        w = Whitelist.objects.get(ipaddress=ip)
         green(f"{w} WHITELIST PASS")
     except ObjectDoesNotExist:
         forbidden = {
@@ -121,7 +123,7 @@ def botcatcher(request, url):
                 block_user(request=request)
                 return HttpResponse("<h1><strong>MALICIOUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n", status=403)
 
-        yellow(f'MAYBE TO BE BLOCKED USER {get_client_ip(request)} for {request}')
+        yellow(f'MAYBE TO BE BLOCKED USER {ip} for {request}')
     raise Http404
 
 

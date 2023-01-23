@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.http import HttpResponse
 
 from .functions import get_client_ip, date_to_datetime, format_EN_date
-from .models import Blacklist
+from .models import Blacklist, IpAddress
 from .colors import red, green
 
 
@@ -12,23 +12,29 @@ def unlocked(function):
 
     def wrapper(request, *args, **kwargs):
         client_ip = get_client_ip(request)
+        ip_tuple = IpAddress.objects.get_or_create(address=client_ip)
+        ip: IpAddress = ip_tuple[0]
+        created = ip_tuple[1]
         try:
-            blocked_ip = Blacklist.objects.get(ipaddress_text=client_ip)
-            if blocked_ip.blocked_forever:
+            blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)
+            if blacklist_ip.blocked_forever:
                 red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
                 return HttpResponse(f"<h1><strong>YOU ARE BLOCKED FOREVER</strong></h1>\n", status=403)
-            record_date = date_to_datetime(blocked_ip.record)
+            record_date = date_to_datetime(blacklist_ip.record)
             block_days = timedelta(days=BLOCK_DAYS)
             today = datetime.today()
             expiration_date = record_date + block_days
 
             if expiration_date < today:
-                blocked_ip.delete()
+                blacklist_ip.delete()
+                ip.unlock()
                 return function(request, *args, **kwargs)
 
             red(f'{request} rejected from user {client_ip} due to block in date {format_EN_date(record_date)}')
             return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {format_EN_date(expiration_date).upper()}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
+            if created:
+                ip.save()
             green(client_ip)
             return function(request, *args, **kwargs)
     return wrapper

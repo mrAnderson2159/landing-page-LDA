@@ -9,7 +9,7 @@ from django.core.serializers import serialize
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import path
-from .models import Blacklist, Date, Whitelist, TextLayout
+from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green
 
 
@@ -71,14 +71,25 @@ def block_user(*, request=None, ip=None) -> Blacklist:
         ip = get_client_ip(request)
     elif not ip:
         raise TypeError("block_user() needs at least 1 keyword argument: 'request' or 'ip'")
+    ip, created = IpAddress.objects.get_or_create(address=ip)
+    ip: IpAddress
     blocked: Blacklist = None
-    try:
-        Whitelist.objects.get(ipaddress_text=ip)
-        green(f"{ip} not blocked because in whitelist")
-    except ObjectDoesNotExist:
-        blocked = Blacklist.objects.get_or_create(ipaddress_text=ip, path=request.path)[0]
+    if not created:
+        try:
+            Whitelist.objects.get(ipaddress=ip)
+            green(f"{ip} not blocked because in whitelist")
+        except ObjectDoesNotExist:
+            blocked = Blacklist.objects.get(ipaddress=ip)
+            blocked.path = request.path
+            ip.block()
+            blocked.save()
+            red('BLOCKED USER', blocked)
+    else:
+        blocked = Blacklist.objects.get(ipaddress=ip, path=request.path)
         blocked.save()
+        ip.block()
         red('BLOCKED USER', blocked)
+    ip.save()
     return blocked
 
 
