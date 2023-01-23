@@ -33,6 +33,7 @@ def unlocked(function):
             red(f'{request} rejected from user {client_ip} due to block in date {format_EN_date(record_date)}')
             return HttpResponse(f"<h1><strong>YOU ARE BLOCKED UNTIL DAY {format_EN_date(expiration_date).upper()}</strong></h1>\n", status=403)
         except ObjectDoesNotExist:
+            ip.increment_views()
             if created:
                 ip.save()
             green(client_ip)

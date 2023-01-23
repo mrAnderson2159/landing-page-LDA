@@ -99,6 +99,8 @@ def form(request: WSGIRequest):
             })
             for field in (car, start, stop, user, query):
                 field.save()
+            ip: IpAddress = IpAddress.objects.get(address=get_client_ip(request))
+            ip.increment_subscriptions()
             return JsonResponse({'code': 0}, safe=False)
 
 
