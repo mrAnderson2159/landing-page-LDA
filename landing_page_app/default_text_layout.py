@@ -4,7 +4,7 @@ TEXT_LAYOUT = {
     'whatsappPhoneNumber': text_field(
         '',
         "Numero di telefono di Whatsapp",
-        placeholder="Es. +39 371 23 45 451 scritto tutto attaccato 393712345451"
+        placeholder="Es. 393712345451 è il modo giusto di scrivere il numero +39 371 23 45 451"
     ),
     'homepageTitle': text_field(
         "Noleggia una macchina di lusso",

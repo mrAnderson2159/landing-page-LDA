@@ -63,9 +63,50 @@ class Request(models.Model):
         return f"{self.user} ha prenotato una {self.car} da {Date.format_IT_date(self.start)} a {Date.format_IT_date(self.stop)}"
 
 
+class IpAddress(models.Model):
+    address = models.GenericIPAddressField(protocol='IPv4', unique=True)
+    user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
+    blocked = models.BooleanField(default=False)
+    views = models.IntegerField(default=0)
+    subscriptions = models.IntegerField(default=0)
+
+    def increment_views(self):
+        self.views += 1
+
+    def increment_subscriptions(self):
+        self.subscriptions += 1
+
+    def block(self):
+        self.blocked = True
+
+    def unlock(self):
+        self.blocked = False
+
+    def __str__(self):
+        res = ''
+        if self.user:
+            fn = self.user.first_name
+            ln = self.user.last_name
+            if not (fn or ln):
+                res = f"{self.user.username} - "
+            else:
+                if fn:
+                    res += fn + ' '
+                if ln:
+                    res += ln + ' '
+                res += '- '
+        elif self.client:
+            res = f"{self.client.name} - "
+
+        return res + self.address
+
+
+
 class Blacklist(models.Model):
     name = models.CharField(max_length=128, blank=True)
-    ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
+    #ipaddress = models.ForeignKey(IpAddress, on_delete=models.CASCADE, blank=True, null=True)
+    ipaddress_text = models.GenericIPAddressField(protocol='IPv4', unique=True)
     record = models.DateField(auto_now_add=True)
     path = models.CharField(max_length=512, blank=True)
     blocked_forever = models.BooleanField(default=False)
@@ -74,14 +115,15 @@ class Blacklist(models.Model):
         res = ''
         if self.name:
             res = f"{self.name} - "
-        res += f"{self.ipaddress} - {Date.format_IT_date(self.record)} - GET {self.path}"
+        res += f"{self.ipaddress_text} - {Date.format_IT_date(self.record)} - GET {self.path}"
         if self.blocked_forever:
             res += ' --- FOREVER'
         return res
 
 
 class Whitelist(models.Model):
-    ipaddress = models.GenericIPAddressField(protocol='IPv4', unique=True)
+    ipaddress_text = models.GenericIPAddressField(protocol='IPv4', unique=True)
+    #ipaddress = models.ForeignKey(IpAddress, on_delete=models.CASCADE, blank=True, null=True)
     user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -101,7 +143,7 @@ class Whitelist(models.Model):
         elif self.client:
             res = f"{self.client.name} - "
 
-        return res + self.ipaddress
+        return res + self.ipaddress_text
 
 
 class TextLayout(models.Model):
