@@ -99,9 +99,11 @@ def form(request: WSGIRequest):
             })
             for field in (car, start, stop, user, query):
                 field.save()
+
             ip: IpAddress = IpAddress.objects.get(address=get_client_ip(request))
             ip.increase_subscriptions()
             ip.save()
+
             green(f"{ip} SUBSCRIPTED")
             return JsonResponse({'code': 0}, safe=False)
 
@@ -109,7 +111,7 @@ def form(request: WSGIRequest):
 @unlocked(increase_bad_requests=True)
 def botcatcher(request, url):
     address = get_client_ip(request)
-    ip, _ = IpAddress.objects.get_or_create(address=address)
+    ip = IpAddress.objects.get(address=address)
     try:
         w = Whitelist.objects.get(ipaddress=ip)
         green(f"{w} WHITELIST PASS")
@@ -118,7 +120,7 @@ def botcatcher(request, url):
             r'php', r'admin/', r'debug', r'^\.', r'actuator', r'api', r'console',
             r'owa', r'solr', r'wp-content', r'bedesk', r'metrics', r'test',
             r'v2', r'HNAP1', r'config', r'druid', r'hudson', r'mat', r'mgmt',
-            r'portal', r'robots', r'\.xml', r'apple'
+            r'portal', r'robots', r'\.xml', r'apple', r'Telerik', r'manager',
 
         }
 
