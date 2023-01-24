@@ -73,23 +73,20 @@ def block_user(*, request=None, ip=None) -> Blacklist:
         raise TypeError("block_user() needs at least 1 keyword argument: 'request' or 'ip'")
     ip, created = IpAddress.objects.get_or_create(address=ip)
     ip: IpAddress
-    blocked: Blacklist = None
     if not created:
         try:
             Whitelist.objects.get(ipaddress=ip)
             green(f"{ip} not blocked because in whitelist")
+            return None
         except ObjectDoesNotExist:
-            blocked, _ = Blacklist.objects.get_or_create(ipaddress=ip)
-            blocked.path = request.path
-            ip.block()
-            blocked.save()
-            red('BLOCKED USER', blocked)
-    else:
-        blocked = Blacklist.objects.get(ipaddress=ip, path=request.path)
-        blocked.save()
-        ip.block()
-        red('BLOCKED USER', blocked)
-    ip.save()
+            pass
+
+    blocked, created = Blacklist.objects.get_or_create(ipaddress=ip)
+    blocked.path = request.path
+    ip.block()
+    ip.increase_bad_requests()
+    blocked.save()
+    red('BLOCKED USER', blocked)
     return blocked
 
 
