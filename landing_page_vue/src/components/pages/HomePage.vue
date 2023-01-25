@@ -34,7 +34,7 @@ export default {
         this.mainBackground = "src/assets/images/main_background.png";
       else if (env === "PRODUCTION") {
         // return "static/images/main_background.png";
-        const res = await axios(urlServer(this.localhost, "main_res"));
+        const res = await axios(urlServer(this.localhost, "main_background"));
         const background = res.data.mainBackground;
         this.mainBackground = background;
       }
