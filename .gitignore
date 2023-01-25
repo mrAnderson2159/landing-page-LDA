@@ -5,3 +5,4 @@ __pycache__/
 migrations/
 db.sqlite3
 faker_populate_db.py
+.DS_Store
