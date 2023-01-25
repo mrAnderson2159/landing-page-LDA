@@ -36,7 +36,7 @@ class Date(models.Model):
 
 class Car(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    img = models.CharField(max_length=1024)
+    path = models.CharField(max_length=1024)
     url = models.URLField(blank=True)
     active = models.BooleanField(default=True)
 

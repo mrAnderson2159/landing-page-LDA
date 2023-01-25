@@ -92,7 +92,7 @@ def form(request: WSGIRequest):
         else:
             send_admin_email({
                 "car": car.name,
-                "img": car.img,
+                "path": car.path,
                 "username": user.name,
                 "email": email,
                 "start": start,

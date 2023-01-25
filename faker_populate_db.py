@@ -34,17 +34,17 @@ def add_car():
     # Model.objects.get_or_create() restituisce la tupla (object: Model, created: bool),
     # quindi selezioniamo [0] per ottenere un puntatore all'oggetto creato
     name=fake.car()
-    img=fake.image_url()
+    path=fake.image_url()
     url=fake.url()
 
     try:
         car = Car.objects.get_or_create(
             name=name,
-            img=img,
+            path=path,
             url=url
         )[0]
     except django.db.utils.IntegrityError as e:
-        print(name, img, url)
+        print(name, path, url)
         raise e
 
     car.save()

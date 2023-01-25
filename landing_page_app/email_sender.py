@@ -7,7 +7,7 @@ from .functions import format_IT_date
 def admin_mail(request_data: dict):
     return f"""
         <h1>Noleggio {request_data["car"]}</h1>
-        <img scr="{request_data["img"]} alt="{request_data["car"]}"/>
+        <path scr="{request_data["path"]} alt="{request_data["car"]}"/>
         <p>Nome utente: {request_data["username"]}</p>
         <p>Email: {request_data["email"]}</p>
         <p>Data acquisizione: {format_IT_date(request_data["start"])}</p>
