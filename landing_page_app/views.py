@@ -4,8 +4,6 @@ from random import randint
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.handlers.wsgi import WSGIRequest
 from django.db.utils import IntegrityError
 from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
@@ -14,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import last_modified
 from rest_framework.parsers import JSONParser
 
-from .colors import yellow, green, c_yellow, c_cyan
+from .colors import yellow
 from .decorators import unlocked
 from .email_sender import send_admin_email
 from .forms import LoginForm

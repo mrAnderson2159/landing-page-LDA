@@ -1,5 +1,4 @@
 import json
-import landing_page_app.views as views
 from os import PathLike, listdir
 from os.path import exists, splitext, basename
 from pathlib import Path
@@ -34,12 +33,16 @@ def jsonify(models: list[Type[Model]]) -> str:
     return json.dumps(fields_filtered)
 
 
-def standard_view(name):
-    return path(f'{name}/', getattr(views, name), name=name)
+def standard_view(views):
+    def init(name):
+        return path(f'{name}/', getattr(views, name), name=name)
+    return init
 
 
-def encrypted_view(name):
-    return path(f'{encrypt(name)}/', getattr(views, name), name=name)
+def encrypted_view(views):
+    def init(name):
+        return path(f'{encrypt(name)}/', getattr(views, name), name=name)
+    return init
 
 
 def visualization(request_object: dict):

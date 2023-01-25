@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from landing_page_app import views
 from landing_page_app.views import index, botcatcher
 from landing_page_app.functions import encrypted_view, standard_view
+
+standard_view = standard_view(views)
+encrypted_view = encrypted_view(views)
 
 urlpatterns = [
     path('', index, name='index'),
