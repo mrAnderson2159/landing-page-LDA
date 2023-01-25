@@ -37,6 +37,7 @@ class Date(models.Model):
 class Car(models.Model):
     name = models.CharField(max_length=64, unique=True)
     img = models.URLField()
+    migrate_img = models.CharField(max_length=512)
     url = models.URLField(blank=True)
     active = models.BooleanField(default=True)
 

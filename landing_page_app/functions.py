@@ -118,7 +118,7 @@ def latest_text_layout_mod(request):
      return TextLayout.objects.get(name='text_layout').date_modified
 
 def save_car(image_basename: Union[str, PathLike]) -> Car:
-    car_path = static('images/cars/')[1:] / image_basename
+    car_path = Path(static('images/cars/')[1:]) / image_basename
     car_abs_path = Path('.').resolve() / car_path
     if exists(car_abs_path):
         car_name, car_ext = splitext(image_basename)
@@ -126,6 +126,7 @@ def save_car(image_basename: Union[str, PathLike]) -> Car:
         if created:
             new_car.img = car_path
             new_car.save()
+            green(f"{new_car} registered")
         else:
             yellow(f"{new_car} already exists")
     else:
