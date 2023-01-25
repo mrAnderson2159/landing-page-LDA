@@ -118,12 +118,13 @@ def latest_text_layout_mod(request):
      return TextLayout.objects.get(name='text_layout').date_modified
 
 def add_car(path: Union[str, PathLike]) -> Car:
-    car_abs_path = Path('.').resolve() / static('images/cars/')[1:] / path
+    car_path = static('images/cars/')[1:] / path
+    car_abs_path = Path('.').resolve() / car_path
     if exists(car_abs_path):
-        car_name, car_ext = splitext(basename(car_abs_path))
+        car_name, car_ext = splitext(basename(car_path))
         new_car, created = Car.objects.get_or_create(name=car_name)
         if created:
-            new_car.img = car_abs_path
+            new_car.img = car_path
         new_car.save()
     else:
         raise IOError(f"{car_abs_path} does not exist")
