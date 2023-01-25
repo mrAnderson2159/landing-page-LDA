@@ -36,9 +36,15 @@ class Date(models.Model):
 
 class Car(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    path = models.FileField(blank=True)
+    path = models.CharField(max_length=1024, blank=True)
     url = models.URLField(blank=True)
     active = models.BooleanField(default=True)
+
+    def activate(self):
+        self.active = True
+
+    def deactivate(self):
+        self.active = False
 
     def __str__(self):
         res = f"{self.name}"

@@ -10,7 +10,7 @@
             class="col-lg-8"
             @click="toggleActiveCar(car.name)"
           >
-            <img :src="car.url" :alt="car.name" class="pt-1" />
+            <img :src="car.url" :alt="car.name" class="pt-1 car" />
             <p class="lead mt-3 mb-0 text-light">{{ car.name }}</p>
           </base-car-image-card>
         </div>
@@ -75,7 +75,8 @@ p {
   color: #343a40;
 }
 
-img {
+img.car {
   width: 96%;
+  height: 22.5vh;
 }
 </style>

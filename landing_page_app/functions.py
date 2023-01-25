@@ -121,8 +121,8 @@ def save_car(image_basename: Union[str, PathLike]) -> Car:
     car_path = Path(static('images/cars/')[1:]) / image_basename
     car_abs_path = Path('.').resolve() / car_path
     if exists(car_abs_path):
-        car_name, car_ext = splitext(image_basename)
-        new_car, created = Car.objects.get_or_create(name=car_name)
+        car_name = splitext(image_basename)[0]
+        new_car, created = Car.objects.get_or_create(name=car_name.title())
         if created:
             new_car.path = str(car_path)
             new_car.save()
