@@ -33,7 +33,7 @@ def index(request: WSGIRequest):
 def cars(request: WSGIRequest):
     if request.method == 'GET':
         magenta('CAR LIST')
-        car_list = Car.objects.all()
+        car_list = Car.objects.filter(active=True)
         return JsonResponse(data=jsonify(car_list), content_type='application/json', safe=False)
 
 

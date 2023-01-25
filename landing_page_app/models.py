@@ -41,8 +41,10 @@ class Car(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.name}"
-
+        res = f"{self.name}"
+        if not self.active:
+            res += ' - INACTIVE'
+        return res
 
 class Client(models.Model):
     name = models.CharField(max_length=64)
