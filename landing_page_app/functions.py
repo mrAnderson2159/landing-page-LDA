@@ -124,7 +124,7 @@ def save_car(image_basename: Union[str, PathLike]) -> Car:
         car_name, car_ext = splitext(image_basename)
         new_car, created = Car.objects.get_or_create(name=car_name)
         if created:
-            new_car.path = car_path
+            new_car.path = str(car_path)
             new_car.save()
             green(f"{new_car} registered")
         else:
