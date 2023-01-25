@@ -13,7 +13,7 @@ from django.views.decorators.http import last_modified
 from django.templatetags.static import static
 from rest_framework.parsers import JSONParser
 
-from .colors import yellow
+from .colors import yellow, magenta
 from .decorators import unlocked
 from .email_sender import send_admin_email
 from .forms import LoginForm
@@ -25,12 +25,14 @@ from .models import *
 @last_modified(last_modified_func=latest_text_layout_mod)
 @unlocked()
 def index(request: WSGIRequest):
+    magenta('HOMEPAGE')
     return render(request, 'landing_page_app/index.html')
 
 
 @unlocked()
 def cars(request: WSGIRequest):
     if request.method == 'GET':
+        magenta('CAR LIST')
         car_list = Car.objects.all()
         return JsonResponse(data=jsonify(car_list), content_type='application/json', safe=False)
 
@@ -39,6 +41,7 @@ def cars(request: WSGIRequest):
 @unlocked()
 def form(request: WSGIRequest):
     if request.method == 'POST':
+        magenta('FORM SUBMIT')
         data = JSONParser().parse(request)
         print(visualization(data))
 
@@ -109,6 +112,7 @@ def form(request: WSGIRequest):
 
 @unlocked(increase_bad_requests=True)
 def botcatcher(request, url):
+    magenta('BOTCATCHER')
     address = get_client_ip(request)
     ip = IpAddress.objects.get(address=address)
     try:
@@ -135,6 +139,7 @@ def botcatcher(request, url):
 
 @unlocked()
 def user_login(request):
+    magenta('LOGIN')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -161,6 +166,7 @@ def user_login(request):
 @login_required
 @unlocked()
 def user_logout(request):
+    magenta('LOGOUT')
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
@@ -168,12 +174,14 @@ def user_logout(request):
 @login_required
 @unlocked()
 def requests_management(request):
+    magenta('REQUESTS MANAGEMENT')
     return render(request, 'landing_page_app/requests_management.html')
 
 
 @login_required
 @unlocked()
 def text_management(request):
+    magenta('TEXT MANAGEMENT')
     raw_json = TextLayout.objects.get(name='text_layout').data
     context = {
         'fields': json.loads(raw_json),
@@ -206,12 +214,13 @@ def text_management(request):
 
 @unlocked(increase_views=True)
 def text_layout(request):
-    # add_car('Audi A3 cabrio.jpg')  # DEBUG
+    magenta('TEXT LAYOUT')
     if request.method == 'GET':
         text_layout = TextLayout.objects.get(name='text_layout')
         return JsonResponse(text_layout.data, safe=False)
 
 @unlocked()
 def main_background(request):
+    magenta('MAIN BACKGROUND')
     path = static('images/main_background.png')
     return JsonResponse({'mainBackground': path}, safe=False)
