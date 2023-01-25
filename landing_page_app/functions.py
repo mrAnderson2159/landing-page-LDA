@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.templatetags.static import static
 from django.urls import path
 from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress, Car
-from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green
+from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green, yellow
 
 
 def encrypt(string: str, algorithm: Callable[AnyStr, Hashable] = sha512) -> str:
@@ -117,14 +117,16 @@ def format_EN_date(date_object: Union[datetime, Date]) -> str:
 def latest_text_layout_mod(request):
      return TextLayout.objects.get(name='text_layout').date_modified
 
-def add_car(path: Union[str, PathLike]) -> Car:
-    car_path = static('images/cars/')[1:] / path
+def save_car(image_basename: Union[str, PathLike]) -> Car:
+    car_path = static('images/cars/')[1:] / image_basename
     car_abs_path = Path('.').resolve() / car_path
     if exists(car_abs_path):
-        car_name, car_ext = splitext(basename(car_path))
+        car_name, car_ext = splitext(image_basename)
         new_car, created = Car.objects.get_or_create(name=car_name)
         if created:
             new_car.img = car_path
-        new_car.save()
+            new_car.save()
+        else:
+            yellow(f"{new_car} already exists")
     else:
         raise IOError(f"{car_abs_path} does not exist")

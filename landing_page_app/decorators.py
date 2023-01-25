@@ -52,7 +52,7 @@ def unlocked(*,
                     f"{format_EN_date(expiration_date).upper()}</strong></h1>\n",
                     status=403)
             except ObjectDoesNotExist:
-                green(client_ip)
+                green(ip)
                 if increase_views:
                     ip.increase_views()
                 ip.save()
