@@ -10,7 +10,13 @@
             class="col-lg-8"
             @click="toggleActiveCar(car.name)"
           >
-            <img :src="car.url" :alt="car.name" class="pt-1 car" />
+            <img
+              :src="car.url"
+              :alt="car.name"
+              class="pt-1 car"
+              ref="img"
+              :height="height"
+            />
             <p class="lead mt-3 mb-0 text-light">{{ car.name }}</p>
           </base-car-image-card>
         </div>
@@ -45,11 +51,13 @@ export default {
       formId: "theForm",
       activeCar: null,
       showForm: false,
+      height: "",
     };
   },
   computed: {
     carsLoaded() {
-      return this.cars.length > 0;
+      const value = this.cars.length > 0;
+      return value;
     },
   },
   provide() {
@@ -66,6 +74,19 @@ export default {
       this.showForm = false;
       this.activeCar = null;
     },
+    setHeight() {
+      const proportion = { w: 16, h: 9 };
+      const width = this.$refs.img[0].width;
+      this.height = (width * proportion.h) / proportion.w;
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", this.setHeight);
+  },
+  watch: {
+    carsLoaded(n, o) {
+      setTimeout(this.setHeight, 1);
+    },
   },
 };
 </script>
@@ -77,6 +98,5 @@ p {
 
 img.car {
   width: 96%;
-  height: 22.5vh;
 }
 </style>
