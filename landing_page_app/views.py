@@ -205,7 +205,7 @@ def text_management(request):
 
 @unlocked(increase_views=True)
 def text_layout(request):
-    add_car('Audi A3 cabrio.jpg')  # DEBUG
+    # add_car('Audi A3 cabrio.jpg')  # DEBUG
     if request.method == 'GET':
         text_layout = TextLayout.objects.get(name='text_layout')
         return JsonResponse(text_layout.data, safe=False)
