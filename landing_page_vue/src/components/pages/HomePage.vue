@@ -1,6 +1,8 @@
 <template>
-  <HomePageBody />
-  <HomePageFooter />
+  <div v-if="mainBackground">
+    <HomePageBody />
+    <HomePageFooter />
+  </div>
 </template>
 
 <script>
@@ -8,22 +10,34 @@ import HomePageBody from "../layout/HomePage/HomePageBody.vue";
 import HomePageFooter from "../layout/HomePage/HomePageFooter.vue";
 
 import { TheInstructionsMessage } from "../../utilities/classes";
+import { urlServer } from "../../utilities/hashing";
+import axios from "axios";
 
 export default {
   components: {
     HomePageBody,
     HomePageFooter,
   },
-  mounted() {},
-  inject: ["env", "textValue"],
+  created() {
+    this.getMainBackground();
+  },
+  inject: ["env", "textValue", "localhost"],
   data() {
-    return {};
+    return {
+      mainBackground: null,
+    };
   },
   methods: {
-    mainBackground() {
+    async getMainBackground() {
       const env = this.env();
-      if (env === "DEVELOPMENT") return "src/assets/images/main_background.png";
-      else if (env === "PRODUCTION") return "static/images/main_background.png";
+      if (env === "DEVELOPMENT")
+        this.mainBackground = "src/assets/images/main_background.png";
+      else if (env === "PRODUCTION") {
+        // return "static/images/main_background.png";
+        const res = await axios(urlServer(this.localhost, "main_res"));
+        const background = res.data.mainBackground;
+        this.mainBackground = background;
+      }
     },
   },
   provide() {
@@ -47,7 +61,7 @@ export default {
           this.textValue("homePageInstruction3message")
         ),
       ],
-      mainBackground: this.mainBackground(),
+      mainBackground: () => this.mainBackground,
     };
   },
 };

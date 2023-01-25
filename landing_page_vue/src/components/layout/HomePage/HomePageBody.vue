@@ -58,7 +58,7 @@ export default {
         mobile: {
           height: "40vh",
           image: {
-            bgImage: this.mainBackground,
+            bgImage: this.mainBackground(),
             imgMinWidth: "550px",
           },
           presentation: {
@@ -74,7 +74,7 @@ export default {
         notMobile: {
           height: "76vh",
           image: {
-            bgImage: this.mainBackground,
+            bgImage: this.mainBackground(),
             imgMinWidth: "1400px",
           },
           shape: {

@@ -32,5 +32,6 @@ urlpatterns = [
     encrypted_view("requests_management"),
     encrypted_view("text_management"),
     encrypted_view("text_layout"),
+    encrypted_view("main_background"),
     path('<path:url>', botcatcher, name='default')
 ]

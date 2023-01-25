@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import last_modified
+from django.templatetags.static import static
 from rest_framework.parsers import JSONParser
 
 from .colors import yellow
@@ -208,3 +209,8 @@ def text_layout(request):
     if request.method == 'GET':
         text_layout = TextLayout.objects.get(name='text_layout')
         return JsonResponse(text_layout.data, safe=False)
+
+@unlocked()
+def main_background(request):
+    path = static('images/main_background.png')
+    return JsonResponse({'mainBackground': path}, safe=False)
