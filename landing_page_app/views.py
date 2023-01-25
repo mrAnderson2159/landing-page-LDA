@@ -18,7 +18,7 @@ from .colors import yellow, green, c_yellow, c_cyan
 from .decorators import unlocked
 from .email_sender import send_admin_email
 from .forms import LoginForm
-from .functions import str_to_date, jsonify, visualization, block_user, get_client_ip, latest_text_layout_mod
+from .functions import *
 from .models import *
 
 
@@ -206,6 +206,7 @@ def text_management(request):
 
 @unlocked(increase_views=True)
 def text_layout(request):
+    add_car('Audi A3 cabrio.jpg')  # DEBUG
     if request.method == 'GET':
         text_layout = TextLayout.objects.get(name='text_layout')
         return JsonResponse(text_layout.data, safe=False)

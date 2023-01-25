@@ -1,5 +1,8 @@
 import json
 import landing_page_app.views as views
+from os import PathLike, listdir
+from os.path import exists, splitext, basename
+from pathlib import Path
 from typing import *
 from hashlib import sha512
 from datetime import datetime, date
@@ -8,8 +11,9 @@ from django.db.models import Model
 from django.core.serializers import serialize
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.exceptions import ObjectDoesNotExist
+from django.templatetags.static import static
 from django.urls import path
-from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress
+from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress, Car
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green
 
 
@@ -83,9 +87,10 @@ def block_user(*, request=None, ip=None) -> Blacklist:
 
     blocked, created = Blacklist.objects.get_or_create(ipaddress=ip)
     blocked.path = request.path
+    blocked.save()
     ip.block()
     ip.increase_bad_requests()
-    blocked.save()
+    ip.save()
     red('BLOCKED USER', blocked)
     return blocked
 
@@ -108,3 +113,14 @@ def format_EN_date(date_object: Union[datetime, Date]) -> str:
 
 def latest_text_layout_mod(request):
      return TextLayout.objects.get(name='text_layout').date_modified
+
+def add_car(path: Union[str, PathLike]) -> Car:
+    car_abs_path = Path('.').resolve() / static('images/cars/')[1:] / path
+    if exists(car_abs_path):
+        car_name, car_ext = splitext(basename(car_abs_path))
+        new_car, created = Car.objects.get_or_create(name=car_name)
+        if created:
+            new_car.img = car_abs_path
+        new_car.save()
+    else:
+        raise IOError(f"{car_abs_path} does not exist")
