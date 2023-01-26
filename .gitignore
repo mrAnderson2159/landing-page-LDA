@@ -5,4 +5,5 @@ __pycache__/
 migrations/
 db.sqlite3
 faker_populate_db.py
+enter_braces_fields.py
 .DS_Store
