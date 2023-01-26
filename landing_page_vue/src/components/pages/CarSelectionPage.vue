@@ -41,7 +41,6 @@ export default {
       leadMessage: this.textValue("carSelectionPageLeadMessage"),
     };
   },
-  mounted() {},
 };
 </script>
 

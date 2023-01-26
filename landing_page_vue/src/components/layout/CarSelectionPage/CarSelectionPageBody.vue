@@ -1,23 +1,29 @@
 <template>
   <car-selection-page-form v-if="showForm" @close="closeForm" :car="activeCar" />
-  <div class="container-lg">
-    <p class="lead text-center display-6 pt-5 mt-5">{{ leadMessage }}</p>
-    <div id="cars" class="px-5 mx-5 text-center">
+  <div class="container-fluid">
+    <p class="lead text-center display-6 pt-5 mt-5">
+      {{ leadMessage }}
+    </p>
+    <div id="cars" class="px-3 m-3 text-center">
       <div v-if="carsLoaded" class="row">
         <div class="col-lg-6 position-relative" v-for="car in cars" :key="car.name">
           <base-car-image-card
             :key="car.name"
-            class="col-lg-8"
+            class="col-lg-11 my-5"
             @click="toggleActiveCar(car.name)"
           >
             <img
               :src="car.url"
               :alt="car.name"
-              class="pt-1 car"
+              class="pt-2 car"
               ref="img"
               :height="height"
             />
-            <p class="lead mt-3 mb-0 text-light">{{ car.name }}</p>
+            <h2 class="mt-3 mb-0 text-light">{{ car.name }}</h2>
+            <hr class="text-light" />
+            <p class="text-light"><b>Cilindrata</b>:</p>
+            <p class="text-light"><b>CV</b>:</p>
+            <p class="text-light"><b>Prezzo</b>:</p>
           </base-car-image-card>
         </div>
       </div>
@@ -97,6 +103,6 @@ p {
 }
 
 img.car {
-  width: 96%;
+  width: 98%;
 }
 </style>

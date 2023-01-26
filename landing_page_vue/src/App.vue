@@ -23,11 +23,12 @@ export default {
     TheWhatsappButton,
   },
   created() {
+    window.scrollTo({ top: 0 });
     this.getTextLayout();
   },
   data() {
     return {
-      currentPage: "HomePage", // "CarSelectionPage",
+      currentPage: "CarSelectionPage",
       componentProps: null,
       textLayout: null,
     };
