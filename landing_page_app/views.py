@@ -90,15 +90,20 @@ def form(request: WSGIRequest):
             yellow(e)
             return JsonResponse(e)
         else:
-            send_admin_email({
-                "car": car.name,
-                "path": car.path,
-                "username": user.name,
-                "email": email,
-                "start": start,
-                "stop": stop,
-                "notes": notes
-            })
+            try:
+                send_admin_email({
+                    "car": car.name,
+                    "path": car.path,
+                    "username": user.name,
+                    "email": email,
+                    "start": start,
+                    "stop": stop,
+                    "notes": notes
+                })
+            except Exception as e:
+                code, msg = e.args
+                red(f"EMAIL ERROR {code}: {str(msg)}")
+
             for field in (car, start, stop, user, query):
                 field.save()
 
