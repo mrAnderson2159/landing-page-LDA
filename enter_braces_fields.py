@@ -65,7 +65,7 @@ class ChangeFields:
         for direction in ('invert', 'revert'):
             for method in methods:
                 method(direction)
-            sleep(3)
+            sleep(6)
 
 
 
