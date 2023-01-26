@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      currentPage: "CarSelectionPage",
+      currentPage: "HomePage",
       componentProps: null,
       textLayout: null,
     };
