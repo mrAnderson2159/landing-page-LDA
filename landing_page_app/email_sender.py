@@ -47,16 +47,5 @@ def send_admin_email(request_data: dict):
         host="smtp.gmail.com",
         port=465,
         sender="testemailsender76@gmail.com",
-        password="lfcmflxydfgpvnjk"
+        password="{{password}}"
     )
-
-# if __name__ == '__main__':
-#     host = "smtp.gmail.com"
-#     port = 465
-#     subject = 'Test Email'
-#     msg = "EMAIL SENT FROM EMAIL_SENDER.PY"
-#     sender = "testemailsender76@gmail.com"
-#     recipients = ["valerioxz@gmail.com","valeriomolinariprogrammazione@gmail.com"]
-#     password = "lfcmflxydfgpvnjk"
-#
-#     send_email(host, port, subject, msg, sender, recipients, password)
