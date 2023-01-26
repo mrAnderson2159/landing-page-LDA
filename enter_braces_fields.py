@@ -2,6 +2,7 @@ from sys import argv
 from time import sleep
 from os import chdir
 from os.path import dirname
+from landing_page_app.colors import yellow
 import re
 
 chdir(dirname(__file__))
@@ -63,9 +64,10 @@ class ChangeFields:
     def __call__(self):
         methods = [getattr(self, method) for method in dir(self) if '__x_' in method]
         for direction in ('invert', 'revert'):
+            yellow(f"{direction.upper()} KEYS")
             for method in methods:
                 method(direction)
-            sleep(6)
+            sleep(3)
 
 
 
