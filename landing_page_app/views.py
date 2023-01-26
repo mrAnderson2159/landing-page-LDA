@@ -124,7 +124,7 @@ def botcatcher(request, url):
             r'owa', r'solr', r'wp-content', r'bedesk', r'metrics', r'test',
             r'v2', r'HNAP1', r'config', r'druid', r'hudson', r'mat', r'mgmt',
             r'portal', r'robots', r'\.xml', r'apple', r'Telerik', r'manager',
-            r'shell',r'chmod|jaws', r'aws|yml'
+            r'shell',r'chmod|jaws', r'aws|yml', r'undefined', 
 
         }
 
