@@ -82,7 +82,7 @@ export default {
       rightTrianglesHeight: y + "px",
       theta_1: this.computeTheta(x * this.trianglesProportion[0], y),
       theta_2: this.computeTheta(x * this.trianglesProportion[1], y, -1),
-      color: "#271E16",
+      color: "#000016", // "#271E16",
       firstLink: this.link("homePageFooterLink1"),
       secondLink: this.link("homePageFooterLink2"),
       thirdLink: this.link("homePageFooterLink3"),

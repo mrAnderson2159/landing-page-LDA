@@ -7,6 +7,8 @@
 
 <script>
 // testing update-lda command
+import "bootstrap/dist/js/bootstrap.min.js";
+
 import HomePage from "./components/pages/HomePage.vue";
 import CarSelectionPage from "./components/pages/CarSelectionPage.vue";
 import FeedbackPage from "./components/pages/FeedbackPage.vue";

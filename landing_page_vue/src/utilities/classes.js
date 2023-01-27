@@ -1,4 +1,9 @@
 export class TheInstructionsMessage {
+  /**
+   * Used to formalize the hint messages of the homepage body
+   * @param {String} title To be rendered as heading
+   * @param {String} message To be rendered as paragraph
+   */
   constructor(title, message) {
     this.title = title;
     this.message = message;

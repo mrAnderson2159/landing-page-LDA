@@ -6,10 +6,16 @@
     </p>
     <div id="cars" class="px-3 m-3 text-center">
       <div v-if="carsLoaded" class="row">
-        <div class="col-lg-6 position-relative" v-for="car in cars" :key="car.name">
+        <div
+          class="position-relative"
+          v-for="(car, i) in cars"
+          :key="car.name"
+          :class="cars.length % 2 && i == cars.length - 1 ? 'col-lg-12' : 'col-lg-6'"
+        >
           <base-car-image-card
             :key="car.name"
-            class="col-lg-11 my-5"
+            class="my-5"
+            :class="cars.length % 2 && i == cars.length - 1 ? 'col-lg-6' : 'col-lg-11'"
             @click="toggleActiveCar(car.name)"
           >
             <img

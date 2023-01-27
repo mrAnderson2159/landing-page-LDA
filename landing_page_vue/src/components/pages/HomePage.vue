@@ -30,14 +30,21 @@ export default {
   methods: {
     async getMainBackground() {
       const env = this.env();
-      if (env === "DEVELOPMENT")
-        this.mainBackground = "src/assets/images/main_background.png";
-      else if (env === "PRODUCTION") {
-        // return "static/images/main_background.png";
-        const res = await axios(urlServer(this.localhost, "main_background"));
-        const background = res.data.mainBackground;
-        this.mainBackground = background;
-      }
+      let url = "";
+      if (env === "DEVELOPMENT") {
+        url = urlServer("http://127.0.0.1:9000", "main_background");
+        this.mainBackground = [
+          "src/assets/images/background-carousel/4.png",
+          "src/assets/images/background-carousel/1.png",
+          "src/assets/images/background-carousel/2.png",
+          "src/assets/images/background-carousel/3.png",
+          "src/assets/images/background-carousel/5.png",
+        ];
+        return;
+      } else if (env === "PRODUCTION") url = urlServer(this.localhost, "main_background");
+      const res = await axios(url);
+      const background = res.data.mainBackground;
+      this.mainBackground = background;
     },
   },
   provide() {

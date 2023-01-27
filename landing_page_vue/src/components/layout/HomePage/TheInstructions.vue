@@ -34,13 +34,27 @@ export default {
     divClasses: notRequiredString,
   },
   methods: {
+    /**
+     * Counts the number of 'this.messages' and calculates the appropriate 'x' for
+     * class 'col-{breakpoint}-{x}': if the 'm' messages are a 12 divisor
+     *  12 % m == 0
+     * then every x will be the same, otherwise the central colums will be larger.
+     * @param {String} breakpoint The bootstrap breakpoing when cols changes behavior
+     * @returns {Array<String>} An array containing computed 'col-{breakpoint}-{x}'
+     */
     colSpan(breakpoint) {
-      const length = this.messages.length;
+      // Get the length of messages where both title and message exists
+      const length = this.messages.filter((m) => m.title && m.message).length;
+      // Bootstrap uses 12 columns, divide it by the messages length
       const span = Math.floor(12 / length);
+      // Keep the rest of the division
       const exceding = 12 % length;
 
+      // Prepare result array of 'messages.length' length
       const result = Array(length).fill(span);
 
+      // If there is a rest, point to the result median (or the medians) and from there
+      // spread the rest over neighboring items
       if (exceding) {
         let i = 0;
         let f = 0;

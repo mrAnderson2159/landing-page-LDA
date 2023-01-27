@@ -1,6 +1,5 @@
-import json
-import re
-from random import randint
+from os import listdir
+from random import randint, shuffle
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,7 +9,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import last_modified
-from django.templatetags.static import static
 from rest_framework.parsers import JSONParser
 
 from .colors import yellow, magenta
@@ -124,19 +122,9 @@ def botcatcher(request, url):
         w = Whitelist.objects.get(ipaddress=ip)
         green(f"{w} WHITELIST PASS")
     except ObjectDoesNotExist:
-        forbidden = {
-            r'php', r'admin/', r'debug', r'^\.|_', r'actuator', r'api', r'console',
-            r'owa', r'solr', r'wp-content', r'bedesk', r'metrics', r'test',
-            r'v2', r'HNAP1', r'config', r'druid', r'hudson', r'mat', r'mgmt',
-            r'portal', r'robots', r'\.xml', r'apple', r'Telerik', r'manager',
-            r'shell',r'chmod|jaws', r'aws|yml', r'undefined', r'js', r'profiler'
-
-        }
-
-        for pattern in forbidden:
-            if re.search(pattern, url):
-                block_user(request=request)
-                return HttpResponse("<h1><strong>MALICIOUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n", status=403)
+        if is_malicious(url):
+            block_user(request=request)
+            return HttpResponse("<h1><strong>MALICIOUS REQUEST DETECTED, USER BLOCKED</strong></h1>\n", status=403)
 
         yellow(f'MAYBE TO BE BLOCKED USER {ip} for {request}')
     raise Http404
@@ -227,5 +215,9 @@ def text_layout(request):
 @unlocked()
 def main_background(request):
     magenta('MAIN BACKGROUND')
-    path = static('images/main_background.png')
-    return JsonResponse({'mainBackground': path}, safe=False)
+    path = Path(static('images/background-carousel')[1:])
+    images = []
+    for image in listdir(path):
+        images.append(str(path / image))
+    shuffle(images)
+    return JsonResponse({'mainBackground': images}, safe=False)

@@ -1,4 +1,5 @@
 import json
+import re
 from os import PathLike, listdir
 from os.path import exists, splitext, basename
 from pathlib import Path
@@ -12,6 +13,8 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.core.exceptions import ObjectDoesNotExist
 from django.templatetags.static import static
 from django.urls import path
+
+from .global_settings import FORBIDDEN_REQUESTS
 from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress, Car
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green, yellow
 
@@ -129,5 +132,12 @@ def save_car(image_basename: Union[str, PathLike]) -> Car:
             green(f"{new_car} registered")
         else:
             yellow(f"{new_car} already exists")
+        return new_car
     else:
         raise IOError(f"{car_abs_path} does not exist")
+
+def is_malicious(url: str) -> bool:
+    for pattern in FORBIDDEN_REQUESTS:
+        if re.match(pattern, url):
+            return True
+    return False

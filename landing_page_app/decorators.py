@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, timedelta
 from django.http import HttpResponse
 
+from .global_settings import BLOCK_DAYS
 from .functions import get_client_ip, date_to_datetime, format_EN_date
 from .models import Blacklist, IpAddress
 from .colors import red, green
@@ -11,8 +12,6 @@ def unlocked(*,
              increase_views: bool = False,
              increase_bad_requests: bool = False):
     def init(function):
-        BLOCK_DAYS = 7
-
         def wrapper(request, *args, **kwargs):
             print()
             client_ip = get_client_ip(request)

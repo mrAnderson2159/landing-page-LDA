@@ -9,11 +9,7 @@
       <h1 class="title display-1">{{ title }}</h1>
       <p class="subtitle lead fs-3 text-secondary col-md-6">{{ subtitle }}</p>
       <div class="d-grid gap-2 col-3 mt-5 submit-container">
-        <button
-          type="submit"
-          class="btn btn-warning text-nowrap submit"
-          @click="submitAction"
-        >
+        <button type="submit" :class="settings.btnClass" @click="submitAction">
           {{ submit }}
         </button>
       </div>
@@ -24,11 +20,7 @@
     <h1 class="title">{{ title }}</h1>
     <p class="subtitle lead text-secondary">{{ subtitle }}</p>
     <div class="d-grid gap-2 col-6 mx-auto">
-      <button
-        type="submit"
-        class="btn btn-warning text-nowrap submit"
-        @click="submitAction"
-      >
+      <button type="submit" :class="settings.btnClass" @click="submitAction">
         {{ submit }}
       </button>
     </div>
@@ -44,11 +36,7 @@
       <p class="subtitle lead fs-5 text-secondary col-md-6">{{ subtitle }}</p>
     </div>
     <div class="col btn-container">
-      <button
-        type="submit"
-        class="btn btn-warning text-nowrap submit"
-        @click="submitAction"
-      >
+      <button type="submit" :class="settings.btnClass" @click="submitAction">
         {{ submit }}
       </button>
     </div>
@@ -62,7 +50,11 @@ export default {
   inject: ["ç_height", "toggleCarSelectionPage"],
   created() {},
   data() {
-    return {};
+    return {
+      settings: {
+        btnClass: "btn btn-success text-nowrap submit rounded-pill",
+      },
+    };
   },
   props: {
     title: requiredString,
@@ -153,5 +145,10 @@ $height: v-bind(rightHeight);
   button {
     margin: 2rem 0;
   }
+}
+
+button {
+  font-size: 1.25em;
+  padding: 1em 2em;
 }
 </style>
