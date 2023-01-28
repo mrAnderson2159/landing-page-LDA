@@ -13,7 +13,7 @@
           :key="image"
           :class="i == 0 ? 'active' : ''"
         >
-          <img :src="image" class="d-block w-100" alt="..." />
+          <img :src="image" class="d-block w-100 carousel-img" alt="..." />
         </div>
       </div>
     </div>
@@ -69,13 +69,18 @@ export default {
   },
   methods: {
     resize() {
-      const image = document.querySelector(".active");
+      // console.log("fired");
+      const images = document.querySelectorAll(".carousel-img");
       const width = window.innerWidth;
       const height = window.innerHeight;
       const factor = 0.5622254758418741;
 
       if (width > 1366) {
-        image.style.bottom = (width * factor) / 2 - height * 0.35 + "px";
+        images.forEach(
+          (img) => (img.style.bottom = (width * factor) / 2 - height * 0.35 + "px")
+        );
+      } else {
+        images.forEach((img) => (img.style.bottom = 0));
       }
     },
   },
