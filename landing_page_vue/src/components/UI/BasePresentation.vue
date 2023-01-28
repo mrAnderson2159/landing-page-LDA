@@ -144,8 +144,9 @@ $height: v-bind(height);
 
   button {
     margin: 2rem 0;
-    position: relative;
-    left: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
