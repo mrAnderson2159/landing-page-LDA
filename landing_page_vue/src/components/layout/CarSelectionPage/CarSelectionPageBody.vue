@@ -1,7 +1,7 @@
 <template>
   <car-selection-page-form v-if="showForm" @close="closeForm" :car="activeCar" />
   <div class="container-fluid">
-    <p class="lead text-center display-6 pt-5 mt-5">
+    <p class="lead display-6 pt-5 mt-5 text-center">
       {{ leadMessage }}
     </p>
     <div id="cars" class="px-3 m-3 text-center">
@@ -27,9 +27,29 @@
             />
             <h2 class="mt-3 mb-0 text-light">{{ car.name }}</h2>
             <hr class="text-light" />
-            <p class="text-light"><b>Cilindrata</b>:</p>
-            <p class="text-light"><b>CV</b>:</p>
-            <p class="text-light"><b>Prezzo</b>:</p>
+            <div class="text-light car-property mb-3">
+              <span class="float-start car-label"><strong>Cilindrata</strong>:</span>
+              <span class="float-end car-value">{{ car.engineCapacity }}</span
+              ><br />
+            </div>
+            <div class="text-light car-property mb-3">
+              <span class="float-start car-label"><strong>Potenza motore</strong>:</span>
+              <span class="float-end car-value">{{ car.horsePower }} CV</span><br />
+            </div>
+            <div class="text-light car-property mb-3">
+              <span class="float-start car-label"><strong>Alimentazione</strong>:</span>
+              <span class="float-end car-value">{{ car.supply }}</span
+              ><br />
+            </div>
+            <div class="text-light car-property mb-3">
+              <span class="float-start car-label"><strong>KM/giorno</strong>:</span>
+              <span class="float-end car-value">{{ car.dailyKm }}</span
+              ><br />
+            </div>
+            <div class="text-light car-property mb-3">
+              <span class="float-start car-label"><strong>A partire da</strong>:</span>
+              <span class="float-end car-value">{{ car.price.toFixed(2) }}€</span><br />
+            </div>
           </base-car-image-card>
         </div>
       </div>
@@ -104,11 +124,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$car-property-margin: 30%;
 p {
   color: #343a40;
 }
 
 img.car {
   width: 98%;
+}
+
+.car-label {
+  margin-left: $car-property-margin;
+}
+
+.car-value {
+  margin-right: $car-property-margin;
 }
 </style>

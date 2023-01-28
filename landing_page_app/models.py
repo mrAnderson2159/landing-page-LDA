@@ -39,6 +39,11 @@ class Car(models.Model):
     path = models.CharField(max_length=1024, blank=True)
     url = models.URLField(blank=True)
     active = models.BooleanField(default=True)
+    engine_capacity = models.IntegerField(blank=True, default=0)
+    horse_power = models.IntegerField(blank=True, default=0)
+    supply = models.CharField(max_length=32, blank=True)
+    daily_km = models.IntegerField(blank=True, default=0)
+    price = models.FloatField(blank=True, default=0.)
 
     def activate(self):
         self.active = True

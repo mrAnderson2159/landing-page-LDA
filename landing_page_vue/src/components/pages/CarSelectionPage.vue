@@ -32,7 +32,18 @@ export default {
       // await this.delay(2000);
       const response = await axios(address);
       let cars = JSON.parse(response.data);
-      cars = cars.map((c) => new Car(c.name, c.path || c.url));
+      cars = cars.map(
+        (c) =>
+          new Car(
+            c.name,
+            c.path || c.url,
+            c.engine_capacity,
+            c.horsePower,
+            c.supply,
+            c.daily_km,
+            c.price
+          )
+      );
       this.cars = cars;
     },
   },

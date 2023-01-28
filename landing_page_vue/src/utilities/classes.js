@@ -11,9 +11,14 @@ export class TheInstructionsMessage {
 }
 
 export class Car {
-  constructor(name, url) {
+  constructor(name, url, engineCapacity, horsePower, supply, dailyKm, price) {
     this.name = name;
     this.url = url;
+    this.engineCapacity = engineCapacity;
+    this.horsePower = horsePower;
+    this.supply = supply;
+    this.dailyKm = dailyKm;
+    this.price = price;
   }
 
   setName(name) {
