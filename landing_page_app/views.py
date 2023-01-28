@@ -215,9 +215,16 @@ def text_layout(request):
 @unlocked()
 def main_background(request):
     magenta('MAIN BACKGROUND')
-    path = Path(static('images/background-carousel')[1:])
-    images = []
-    for image in listdir(path):
-        images.append(str(path / image))
-    shuffle(images)
-    return JsonResponse({'mainBackground': images}, safe=False)
+    dev_path = Path('src/assets/images/background-carousel')
+    prod_path = Path(static('images/background-carousel')[1:])
+    dev_images = []
+    prod_images = []
+    for image in listdir(prod_path):
+        dev_images.append(str(dev_path / image))
+        prod_images.append(str(prod_path / image))
+    shuffle(dev_images)
+    shuffle(prod_images)
+    return JsonResponse({
+        'prod': {'mainBackground': prod_images},
+        'dev': {'mainBackground': dev_images}
+    }, safe=False)

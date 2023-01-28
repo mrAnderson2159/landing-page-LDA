@@ -7,13 +7,14 @@ import {
   requiredCssUnit,
   notRequiredCssUnit,
   notRequiredString,
+  requiredString,
 } from "../../utilities/props";
 
 export default {
   mounted() {},
-  inject: ["ç_height"],
+  inject: [],
   props: {
-    height: notRequiredString,
+    height: requiredString,
     width: requiredCssUnit,
     inclination: {
       ...notRequiredCssUnit,
@@ -35,17 +36,12 @@ export default {
       },
     },
   },
-  computed: {
-    rightHeight() {
-      return this.height || this.ç_height;
-    },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 $color: v-bind(color);
-$height: v-bind(rightHeight);
+$height: v-bind(height);
 $width: v-bind(width);
 $angle: v-bind(inclination);
 $origin: v-bind(transformOrigin);
@@ -59,6 +55,7 @@ $origin: v-bind(transformOrigin);
   &::before {
     content: "";
     position: absolute;
+    top: 0px;
     height: 100%;
     width: 100%;
     background-color: $color;

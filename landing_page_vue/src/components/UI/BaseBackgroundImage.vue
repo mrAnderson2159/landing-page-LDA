@@ -29,13 +29,14 @@ import {
   notRequiredCssUnit,
   notRequiredString,
   requiredArrayOfStrings,
+  requiredString,
 } from "../../utilities/props";
 
 export default {
-  inject: ["ç_height"],
+  inject: [],
   props: {
     imgMinWidth: notRequiredCssUnit,
-    height: notRequiredString,
+    height: requiredString,
     bgImage: requiredArrayOfStrings,
     mode: {
       ...notRequiredString,
@@ -59,7 +60,7 @@ export default {
     },
     commonStyle() {
       return {
-        height: this.height || this.ç_height,
+        height: this.height,
         width: "100%",
       };
     },
@@ -72,7 +73,7 @@ export default {
   mounted() {
     const mycarousel = this.$refs.mycarousel;
     const carousel = new bootstrap.Carousel(mycarousel, {
-      interval: 1000000,
+      interval: 10000,
     });
   },
 };

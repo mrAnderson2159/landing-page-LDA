@@ -7,7 +7,7 @@
   >
     <div class="main-text col-md-6">
       <h1 class="title display-1">{{ title }}</h1>
-      <p class="subtitle lead fs-3 text-secondary col-md-6">{{ subtitle }}</p>
+      <p class="subtitle lead fs-3 col-md-6 text-secondary">{{ subtitle }}</p>
       <div class="d-grid gap-2 col-3 mt-5 submit-container">
         <button type="submit" :class="settings.btnClass" @click="submitAction">
           {{ submit }}
@@ -44,11 +44,10 @@
 </template>
 
 <script>
-import { requiredString, notRequiredCssUnit } from "../../utilities/props";
+import { requiredString, requiredCssUnit } from "../../utilities/props";
 
 export default {
-  inject: ["ç_height", "toggleCarSelectionPage"],
-  created() {},
+  inject: ["toggleCarSelectionPage"],
   data() {
     return {
       settings: {
@@ -60,7 +59,7 @@ export default {
     title: requiredString,
     subtitle: requiredString,
     submit: requiredString,
-    height: notRequiredCssUnit,
+    height: requiredCssUnit,
     mode: {
       ...requiredString,
       validator(value) {
@@ -78,16 +77,12 @@ export default {
       this.toggleCarSelectionPage();
     },
   },
-  computed: {
-    rightHeight() {
-      return this.height || this.ç_height;
-    },
-  },
+  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
-$height: v-bind(rightHeight);
+$height: v-bind(height);
 
 .main-text-container {
   height: $height;
@@ -150,5 +145,9 @@ $height: v-bind(rightHeight);
 button {
   font-size: 1.25em;
   padding: 1em 2em;
+}
+
+.text-secondary {
+  color: rgb(160, 173, 185) !important;
 }
 </style>
