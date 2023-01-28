@@ -1,5 +1,6 @@
 from os import listdir
 from random import randint, shuffle
+from datetime import timedelta
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -41,22 +42,30 @@ def form(request: WSGIRequest):
     if request.method == 'POST':
         magenta('FORM SUBMIT')
         data = JSONParser().parse(request)
-        print(visualization(data))
+        # print(visualization(data))
+
+        print(data)
 
         errors = []
 
         car = data['car']
         username = data['userName'].title()
         email = data['email']
-        start = data['from']
-        stop = data['to']
+        startHour = data['fromHour']
+        startDate = data['fromDate']
+        stopHour = data['toHour']
+        stopDate = data['toDate']
         notes = data['notes']
 
-        start, stop = map(str_to_date, (start, stop))
+        startDate, stopDate = map(str_to_date, (startDate, stopDate))
+        startHour, stopHour = map(lambda t: tuple(map(int, t.split(':'))), (startHour, stopHour))
+
+        startDate += timedelta(hours=startHour[0], minutes=startHour[1])
+        stopDate += timedelta(hours=stopHour[0], minutes=stopHour[1])
 
         car = Car.objects.get_or_create(name=car)[0]
-        start = Date.objects.get_or_create(date=start)[0]
-        stop = Date.objects.get_or_create(date=stop)[0]
+        startDate = Date.objects.get_or_create(date=startDate)[0]
+        stopDate = Date.objects.get_or_create(date=stopDate)[0]
         query = user = None
         user_created = False
 
@@ -73,8 +82,8 @@ def form(request: WSGIRequest):
                 query, query_created = Request.objects.get_or_create(
                     user=user,
                     car=car,
-                    start=start,
-                    stop=stop,
+                    start=startDate,
+                    stop=stopDate,
                     notes=notes
                 )
                 if not query_created:
@@ -94,15 +103,15 @@ def form(request: WSGIRequest):
                     "path": car.path,
                     "username": user.name,
                     "email": email,
-                    "start": start,
-                    "stop": stop,
+                    "start": startDate,
+                    "stop": stopDate,
                     "notes": notes
                 })
             except Exception as e:
                 code, msg = e.args
                 red(f"EMAIL ERROR {code}: {str(msg)}")
 
-            for field in (car, start, stop, user, query):
+            for field in (car, startDate, stopDate, user, query):
                 field.save()
 
             ip: IpAddress = IpAddress.objects.get(address=get_client_ip(request))

@@ -18,7 +18,7 @@ class Date(models.Model):
     # Il DateField si aspetta un dato in formato datetime.datetime.date(), quindi il server
     # che accetta la richiesta in post di axios deve assicurarsi di convertire il dato in
     # formato str(aaaa/mm/dd) in formato datetime.date()
-    date = models.DateField(unique=True)
+    date = models.DateTimeField(unique=True)
 
     @classmethod
     def format_IT_date(cls, date_object: _Union[datetime, 'Date']):
@@ -28,7 +28,15 @@ class Date(models.Model):
         mesi = "gennaio febbraio marzo aprile maggio giugno luglio " \
                "agosto settembre ottobre novembre dicembre"
         mesi = list(map(str.capitalize, mesi.split(' ')))
-        return f"{giorni[date_object.weekday()]} {date_object.day} {mesi[date_object.month - 1]} {date_object.year}"
+
+        weekday = giorni[date_object.weekday()]
+        day = date_object.day
+        month = mesi[date_object.month - 1]
+        year = date_object.year
+        hour = date_object.hour
+        minute = date_object.minute
+
+        return f"{weekday} {day} {month} {year} - {hour}:{minute}"
 
     def __str__(self):
         return self.format_IT_date(self.date)

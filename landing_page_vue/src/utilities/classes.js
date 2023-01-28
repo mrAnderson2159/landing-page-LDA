@@ -44,16 +44,20 @@ export class Form {
     userName = "",
     email = "",
     confirmEmail = "",
-    from = "",
-    to = "",
+    fromHour = "",
+    fromDate = "",
+    toHour = "",
+    toDate = "",
     notes = ""
   ) {
     this.car = car;
     this.userName = userName;
     this.email = email;
     this.confirmEmail = confirmEmail;
-    this.from = from;
-    this.to = to;
+    this.fromHour = fromHour;
+    this.fromDate = fromDate;
+    this.toHour = toHour;
+    this.toDate = toDate;
     this.notes = notes;
   }
 
@@ -89,9 +93,9 @@ export class Form {
       valids.push("email");
       valids.push("confirmEmail");
     }
-    if (!this.from) errors.push("FROM_MISSING");
-    else if (!this.to) errors.push("TO_MISSING");
-    if (this.from && this.to && this.from >= this.to)
+    if (!this.fromDate) errors.push("FROM_MISSING");
+    else if (!this.toDate) errors.push("TO_MISSING");
+    if (this.fromDate && this.toDate && this.fromDate >= this.toDate)
       errors.push("DATE_VALIDATION");
     if (
       !this.includesAny(errors, "FROM_MISSING", "TO_MISSING", "DATE_VALIDATION")
@@ -109,15 +113,17 @@ export class Form {
   }
 
   reverseDates() {
-    return [this.from, this.to].map((x) => x.split("-").reverse().join("-"));
+    return [this.fromDate, this.toDate].map((x) =>
+      x.split("-").reverse().join("-")
+    );
   }
 
   request(reverseDate = false) {
-    const { car, userName, email, notes } = this;
-    let from, to;
-    if (reverseDate) [from, to] = this.reverseDates();
-    else ({ from, to } = this);
-    return { car, userName, email, from, to, notes };
+    const { car, userName, email, notes, fromHour, toHour } = this;
+    let fromDate, toDate;
+    if (reverseDate) [fromDate, toDate] = this.reverseDates();
+    else ({ fromDate, toDate } = this);
+    return { car, userName, email, fromHour, fromDate, toHour, toDate, notes };
   }
 
   JSONrequest() {

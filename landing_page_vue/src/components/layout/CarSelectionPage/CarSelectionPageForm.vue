@@ -67,6 +67,7 @@
                 class="form-select"
                 aria-label="hour"
                 :name="input.name + 'Hour'"
+                v-model="form[input.name + 'Hour']"
               >
                 <option
                   v-for="(hour, i) in getHours"
@@ -83,32 +84,10 @@
                 class="form-control"
                 :name="input.name + 'Date'"
                 :min="new Date().toISOString().split('T')[0]"
+                v-model="form[input.name + 'Date']"
               />
             </div>
-
-            <!-- <button
-              v-for="input in inputs"
-              :key="input.buttonId"
-              :id="input.buttonId"
-              class="btn btn-outline-secondary"
-              :class="{ active: checkActiveInput(input.name) }"
-              type="button"
-              @click="toggleActiveInput(input.name)"
-            >
-              {{ input.text }}
-            </button>
-            <input
-              v-for="input in inputs"
-              :key="input.inputId"
-              :id="input.inputId"
-              type="date"
-              name="dates"
-              class="form-control"
-              v-show="checkActiveInput(input.name)"
-              v-model="form[input.name]"
-              required
-            />
-            <div class="invalid-feedback">{{ errors.dates }}</div> -->
+            <div class="invalid-feedback">{{ errors.dates }}</div>
           </div>
           <div id="date-help" class="form-text">{{ rentInterval }}</div>
         </div>
@@ -153,32 +132,6 @@
             name="submit"
           />
         </div>
-        <!-- mobile -->
-        <!-- <div class="mobile button-mobile my-3">
-          <button v-if="loading" class="btn btn-primary" type="button" disabled>
-            <span
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
-            Caricamento...
-          </button>
-          <input
-            v-else
-            type="submit"
-            class="btn btn-primary me-md-2"
-            value="Richiedi preventivo"
-            name="submit"
-          />
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            @click="closeDialog"
-            :disabled="loading"
-          >
-            Annulla
-          </button>
-        </div> -->
         <div class="mobile button-mobile"></div>
         <p id="requestExists" v-if="requestExistError">Richiesta già inviata</p>
       </form>
@@ -199,16 +152,14 @@ export default {
   mounted() {
     this.$refs.nome.focus();
 
-    Array.from(this.$refs.form.children).forEach((field) => {
-      const input = field.querySelector("input");
-      if (input !== null) {
-        input.addEventListener("blur", (event) => {
-          this.validateForm();
-        });
-      }
-    });
-
-    console.log(this.$refs.hourRent);
+    // Array.from(this.$refs.form.children).forEach((field) => {
+    //   const input = field.querySelector("input");
+    //   if (input !== null) {
+    //     input.addEventListener("blur", (event) => {
+    //       this.validateForm();
+    //     });
+    //   }
+    // });
   },
   emits: ["close"],
   inject: ["toggleFeedbackPage", "postRequest"],
