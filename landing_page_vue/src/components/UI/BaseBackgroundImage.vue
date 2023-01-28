@@ -1,5 +1,4 @@
 <template>
-  <!-- position-fixed -->
   <div class="bg-image" :style="commonStyle" :class="getMode">
     <div
       id="mycarousel"
@@ -18,8 +17,6 @@
         </div>
       </div>
     </div>
-    <!-- position-absolute -->
-    <!-- <img :src="bgImage[0]" :style="imgStyle" /> -->
   </div>
 </template>
 
@@ -70,11 +67,28 @@ export default {
       };
     },
   },
+  methods: {
+    resize() {
+      const image = document.querySelector(".active");
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const factor = 0.5622254758418741;
+
+      if (width > 1366) {
+        image.style.bottom = (width * factor) / 2 - height * 0.35 + "px";
+      }
+    },
+  },
   mounted() {
+    this.resize();
+    window.addEventListener("resize", this.resize);
     const mycarousel = this.$refs.mycarousel;
     const carousel = new bootstrap.Carousel(mycarousel, {
       interval: 10000,
     });
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.resize);
   },
 };
 </script>
@@ -85,6 +99,7 @@ export default {
 
   & img {
     margin: auto 0;
+    position: relative;
   }
 }
 </style>
