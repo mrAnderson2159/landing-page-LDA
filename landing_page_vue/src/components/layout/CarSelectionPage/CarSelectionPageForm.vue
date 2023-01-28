@@ -102,7 +102,8 @@
         <!-- Asterisco -->
         <div class="form-text mb-3">*I campi con un asterisco sono obbligatori</div>
         <!-- Invio -->
-        <div class="my-3 d-grid gap-2 d-md-flex justify-content-md-end">
+        <!-- not-mobile -->
+        <div class="my-3 d-grid gap-2 d-md-flex justify-content-md-end not-mobile">
           <button
             type="button"
             class="btn btn-outline-secondary"
@@ -127,6 +128,33 @@
             name="submit"
           />
         </div>
+        <!-- mobile -->
+        <!-- <div class="mobile button-mobile my-3">
+          <button v-if="loading" class="btn btn-primary" type="button" disabled>
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Caricamento...
+          </button>
+          <input
+            v-else
+            type="submit"
+            class="btn btn-primary me-md-2"
+            value="Richiedi preventivo"
+            name="submit"
+          />
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            @click="closeDialog"
+            :disabled="loading"
+          >
+            Annulla
+          </button>
+        </div> -->
+        <div class="mobile button-mobile"></div>
         <p id="requestExists" v-if="requestExistError">Richiesta già inviata</p>
       </form>
     </div>
@@ -299,5 +327,9 @@ export default {
   font-size: 0.875em;
   margin: 0;
   text-align: right;
+}
+
+.button-mobile {
+  height: 75px;
 }
 </style>

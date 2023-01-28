@@ -143,7 +143,9 @@ $height: v-bind(height);
   }
 
   button {
-    margin: 2rem auto;
+    margin: 2rem 0;
+    position: relative;
+    left: 25%;
   }
 }
 
