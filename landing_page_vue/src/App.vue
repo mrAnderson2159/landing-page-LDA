@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      currentPage: "HomePage",
+      currentPage: "CarSelectionPage",
       componentProps: null,
       textLayout: null,
     };

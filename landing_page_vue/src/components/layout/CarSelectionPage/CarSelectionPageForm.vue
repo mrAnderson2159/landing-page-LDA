@@ -57,10 +57,36 @@
         </div>
         <!-- Intervallo -->
         <div class="mb-4">
-          <label for="dates" class="form-label">*Intervallo</label>
+          <label class="form-label">*Intervallo</label>
           <!-- Bottoni Intervallo -->
           <div id="dates" class="input-group">
-            <button
+            <div class="input-group mb-4" v-for="input in inputs" :key="input.name">
+              <span class="input-group-text">{{ input.text }}</span>
+              <select
+                ref="hourRent"
+                class="form-select"
+                aria-label="hour"
+                :name="input.name + 'Hour'"
+              >
+                <option
+                  v-for="(hour, i) in getHours"
+                  :key="hour"
+                  :value="hour"
+                  :selected="!i"
+                >
+                  {{ hour }}
+                </option>
+              </select>
+              <input
+                type="date"
+                aria-label="date"
+                class="form-control"
+                :name="input.name + 'Date'"
+                :min="new Date().toISOString().split('T')[0]"
+              />
+            </div>
+
+            <!-- <button
               v-for="input in inputs"
               :key="input.buttonId"
               :id="input.buttonId"
@@ -71,7 +97,6 @@
             >
               {{ input.text }}
             </button>
-            <!-- Input Intervallo -->
             <input
               v-for="input in inputs"
               :key="input.inputId"
@@ -83,7 +108,7 @@
               v-model="form[input.name]"
               required
             />
-            <div class="invalid-feedback">{{ errors.dates }}</div>
+            <div class="invalid-feedback">{{ errors.dates }}</div> -->
           </div>
           <div id="date-help" class="form-text">{{ rentInterval }}</div>
         </div>
@@ -182,6 +207,8 @@ export default {
         });
       }
     });
+
+    console.log(this.$refs.hourRent);
   },
   emits: ["close"],
   inject: ["toggleFeedbackPage", "postRequest"],
@@ -190,8 +217,8 @@ export default {
       activeInput: "from",
       form: new Form(this.car),
       inputs: [
-        new FormDateInput("from", "A partire dal", "button-from", "date-from"),
-        new FormDateInput("to", "Fino al", "button-to", "date-to"),
+        new FormDateInput("from", "Data ritiro", "button-from", "date-from"),
+        new FormDateInput("to", "Data riconsegna", "button-to", "date-to"),
       ],
       errors: {},
       requestExistError: false,
@@ -205,6 +232,16 @@ export default {
     rentInterval() {
       const [from, to] = this.form.reverseDates();
       return `Dal ${from} al ${to}`;
+    },
+    getHours() {
+      const hours = [];
+
+      for (let i = 0; i < 21; i++) {
+        const adding = Math.floor(i / 2);
+        hours.push(`${9 + adding}:${i % 2 ? "30" : "00"}`);
+      }
+
+      return hours;
     },
   },
   props: {
@@ -331,5 +368,9 @@ export default {
 
 .button-mobile {
   height: 75px;
+}
+
+.input-group-text {
+  min-width: 35%;
 }
 </style>
