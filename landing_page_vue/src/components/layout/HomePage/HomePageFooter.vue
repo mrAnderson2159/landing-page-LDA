@@ -195,7 +195,7 @@ export default {
 }
 
 @mixin footer-container($height) {
-  min-height: $height;
+  height: $height;
   background-color: v-bind(computedColor);
 }
 
@@ -213,18 +213,18 @@ $height: v-bind(rightTrianglesHeight);
 }
 
 #not-mobile-footer-container {
-  @include footer-container(75vh);
+  @include footer-container(450px);
 }
 
 #mobile-footer-container {
   margin-top: 10vh;
-  @include footer-container(35vh);
+  @include footer-container(375px);
 }
 
 #not-mobile-links {
   width: 25%;
   position: relative;
-  bottom: 46%;
+  bottom: 49%;
   float: right;
 
   @include link-list(absolute);
