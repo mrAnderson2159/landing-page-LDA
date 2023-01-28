@@ -19,7 +19,7 @@
   <div v-else-if="mode === 'body-mobile'" class="container-fluid" id="body-mobile">
     <h1 class="title">{{ title }}</h1>
     <p class="subtitle lead text-secondary">{{ subtitle }}</p>
-    <div class="d-grid gap-2 col-6 mx-auto">
+    <div class="">
       <button type="submit" :class="settings.btnClass" @click="submitAction">
         {{ submit }}
       </button>
@@ -143,7 +143,7 @@ $height: v-bind(height);
   }
 
   button {
-    margin: 2rem 0;
+    margin: 2rem auto;
   }
 }
 
