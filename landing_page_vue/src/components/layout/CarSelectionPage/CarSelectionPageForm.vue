@@ -160,6 +160,9 @@ export default {
     //     });
     //   }
     // });
+
+    this.form.fromHour = "9:00";
+    this.form.toHour = "9:00";
   },
   emits: ["close"],
   inject: ["toggleFeedbackPage", "postRequest"],
