@@ -5,9 +5,9 @@
     id="body-not-mobile"
     class="row main-text-container text-light position-relative"
   >
-    <div class="main-text col-md-6">
-      <h1 class="title display-1">{{ title }}</h1>
-      <p class="subtitle lead fs-3 col-md-6 text-secondary">{{ subtitle }}</p>
+    <div class="main-text col-lg-7">
+      <h1 class="title display-3">{{ title }}</h1>
+      <p class="subtitle lead fs-3 text-mylight">{{ subtitle }}</p>
       <div class="d-grid gap-2 col-3 mt-5 submit-container">
         <button type="submit" :class="settings.btnClass" @click="submitAction">
           {{ submit }}
@@ -92,10 +92,15 @@ $height: v-bind(height);
   & .main-text {
     // border: 1px solid red;
     height: 60%;
-    margin: auto 10%; // percentage($phi / 10)
+    margin: auto 5%; // percentage($phi / 10)
 
     & .title {
       font-family: "Mukta", sans-serif;
+      margin-bottom: 2vw;
+    }
+
+    & .subtitle {
+      margin-bottom: 5vw;
     }
   }
 }
@@ -147,7 +152,7 @@ button {
   padding: 1em 2em;
 }
 
-.text-secondary {
+.text-mylight {
   color: rgb(160, 173, 185) !important;
 }
 </style>

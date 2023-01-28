@@ -195,7 +195,7 @@ export default {
 }
 
 @mixin footer-container($height) {
-  height: $height;
+  min-height: $height;
   background-color: v-bind(computedColor);
 }
 
@@ -213,7 +213,7 @@ $height: v-bind(rightTrianglesHeight);
 }
 
 #not-mobile-footer-container {
-  @include footer-container(50vh);
+  @include footer-container(75vh);
 }
 
 #mobile-footer-container {

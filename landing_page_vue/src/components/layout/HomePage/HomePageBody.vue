@@ -32,8 +32,9 @@ import TheInstructions from "./TheInstructions.vue";
 
 function getHeight() {
   const width = window.innerWidth;
-  if (width > 1366) return "75vh";
-  else return width * 0.5622254758418741 + "px";
+  const factor = 0.5622254758418741;
+  if (width > 1366) return 1366 * factor * 0.9 + "px";
+  else return width * factor * 0.9 + "px";
 }
 
 export default {
