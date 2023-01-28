@@ -137,7 +137,7 @@ class IpAddress(models.Model):
 class Blacklist(models.Model):
     name = models.CharField(max_length=128, blank=True)
     ipaddress: IpAddress = models.ForeignKey(IpAddress, on_delete=models.CASCADE, blank=True, null=True)
-    record = models.DateField(auto_now_add=True)
+    record = models.DateTimeField(auto_now_add=True)
     path = models.CharField(max_length=512, blank=True)
     blocked_forever = models.BooleanField(default=False)
 
