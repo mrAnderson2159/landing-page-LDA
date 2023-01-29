@@ -14,7 +14,6 @@ def unlocked(*,
     def init(function):
         def wrapper(request, *args, **kwargs):
             print()
-            print(request.header)
             client_ip = get_client_ip(request)
             ip, created = IpAddress.objects.get_or_create(address=client_ip)
             ip: IpAddress
