@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from .global_settings import BLOCK_DAYS
 from .functions import get_client_ip, date_to_datetime, format_EN_date
 from .models import Blacklist, IpAddress
-from .colors import red, green
+from .colors import red, green, cyan
 
 
 def unlocked(*,
@@ -14,8 +14,12 @@ def unlocked(*,
     def init(function):
         def wrapper(request, *args, **kwargs):
             print()
+            print(request.header)
             client_ip = get_client_ip(request)
-            ip: IpAddress = IpAddress.objects.get_or_create(address=client_ip)[0]
+            ip, created = IpAddress.objects.get_or_create(address=client_ip)
+            ip: IpAddress
+            if created:
+                cyan("NEW USER")
             try:
                 blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)  # Questo genera l'eccezione
                 if ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
