@@ -138,6 +138,6 @@ def save_car(image_basename: Union[str, PathLike]) -> Car:
 
 def is_malicious(url: str) -> bool:
     for pattern in FORBIDDEN_REQUESTS:
-        if re.match(pattern, url):
+        if re.match(pattern, url, re.IGNORECASE):
             return True
     return False
