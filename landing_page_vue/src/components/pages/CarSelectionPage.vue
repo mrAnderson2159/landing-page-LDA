@@ -38,7 +38,7 @@ export default {
             c.name,
             c.path || c.url,
             c.engine_capacity,
-            c.horsePower,
+            c.horse_power,
             c.supply,
             c.daily_km,
             c.price

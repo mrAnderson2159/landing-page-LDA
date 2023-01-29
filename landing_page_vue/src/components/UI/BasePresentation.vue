@@ -19,7 +19,7 @@
   <div v-else-if="mode === 'body-mobile'" class="container-fluid" id="body-mobile">
     <h1 class="title">{{ title }}</h1>
     <p class="subtitle lead text-secondary">{{ subtitle }}</p>
-    <div class="">
+    <div class="btn-container">
       <button type="submit" :class="settings.btnClass" @click="submitAction">
         {{ submit }}
       </button>
@@ -142,11 +142,14 @@ $height: v-bind(height);
     line-height: normal;
   }
 
-  button {
-    margin: 2rem 0;
+  & .btn-container {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    & button {
+      margin: 2rem 0;
+    }
   }
 }
 

@@ -18,7 +18,7 @@ export class Car {
     this.horsePower = horsePower;
     this.supply = supply;
     this.dailyKm = dailyKm;
-    this.price = price;
+    this.price = price.toFixed(2);
   }
 
   setName(name) {
@@ -35,6 +35,20 @@ export class Car {
 
   addUrlAfter(url) {
     this.url += url;
+  }
+}
+
+export class CarProperty {
+  /** Used to display a Car property
+   *
+   * @param {String} label The name of the property to be displayed
+   * @param {String} pointer A pointer to a Car property to be dereferenced with square brackets
+   * @param {String} unit An optional unit of mesure for the property to be displayed in the label
+   */
+  constructor(label, pointer, unit = "") {
+    this.label = label;
+    this.pointer = pointer;
+    this.unit = unit;
   }
 }
 

@@ -27,28 +27,20 @@
             />
             <h2 class="mt-3 mb-0 text-light">{{ car.name }}</h2>
             <hr class="text-light" />
-            <div class="text-light car-property mb-3">
-              <span class="float-start car-label"><strong>Cilindrata</strong>:</span>
-              <span class="float-end car-value">{{ car.engineCapacity }}</span
-              ><br />
-            </div>
-            <div class="text-light car-property mb-3">
-              <span class="float-start car-label"><strong>Potenza motore</strong>:</span>
-              <span class="float-end car-value">{{ car.horsePower }} CV</span><br />
-            </div>
-            <div class="text-light car-property mb-3">
-              <span class="float-start car-label"><strong>Alimentazione</strong>:</span>
-              <span class="float-end car-value">{{ car.supply }}</span
-              ><br />
-            </div>
-            <div class="text-light car-property mb-3">
-              <span class="float-start car-label"><strong>KM/giorno</strong>:</span>
-              <span class="float-end car-value">{{ car.dailyKm }}</span
-              ><br />
-            </div>
-            <div class="text-light car-property mb-3">
-              <span class="float-start car-label"><strong>A partire da</strong>:</span>
-              <span class="float-end car-value">{{ car.price.toFixed(2) }}€</span><br />
+            <div class="row flex justify-content-center">
+              <div
+                class="text-light car-property mb-3 col-sm-8 col-11"
+                v-for="property in carProperties"
+                :key="property.pointer"
+              >
+                <span class="property-label float-start"
+                  ><strong>{{ property.label }}</strong
+                  >:</span
+                >
+                <span class="property-car float-end"
+                  >{{ car[property.pointer] }} {{ property.unit }}</span
+                ><br />
+              </div>
             </div>
           </base-car-image-card>
         </div>
@@ -67,7 +59,7 @@
 import CarSelectionPageForm from "./CarSelectionPageForm.vue";
 import BaseCarImageCard from "../../UI/BaseCarImageCard.vue";
 import { requiredArray } from "../../../utilities/props";
-import { Car } from "../../../utilities/classes";
+import { Car, CarProperty } from "../../../utilities/classes";
 
 export default {
   components: {
@@ -84,6 +76,13 @@ export default {
       activeCar: null,
       showForm: false,
       height: "",
+      carProperties: [
+        new CarProperty("Cilindrata", "engineCapacity"),
+        new CarProperty("Potenza motore", "horsePower", "CV"),
+        new CarProperty("Alimentazione", "supply"),
+        new CarProperty("KM/giorno", "dailyKm"),
+        new CarProperty("A partire da", "price", "€"),
+      ],
     };
   },
   computed: {
@@ -124,7 +123,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$car-property-margin: 30%;
 p {
   color: #343a40;
 }
@@ -133,11 +131,7 @@ img.car {
   width: 98%;
 }
 
-.car-label {
-  margin-left: $car-property-margin;
-}
-
-.car-value {
-  margin-right: $car-property-margin;
+.car-property {
+  font-size: 1.3rem;
 }
 </style>
