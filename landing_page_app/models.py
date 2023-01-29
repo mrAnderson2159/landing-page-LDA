@@ -89,6 +89,7 @@ class Request(models.Model):
 
 
 class IpAddress(models.Model):
+    name = models.CharField(max_length=64, blank=True)
     address = models.GenericIPAddressField(protocol='IPv4', unique=True)
     user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
@@ -114,7 +115,9 @@ class IpAddress(models.Model):
 
     def __str__(self):
         res = ''
-        if self.user:
+        if self.name:
+            res += f"{self.name} - "
+        elif self.user:
             fn = self.user.first_name
             ln = self.user.last_name
             if not (fn or ln):
@@ -138,7 +141,6 @@ class IpAddress(models.Model):
 
 
 class Blacklist(models.Model):
-    name = models.CharField(max_length=128, blank=True)
     ipaddress: IpAddress = models.ForeignKey(IpAddress, on_delete=models.CASCADE, blank=True, null=True)
     record = models.DateTimeField(auto_now_add=True)
     path = models.CharField(max_length=512, blank=True)
@@ -148,10 +150,7 @@ class Blacklist(models.Model):
         self.blocked_forever = True
 
     def __str__(self):
-        res = ''
-        if self.name:
-            res = f"{self.name} - "
-        res += f"{self.ipaddress.address} - {Date.format_IT_date(self.record)} - GET {self.path}"
+        res = f"{self.ipaddress.address} - {Date.format_IT_date(self.record)} - GET {self.path}"
         if self.blocked_forever:
             res += ' --- FOREVER'
         return res
@@ -159,24 +158,22 @@ class Blacklist(models.Model):
 
 class Whitelist(models.Model):
     ipaddress: IpAddress = models.ForeignKey(IpAddress, on_delete=models.CASCADE, blank=True, null=True)
-    user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         res = ''
-        if self.user:
-            fn = self.user.first_name
-            ln = self.user.last_name
+        if self.ipaddress.user:
+            fn = self.ipaddress.user.first_name
+            ln = self.ipaddress.user.last_name
             if not (fn or ln):
-                res = f"{self.user.username} - "
+                res = f"{self.ipaddress.user.username} - "
             else:
                 if fn:
                     res += fn + ' '
                 if ln:
                     res += ln + ' '
                 res += '- '
-        elif self.client:
-            res = f"{self.client.name} - "
+        elif self.ipaddress.client:
+            res = f"{self.ipaddress.client.name} - "
 
         return res + self.ipaddress.address
 
