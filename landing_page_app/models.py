@@ -138,7 +138,7 @@ class IpAddress(models.Model):
 
         return res
 
-
+# print('\n'.join(map(str,(IpAddress.objects.filter(blocked=True).order_by('-bad_requests').values('address','bad_requests')))))
 
 class Blacklist(models.Model):
     ipaddress: IpAddress = models.ForeignKey(IpAddress, on_delete=models.CASCADE, blank=True, null=True)

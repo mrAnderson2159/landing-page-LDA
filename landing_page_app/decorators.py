@@ -27,6 +27,9 @@ def unlocked(*,
                     blacklist_ip.save()
                     red(f'{ip} surpassed 10 bad requests, BLOCKED FOREVER')
 
+                if ip.bad_requests >= 45 and not ip.name:
+                    ip.name = "HACKERMAN"
+
                 if increase_bad_requests:
                     ip.increase_bad_requests()
                     ip.save()
