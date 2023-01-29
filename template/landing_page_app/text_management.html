@@ -19,8 +19,8 @@
         {% csrf_token %} 
         {% for field, item in fields.items %}
         <div class="mb-5 form-field">
-            <label for="{{ field }}" class="form-label">
-                {{ item.label }}
+            <label for="{{ field }}" class="form-label ps-3">
+                {{ item.label | capfirst}}
             </label>
             <input
                 id="{{ field }}"
@@ -28,7 +28,7 @@
                 name="{{ field }}"
                 value="{{ item.value }}"
                 placeholder="{{ item.placeholder }}"
-                class="form-control"
+                class="form-control ps-5"
             />
         </div>
         {% endfor %}

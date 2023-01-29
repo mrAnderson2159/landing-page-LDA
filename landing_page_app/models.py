@@ -7,10 +7,13 @@
 #     "Car",
 #
 # ]
+import json
+import re
+
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-from typing import Union as _Union
+from typing import Union as _Union, Union, Optional
 
 
 # Create your models here.
@@ -182,6 +185,52 @@ class TextLayout(models.Model):
     name = models.CharField(max_length=32, unique=True)
     data = models.JSONField(max_length=65536)
     date_modified = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    @property
+    def text_layout(cls):
+        return cls.objects.get(name='text_layout')
+
+    def add_field(self, name: str,
+                  label: str,
+                  *,
+                  fields: Union[list[str], tuple[str]] = [],
+                  before: str = '') -> dict:
+        fields = ["value", "label", *fields]
+        text_layout = json.loads(self.data)
+
+        if name in text_layout:
+            raise ValueError(f"{name} already exists in text layout")
+
+        if not re.match(r'^[^0-9][a-zA-Z0-9]+$', name):
+            raise ValueError(f"{name} must be a valid camelCase javascript identifier")
+
+        new_field = {field: '' for field in fields}
+        new_field["label"] = label
+
+        if before:
+            if before not in text_layout:
+                raise ValueError(f"There's no field named {before} to append {name} before")
+            listed: list[tuple[str, dict]] = list(json.loads(self.data).items())
+            pos = list(map(lambda t: t[0], listed)).index(before)
+            listed.insert(pos, (name, new_field))
+            text_layout = dict(listed)
+        else:
+            text_layout[name] = new_field
+
+        self.data = json.dumps(text_layout)
+        self.save()
+        return {'name': name, **new_field}
+
+    def remove_field(self, name: str) -> dict:
+        text_layout = json.loads(self.data)
+        if name in text_layout:
+            delated = text_layout[name]
+            del text_layout[name]
+            self.data = json.dumps(text_layout)
+            self.save()
+            return {'name': name, **delated}
+        return None
 
     def __str__(self):
         return self.name
