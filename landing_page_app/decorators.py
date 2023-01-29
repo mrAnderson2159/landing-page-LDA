@@ -21,11 +21,11 @@ def unlocked(*,
                 cyan("NEW USER")
             try:
                 blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)  # Questo genera l'eccezione
-                red(ip)
+                red(ip.address)
                 if ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
                     blacklist_ip.block_forever()
                     blacklist_ip.save()
-                    red(f'{ip} surpassed 10 bad requests, BLOCKED FOREVER')
+                    red(f'{ip.address} surpassed 10 bad requests, BLOCKED FOREVER')
 
                 if ip.bad_requests >= 45 and not ip.name:
                     ip.name = "HACKERMAN"

@@ -91,7 +91,7 @@ def block_user(*, request=None, ip=None) -> Blacklist:
         except ObjectDoesNotExist:
             pass
 
-    blocked, created = Blacklist.objects.get_or_create(ipaddress=ip)
+    blocked: Blacklist = Blacklist.objects.get_or_create(ipaddress=ip)[0]
     blocked.path = request.path
     blocked.save()
     ip.block()
