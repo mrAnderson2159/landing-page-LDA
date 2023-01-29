@@ -150,7 +150,7 @@ class Blacklist(models.Model):
         self.blocked_forever = True
 
     def __str__(self):
-        res = f"{self.ipaddress.address} - {Date.format_IT_date(self.record)} - GET {self.path}"
+        res = f"{self.ipaddress} - {Date.format_IT_date(self.record)} - GET {self.path}"
         if self.blocked_forever:
             res += ' --- FOREVER'
         return res
