@@ -21,7 +21,7 @@ def unlocked(*,
                 cyan("NEW USER")
             try:
                 blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)  # Questo genera l'eccezione
-                red(ip.address)
+                red(ip.address, ip.name)
                 if ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
                     blacklist_ip.block_forever()
                     blacklist_ip.save()
