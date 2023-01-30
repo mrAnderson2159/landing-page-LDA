@@ -22,17 +22,20 @@ def unlocked(*,
             try:
                 blacklist_ip: Blacklist = Blacklist.objects.get(ipaddress=ip)  # Questo genera l'eccezione
                 red(ip.address, ip.name)
-                if ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
-                    blacklist_ip.block_forever()
-                    blacklist_ip.save()
-                    red(f'{ip.address} surpassed 10 bad requests, BLOCKED FOREVER')
-
-                if ip.bad_requests >= 45 and not ip.name:
-                    ip.name = "HACKERMAN"
 
                 if increase_bad_requests:
                     ip.increase_bad_requests()
+
+                    if ip.bad_requests >= 45 and not ip.name:
+                        cyan(f'{ip.address} just became an HACKERMAN')
+                        ip.name = "HACKERMAN"
+                    elif ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
+                        blacklist_ip.block_forever()
+                        blacklist_ip.save()
+                        red(f'{ip.address} surpassed 10 bad requests, BLOCKED FOREVER')
+
                     ip.save()
+
 
                 if blacklist_ip.blocked_forever:
                     red(f'{request} rejected from user {client_ip} due to ETERNAL BLOCK')
