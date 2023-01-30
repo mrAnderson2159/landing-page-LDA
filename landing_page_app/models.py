@@ -50,10 +50,10 @@ class Car(models.Model):
     path = models.CharField(max_length=1024, blank=True)
     url = models.URLField(blank=True)
     active = models.BooleanField(default=True)
-    engine_capacity = models.IntegerField(blank=True, default=0)
-    horse_power = models.IntegerField(blank=True, default=0)
+    engine_capacity = models.PositiveIntegerField(blank=True, default=0)
+    horse_power = models.PositiveIntegerField(blank=True, default=0)
     supply = models.CharField(max_length=32, blank=True)
-    daily_km = models.IntegerField(blank=True, default=0)
+    daily_km = models.PositiveIntegerField(blank=True, default=0)
     price = models.FloatField(blank=True, default=0.)
 
     def activate(self):
@@ -94,9 +94,9 @@ class IpAddress(models.Model):
     user: User = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     client: Client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     blocked = models.BooleanField(default=False)
-    views = models.IntegerField(default=0)
-    bad_requests = models.IntegerField(default=0)
-    subscriptions = models.IntegerField(default=0)
+    views = models.PositiveIntegerField(default=0)
+    bad_requests = models.PositiveIntegerField(default=0)
+    subscriptions = models.PositiveIntegerField(default=0)
 
     def increase_views(self):
         self.views += 1

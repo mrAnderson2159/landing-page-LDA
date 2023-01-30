@@ -156,3 +156,4 @@ CORS_ALLOW_CREDENTIALS = True
 #     'http://127.0.0.1:8000',
 #     "http://127.0.0.1:9000",
 # ]
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
