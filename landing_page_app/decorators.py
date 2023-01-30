@@ -26,10 +26,10 @@ def unlocked(*,
                 if increase_bad_requests:
                     ip.increase_bad_requests()
 
-                    if ip.bad_requests >= 45 and not ip.name:
+                    if not ip.name and ip.bad_requests >= 45:
                         cyan(f'{ip.address} just became an HACKERMAN')
                         ip.name = "HACKERMAN"
-                    elif ip.bad_requests >= 10 and not blacklist_ip.blocked_forever:
+                    elif not blacklist_ip.blocked_forever and ip.bad_requests >= 10:
                         blacklist_ip.block_forever()
                         blacklist_ip.save()
                         red(f'{ip.address} surpassed 10 bad requests, BLOCKED FOREVER')
