@@ -32,7 +32,7 @@ def unlocked(*,
                     elif not blacklist_ip.blocked_forever and ip.bad_requests >= 10:
                         blacklist_ip.block_forever()
                         blacklist_ip.save()
-                        red(f'{ip.address} surpassed 10 bad requests, BLOCKED FOREVER')
+                        cyan(f'{ip.address} surpassed 10 bad requests so it will be BLOCKED FOREVER')
 
                     ip.save()
 
