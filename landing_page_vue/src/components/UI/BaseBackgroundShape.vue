@@ -76,7 +76,7 @@ $origin: v-bind(transformOrigin);
     position: absolute;
     width: 1100%;
     height: 1100%;
-    top: 20px;
+    top: 30px;
     right: -500%;
     background-color: $color;
     transform-origin: $origin;

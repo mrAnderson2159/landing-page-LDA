@@ -19,15 +19,23 @@ export default {
     HomePageFooter,
   },
   created() {
+    // Queries the server about the main background images list to create a carousel
     this.getMainBackground();
   },
   inject: ["env", "textValue", "localhost"],
   data() {
     return {
+      /** @type {ArrayLike<url>} */
       mainBackground: null,
     };
   },
   methods: {
+    /**
+     * Queries the server about the main background images list to create a carousel.
+     * It distinguishes between development and production mode because of Django's static
+     * storage system.
+     * It directly update this.mainBackground with server's response.
+     */
     async getMainBackground() {
       const env = this.env();
       let url = "";
