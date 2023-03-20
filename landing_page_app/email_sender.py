@@ -46,6 +46,6 @@ def send_admin_email(request_data: dict):
         recipients=admin_users(),
         host="smtp.gmail.com",
         port=465,
-        sender="testemailsender76@gmail.com",
+        sender="noreply.luxurycarrentalperugia@gmail.com",
         password="{{password}}"
     )
