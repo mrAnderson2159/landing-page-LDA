@@ -237,3 +237,18 @@ def main_background(request):
         'prod': {'mainBackground': prod_images},
         'dev': {'mainBackground': dev_images}
     }, safe=False)
+
+
+@login_required
+@unlocked()
+def mod_store(request):
+    magenta('MOD STORE')
+    context = {
+        'ideas': [
+            {'title': 'idea1', 'explanation': 'this is my first idea'},
+            {'title': 'idea1', 'explanation': 'this is my first idea'},
+            {'title': 'idea1', 'explanation': 'this is my first idea'}
+        ],
+    
+    }
+    return render(request, 'landing_page_app/mod_store.html', context)

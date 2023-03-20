@@ -1,0 +1,62 @@
+{% extends 'landing_page_app/administration.html' %}
+{% block head_block %}
+    <title>Negozio Modifiche</title>
+{% endblock head_block %}
+
+
+{% block body_block %}
+<div class="container-fluid">
+    <div class="p-5 mb-5 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Negozio delle modifiche del sito</h1>
+            <p class="fs-4 lead">
+                In questa sezione potete acquistare le modifiche che preferite e appena
+                ricevo la notifica mi metto subito al lavoro!
+            </p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body_block %}
+
+
+{% block script_block %}
+<script src="https://www.paypal.com/sdk/js?client-id=AUsRZ-oZbYGrIHH82gQSCV5KrLiP1JcZSQ0xMyc1X5xMebN7dDzEaO4rndN5-ZL0aoImWD_RadsBXtQF&currency=EUR"></script>
+<script>
+    const values = "{{values}}".split(' ').map(Number);
+    
+    const buttons = value => paypal.Buttons({
+      // Sets up the transaction when a payment button is clicked
+      createOrder: (data, actions) => {
+        console.log('mario')
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value // Can also reference a variable or function
+            }
+          }]
+        });
+      },
+      // Finalize the transaction after payer approval
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(function(orderData) {
+          // Successful capture! For dev/demo purposes:
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+          const transaction = orderData.purchase_units[0].payments.captures[0];
+          alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+          // When ready to go live, remove the alert and show a success message within this page. For example:
+          // const element = document.getElementById('paypal-button-container');
+          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+          // Or go to another URL:  actions.redirect('thank_you.html');
+        });
+      }
+    })
+    for (let i = 0; i < values.length; i++)
+        buttons(values[i]).render(`#button${i + 1}`);
+  </script>
+{% endblock script_block %}
+
+{% block style_block %}
+<style lang="scss"></style>
+{% endblock style_block %}

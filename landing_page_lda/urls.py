@@ -24,7 +24,7 @@ encrypted_view = encrypted_view(views)
 
 urlpatterns = [
     path('', index, name='index'),
-    path('admin-lda/', admin.site.urls),
+    path('admin-lrcp/', admin.site.urls),
     encrypted_view('form'),
     encrypted_view("cars"),
     standard_view("user_login"),
@@ -33,5 +33,7 @@ urlpatterns = [
     encrypted_view("text_management"),
     encrypted_view("text_layout"),
     encrypted_view("main_background"),
+    # encrypted_view("mod_store"),
     path('<path:url>', botcatcher, name='default')
 ]
+å

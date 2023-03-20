@@ -4,7 +4,7 @@
 {% endblock head_block %} 
 {% block body_block %} 
 {% if type == 'modify' %}
-<div id="form-container" class="container-fluid w-75">
+<div class="container-fluid">
     <div class="p-5 mb-5 bg-light rounded-3">
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold">Gestione dei campi di testo</h1>
@@ -15,6 +15,8 @@
             </p>
         </div>
     </div>
+</div>
+<div id="form-container" class="container-fluid w-75">
     <form method="POST">
         {% csrf_token %} 
         {% for field, item in fields.items %}
@@ -46,7 +48,7 @@
     <div id="bottom-space"></div>
 </div>
 {% elif type == 'thanks' %}
-<div class="container-fluid w-75">
+<div class="container-fluid">
     <div class="p-5 mb-5 bg-light rounded-3">
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold">Gestione dei campi di testo</h1>
@@ -108,14 +110,6 @@
         font-size: 0.75em;
     }
 
-    h1 {
-        text-transform: uppercase;
-        text-align: center;
-    }
-
-    p {
-        text-align: center;
-    }
 
     #bottom-space {
         width: 100%;
