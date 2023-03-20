@@ -36,4 +36,3 @@ urlpatterns = [
     # encrypted_view("mod_store"),
     path('<path:url>', botcatcher, name='default')
 ]
-å
