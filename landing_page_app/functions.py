@@ -1,22 +1,23 @@
 import json
 import re
-from os import PathLike, listdir
-from os.path import exists, splitext, basename
+from datetime import datetime, date
+from hashlib import sha512
+from os import PathLike
+from os.path import exists, splitext
 from pathlib import Path
 from typing import *
-from hashlib import sha512
-from datetime import datetime, date
 from typing import Type
-from django.db.models import Model
-from django.core.serializers import serialize
-from django.core.handlers.wsgi import WSGIRequest
+
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.handlers.wsgi import WSGIRequest
+from django.core.serializers import serialize
+from django.db.models import Model
 from django.templatetags.static import static
 from django.urls import path
 
+from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green, yellow
 from .global_settings import FORBIDDEN_REQUESTS
 from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress, Car
-from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green, yellow
 
 
 def encrypt(string: str, algorithm: Callable[AnyStr, Hashable] = sha512) -> str:
@@ -39,12 +40,14 @@ def jsonify(models: list[Type[Model]]) -> str:
 def standard_view(views):
     def init(name):
         return path(f'{name}/', getattr(views, name), name=name)
+
     return init
 
 
 def encrypted_view(views):
     def init(name):
         return path(f'{encrypt(name)}/', getattr(views, name), name=name)
+
     return init
 
 
@@ -118,14 +121,15 @@ def format_EN_date(date_object: Union[datetime, Date]) -> str:
 
 
 def latest_text_layout_mod(request):
-     return TextLayout.objects.get(name='text_layout').date_modified
+    return TextLayout.objects.get(name='text_layout').date_modified
 
-def save_car(image_basename: Union[str, PathLike]) -> Car:
+
+def save_car(image_basename: Union[str, PathLike], car_data: dict[str, dict[str, Union[float, bool]]]) -> Car:
     car_path = Path(static('images/cars/')[1:]) / image_basename
     car_abs_path = Path('.').resolve() / car_path
     if exists(car_abs_path):
         car_name = splitext(image_basename)[0]
-        new_car, created = Car.objects.get_or_create(name=car_name.title())
+        new_car, created = Car.objects.get_or_create(name=car_name.title(), **car_data)
         if created:
             new_car.path = str(car_path)
             new_car.save()
@@ -135,6 +139,7 @@ def save_car(image_basename: Union[str, PathLike]) -> Car:
         return new_car
     else:
         raise IOError(f"{car_abs_path} does not exist")
+
 
 def is_malicious(url: str) -> bool:
     for pattern in FORBIDDEN_REQUESTS:

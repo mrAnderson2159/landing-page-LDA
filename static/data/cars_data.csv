@@ -1,0 +1,14 @@
+name;engine_capacity;horse_power;supply;daily_km;price;active
+Audi A3;2;150;Diesel;150;0;False
+Audi Q3 Sportback;2;190;Diesel;150;0;True
+Audi Q5;2;190;Diesel;150;220;True
+Audi Q8;3;381;Diesel;150;250;True
+BMW 420;2;284;Diesel;150;130;True
+BMW X6;3;381;Diesel;150;0;True
+BMW Z4;2;197;Diesel;150;0;True
+Jaguar e-pace;2;250;Diesel;150;160;True
+Maserati Levante;3;275;Diesel;120;0;True
+Porsche Boxster 718;2;300;Benzina;120;500;True
+Porsche Cayenne;3;340;Benzina;150;400;True
+Range Rover Evoque;2;249;Diesel;150;160;True
+Range Rover Sport;3;250;Diesel;150;220;True
