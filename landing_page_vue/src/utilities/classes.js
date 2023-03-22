@@ -14,7 +14,7 @@ export class Car {
   constructor(name, url, engineCapacity, horsePower, supply, dailyKm, price) {
     this.name = name;
     this.url = url;
-    this.engineCapacity = engineCapacity;
+    this.engineCapacity = engineCapacity.toFixed(1);
     this.horsePower = horsePower;
     this.supply = supply;
     this.dailyKm = dailyKm;

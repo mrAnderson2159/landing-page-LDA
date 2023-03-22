@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       // the current toggled component
-      currentPage: "CarSelectionPage",
+      currentPage: "HomePage",
       // the properties to be passed to currentPage
       componentProps: null,
       /**

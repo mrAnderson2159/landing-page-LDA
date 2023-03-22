@@ -1,5 +1,9 @@
 <template>
-  <car-selection-page-form v-if="showForm" @close="closeForm" :car="activeCar" />
+  <car-selection-page-form
+    v-if="showForm"
+    @close="closeForm"
+    :car="activeCar"
+  />
   <div class="container-fluid">
     <p class="lead display-6 pt-5 mt-5 text-center">
       {{ leadMessage }}
@@ -10,12 +14,16 @@
           class="position-relative"
           v-for="(car, i) in cars"
           :key="car.name"
-          :class="cars.length % 2 && i == cars.length - 1 ? 'col-lg-12' : 'col-lg-6'"
+          :class="
+            cars.length % 2 && i == cars.length - 1 ? 'col-lg-12' : 'col-lg-6'
+          "
         >
           <base-car-image-card
             :key="car.name"
             class="my-5"
-            :class="cars.length % 2 && i == cars.length - 1 ? 'col-lg-6' : 'col-lg-11'"
+            :class="
+              cars.length % 2 && i == cars.length - 1 ? 'col-lg-6' : 'col-lg-11'
+            "
             @click="toggleActiveCar(car.name)"
           >
             <img
@@ -81,7 +89,7 @@ export default {
         new CarProperty("Potenza motore", "horsePower", "CV"),
         new CarProperty("Alimentazione", "supply"),
         new CarProperty("KM/giorno", "dailyKm"),
-        new CarProperty("A partire da", "price", "€"),
+        new CarProperty("A partire da", "price", "€/g"),
       ],
     };
   },
