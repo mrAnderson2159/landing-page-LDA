@@ -17,7 +17,7 @@ from django.urls import path
 
 from .colors import c_yellow, c_cyan, c_green, c_red, c_magenta, red, green, yellow
 from .global_settings import FORBIDDEN_REQUESTS
-from .models import Blacklist, Date, Whitelist, TextLayout, IpAddress, Car
+from .models import Blacklist, Date, Whitelist, IpAddress, Car, SiteHash
 
 
 def encrypt(string: str, algorithm: Callable[AnyStr, Hashable] = sha512) -> str:
@@ -121,7 +121,7 @@ def format_EN_date(date_object: Union[datetime, Date]) -> str:
 
 
 def latest_text_layout_mod(request):
-    return TextLayout.objects.get(name='text_layout').date_modified
+    return SiteHash.objects.get(name='site_hash').date_modified
 
 
 def save_car(image_basename: Union[str, PathLike], car_data: dict[str, dict[str, Union[float, bool]]]) -> Car:

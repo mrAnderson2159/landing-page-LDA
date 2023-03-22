@@ -232,3 +232,9 @@ class TextLayout(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class SiteHash(models.Model):
+    name = models.CharField(max_length=16, unique=True)
+    value = models.CharField(max_length=128, blank=True)
+    date_modified = models.DateTimeField(auto_now=True)
