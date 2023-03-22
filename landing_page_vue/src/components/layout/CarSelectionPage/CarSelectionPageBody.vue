@@ -9,7 +9,7 @@
       {{ leadMessage }}
     </p>
     <div id="cars" class="px-3 m-3 text-center">
-      <div v-if="carsLoaded" class="row">
+      <div v-show="carsLoaded" class="row">
         <div
           class="position-relative"
           v-for="(car, i) in cars"
@@ -53,7 +53,7 @@
           </base-car-image-card>
         </div>
       </div>
-      <div v-else class="row">
+      <div v-if="!carsLoaded" class="row">
         <div class="col-lg-6 position-relative" v-for="i in 6" :key="i">
           <base-car-image-card :key="i" class="col-lg-8" :car-exists="false">
           </base-car-image-card>
@@ -91,10 +91,12 @@ export default {
         new CarProperty("KM/giorno", "dailyKm"),
         new CarProperty("A partire da", "price", "€/giorno"),
       ],
+      carsLoaded: false,
+      loadInterval: null,
     };
   },
   computed: {
-    carsLoaded() {
+    carsExist() {
       const value = this.cars.length > 0;
       return value;
     },
@@ -118,13 +120,27 @@ export default {
       const width = this.$refs.img[0].width;
       this.height = (width * proportion.h) / proportion.w;
     },
+    loadHandler() {
+      const images = this.$refs.img;
+      const value = images.every(
+        (img) => img.complete && img.naturalHeight !== 0
+      );
+      if (this.carsLoaded !== value) {
+        this.carsLoaded = value;
+      }
+    },
   },
+  created() {},
   mounted() {
     window.addEventListener("resize", this.setHeight);
   },
   watch: {
-    carsLoaded(n, o) {
-      setTimeout(this.setHeight, 1);
+    carsExist() {
+      this.loadInterval = setInterval(this.loadHandler, 10);
+    },
+    carsLoaded() {
+      clearInterval(this.loadInterval);
+      setTimeout(this.setHeight, 10);
     },
   },
 };
