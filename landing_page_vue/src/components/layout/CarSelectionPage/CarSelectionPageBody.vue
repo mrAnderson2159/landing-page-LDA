@@ -89,7 +89,7 @@ export default {
         new CarProperty("Potenza motore", "horsePower", "CV"),
         new CarProperty("Alimentazione", "supply"),
         new CarProperty("KM/giorno", "dailyKm"),
-        new CarProperty("A partire da", "price", "€/g"),
+        new CarProperty("A partire da", "price", "€/giorno"),
       ],
     };
   },

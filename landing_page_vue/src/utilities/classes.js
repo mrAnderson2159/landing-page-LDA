@@ -18,7 +18,7 @@ export class Car {
     this.horsePower = horsePower;
     this.supply = supply;
     this.dailyKm = dailyKm;
-    this.price = price.toFixed(2);
+    this.price = price;
   }
 
   setName(name) {
